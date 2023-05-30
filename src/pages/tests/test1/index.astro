@@ -45,7 +45,7 @@ import Layout from '../../../layouts/Layout.astro'
   </div>
  
  <section class="container my-3 pt-2 shadow-sm border-1" style="border: 1px solid lightgrey; border-radius: 5px;">
-     <div id="alert-time" class="alert alert-danger">Wait 30 seconds to upload your answer</div>
+     <div id="alert-time" class="alert alert-danger hidden"></div>
  <div class="row">
    <div class="col-md-5 py-3">
      <div class="card">
@@ -758,14 +758,14 @@ function examEnd(){
 
 function startCountdownend() {
 		let count = 40;
-		document.getElementById("alert-time").innerHTML += `${count} seconds`;
+		document.getElementById("alert-time").classList.remove("hidden")
 		const interval = setInterval(() => {
 		  count--;
-		  timer.innerHTML = `${count} seconds`;
+	        document.getElementById("alert-time").innerHTML += `Wait ${count} seconds to Upload your answer to Server...`;
 		  if (count <= 0) {
 			beep.play();
 			clearInterval(interval);
-            document.getElementById("home").style.display="block";
+          	        window.location.href="/"
 		  }
 		}, 1000);
     }
