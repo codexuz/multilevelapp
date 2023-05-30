@@ -42,7 +42,7 @@ const friends = friendsSnapshot.docs.map((doc) => ({
 <Layout title="Dashboard">
   <Loader/>
 <DashHeader/>
-  
+  <div class="bg-white dark:bg-gray-900 mx-auto" style="width:100%; min-height:100vh">
 <ul style="margin: 100px 0 0 30px;  ">
   {
     friends.map((friend) => (
@@ -92,5 +92,6 @@ const friends = friendsSnapshot.docs.map((doc) => ({
 </div>
   
   <FooterMenu/>
+      </div>
 </Layout>
 
