@@ -7,12 +7,12 @@ export interface Props {
 const { href, title } = Astro.props;
 ---
 
-<a href={href} class="bg-white dark:bg-gray-600 rounded-lg shadow-lg p-6 mb-4 dark:border-gray-800 dark:text-geen-500">
+<a href={href} class="bg-white dark:bg-gray-900 rounded-lg shadow p-3 mb-2 dark:border-gray-700 dark:text-geen-600">
 	<div class="card">
-		<h1 class="text-gray-600 dark:text-white">
+		<h1 class="text-lg text-gray-600">
 			{title}
 		</h1>
-		<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-600 dark:text-white">
+		<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-600">
 			<path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
 		  </svg>		  
 	</div>
