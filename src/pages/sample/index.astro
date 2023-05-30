@@ -11,7 +11,7 @@ import DashHeader from '../../components/DashHeader.astro'
 <Layout/> 	
 <script is:inline>
 	
-	const Api_URL='https://xirurgabdukarim.uz/wp-json/wp/v2/posts/';
+	const Api_URL='https://xirurgabdukarim.uz/wp-json/wp/v2/posts/?per_page=100';
 async function show() {
 	const row=document.getElementById("row");
     row.innerHTML='';
