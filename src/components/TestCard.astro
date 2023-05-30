@@ -1,0 +1,14 @@
+---
+const {title,href, klassName} = Astro.props;
+export interface Props {
+  
+  title: string;
+  href?: string;
+  klassName:string;
+}
+---
+<a href={href} class={klassName}>
+  <div class="card-body">
+    <h5 class="card-title">{title}</h5>
+  </div>
+</a>

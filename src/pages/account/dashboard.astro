@@ -1,0 +1,96 @@
+---
+import { app } from "../../lib/firebase/server";
+import { getFirestore } from "firebase-admin/firestore";
+import { getAuth } from "firebase-admin/auth";
+import Layout from "../../layouts/Layout.astro";
+import FooterMenu from '../../components/FooterMenu.astro'
+import Card from '../../components/Card.astro'
+import DashHeader from '../../components/DashHeader.astro';
+import Loader from '../../components/Loader.astro';
+
+const auth = getAuth(app);
+
+/* Check current session */
+const sessionCookie = Astro.cookies.get("session").value;
+
+if (!sessionCookie) {
+  return Astro.redirect("/");
+}
+const decodedCookie = await auth.verifySessionCookie(sessionCookie);
+const user = await auth.getUser(decodedCookie.uid);
+
+if (!user) {
+  return Astro.redirect("/");
+}
+
+interface Friend {
+  id: string;
+  name: string;
+  age: number;
+  isBestFriend: boolean;
+}
+
+const db = getFirestore(app);
+const friendsRef = db.collection("users");
+const friendsSnapshot = await friendsRef.get();
+const friends = friendsSnapshot.docs.map((doc) => ({
+  id: doc.id,
+  ...doc.data(),
+})) as Friend[];
+---
+
+<Layout title="Dashboard">
+  <Loader/>
+<DashHeader/>
+  
+<ul style="margin: 100px 0 0 30px;  ">
+  {
+    friends.map((friend) => (
+      <li class="flex">
+        <a style="color:blue; font-weight:bold "  href={`/account/friend/${friend.id}`}>{"Hello, " + friend.name}</a><br>
+        <a  class="bg-blue-700 rounded-full text-white mx-3 border-t-blue-700 px-2 " href={`/account/edit/${friend.id}`}>Edit info</a>
+      </li>
+    ))
+  }
+</ul>
+  <h2 style="margin: 5px 0 0 30px;">Welcome to Dashboard!</h2>
+<div class=" mx-3 flex flex-col my-2" style="margin-bottom:120px">
+  <Card 
+  title="Speaking Mock"
+  href="/account/dashboard"
+  />
+
+  <Card 
+  title="Writing Checker"
+  href="/account/dashboard"
+  />
+
+  <Card 
+  title="Reading"
+  href="/account/dashboard"
+  />
+
+  <Card 
+  title="Listening"
+  href="/account/dashboard"
+  />
+
+  <Card 
+  title="Phrasal Verbs"
+  href="/account/dashboard"
+  />
+
+  <Card 
+  title="Dictionary"
+  href="/account/dashboard"
+  />
+
+  <Card 
+  title="Wordnik Game"
+  href="/account/dashboard"
+  />
+</div>
+  
+  <FooterMenu/>
+</Layout>
+

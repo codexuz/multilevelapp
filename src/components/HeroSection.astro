@@ -1,0 +1,182 @@
+---
+import 'bootstrap/dist/css/bootstrap.css';
+import 'mdb-ui-kit/css/mdb.min.css'
+import 'font-awesome/css/font-awesome.min.css'
+---
+
+<div class="px-5 py-6 block bg-gray-700 container-fluid  shadow-sm">
+<h1 class="display-4 head text-white" style="font-weight:500; text-shadow: 1px 2px 3px rgba(0, 0, 0,0.2);">Multi-Level Speaking | Edumo</h1>
+	<div class="row">
+		<!--Birinchi qism---->
+		<div class="col-lg-8 mt-4">
+			<div style="width:100%">
+			<span class="tips px-3 mx-1 text-white"><i class="fa fa-clock-o"></i> &nbsp;15 min</span>
+			<span class="tips px-3 mx-1 text-white"><i class="fa fa-microphone"></i> &nbsp;Microphone</span>
+			<span class="tips-free px-3 text-white"><i class="fa fa-dollar"></i> &nbsp;Cheap</span>
+		</div>
+			<div class="mt-5 mx-3">
+				<p class="describe text-white">Multi-Level Speaking Exam</p>
+				<p class="title text-white">Boost Your Speaking Level<span class="text-warning"> With US</span> Now! </p>
+				<div class="d-flex p-3"></div>
+				<a href=""><button class="my-btn btn btn-dark text-light px-5 py-3 rounded-lg"><i class="fa fa-microphone"></i>&nbsp;&nbsp;&nbsp; TRY IT NOW </button></a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+  .block{
+    padding: 20px 24px 32px;
+
+  }
+
+.tips{
+	background:rgba(46,104,255,.1)!important;
+  	border-radius: 16px;
+    font-size: 14px;
+    height: 32px;
+    margin: 5px ;
+    padding: 10px;
+    margin-top: 56px;
+
+}
+.tips-free{
+	background:rgba(46,104,255,.1)!important;
+  	border-radius: 16px;
+    font-size: 14px;
+	margin: 5px ;
+    padding: 10px;
+  }
+
+.describe{
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 32px;
+    color: #1b1f2e;
+}
+
+.title{
+  font-weight: 700;
+    font-size: 32px;
+    line-height: 48px;
+    color: #1b1f2e;
+    margin-top: 16px;
+}
+.my-btn{
+  font-size: 16px;
+}
+
+.tabs{
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border-radius: 32px;
+    background: #f2f2f5;
+    max-height: 64px;
+    overflow: hidden;
+}
+.tabs .is-active{
+    background: #fff;
+    color: #1d1e21;
+}
+
+.tab-items:hover{
+    background: #fff;
+    color: #1d1e21;
+}
+
+.tab-items{
+  display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    gap: 10px;
+    box-sizing: border-box;
+    padding: 8px 32px;
+    border-radius: 32px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 32px;
+    color: #606070;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+
+
+@media (max-width: 991px){
+.my-btn{
+    order: 10;
+    width: 100%;
+    margin-bottom: 16px;
+}
+.sec-block{
+  display: none;
+}
+}
+@media (max-width: 900px){
+.tabs{
+    width: 100%!important;
+}
+}
+
+@media screen and (max-width: 600px){
+.tips-free{
+	display:inline-block;
+	margin: 15px 0;
+	padding:8px;
+	text-align:center
+}
+
+.head{
+    display: none;
+}
+.tips{
+    margin: 1px ;
+
+}
+
+#app-none{
+  display: none;
+}
+.tabs{
+  width: 100%;
+  overflow-y:hidden;
+  overflow-x:scroll;
+}
+::-webkit-scrollbar{
+  display: none;
+}
+
+.tab-items{
+    padding: 8px 32px;
+    font-size: 12px;
+    background: #f9f9fa;
+    margin-right: 16px;
+}
+}
+
+
+</style>

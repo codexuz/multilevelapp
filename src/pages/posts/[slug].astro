@@ -1,0 +1,27 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const { slug } = Astro.params;
+
+let res = await fetch(`https://norian.studio/wp-json/wp/v2/posts?slug=${slug}&_embed`)
+let [post] = await res.json();
+
+// The getStaticPaths() is required for static Astro sites.
+// If using SSR, you will not need this function.
+export async function getStaticPaths() {
+  let data = await fetch("https://xirurgabdukarim.uz/wp-json/wp/v2/posts")
+  let posts = await data.json();
+
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post: post },
+  }));
+}
+---
+<Layout title={post.title.rendered}>
+  <article>
+    <img src={post._embedded['wp:featuredmedia']['0'].source_url} />
+    <h1 set:html={post.title.rendered} />
+    <Fragment set:html={post.content.rendered} />
+  </article>
+</Layout>

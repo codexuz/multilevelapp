@@ -1,0 +1,25 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Course from '../components/Course.astro'
+import Header from '../components/Header.astro';
+import Loader from '../components/Loader.astro';
+import HeroSection from '../components/HeroSection.astro';
+---
+
+<Layout title="Home">
+<div class="bg-white dark:bg-gray-900 mx-auto" style="width:100%; min-height:100vh">
+   <Loader/>
+<Header/>
+<div style="padding-top:70px">
+<HeroSection/>	
+<Course/>  
+</div>
+</div>
+</Layout>
+
+<style>
+
+   body{
+    background-color: rgb(252, 252, 252);
+   }
+</style>

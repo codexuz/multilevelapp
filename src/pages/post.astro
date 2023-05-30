@@ -1,0 +1,21 @@
+---
+import Layout from "../layouts/Layout.astro"
+
+let res = await fetch("https://xirurgabdukarim.uz/wp-json/wp/v2/posts")
+let posts = await res.json();
+---
+<Layout title="Posts">
+  <section>
+    
+    {
+      posts.map((post) => (
+        <article>
+          <h2>
+            <a href={`/posts/${post.slug}/`} set:html={post.title.rendered} />
+          </h2>
+          <Fragment set:html={post.content.rendered} />
+        </article>
+      ))
+    }
+  </section>
+</Layout>

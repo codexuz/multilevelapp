@@ -1,0 +1,42 @@
+---
+import 'bootstrap/dist/css/bootstrap.css';
+import TestCard from '../../components/TestCard.astro';
+import Layout from '../../layouts/Layout.astro'
+import type { Props as CardType } from '../../components/TestCard.astro';
+const cards: CardType[] = [
+  {
+    
+    title: 'Test 1',
+    href: '/tests/test1',
+    klassName: 'card bg-warning shadow-sm border-0 text-decoration-none text-center text-dark'
+  },
+  {
+    
+    title: 'Test 2',
+    href: '/tests',
+    klassName: 'card bg-warning border-0 shadow-sm text-decoration-none text-center text-dark'
+  },
+  {
+    
+    title: 'Test 3',
+    href: '/tests',
+    klassName: 'card bg-warning border-0 shadow-sm text-decoration-none text-dark text-center'
+  },
+];
+---
+
+
+<Layout title="Speaking Mock Tests">
+<div class="container my-4">
+  <div class="row">
+    {
+      cards.map((card) => (
+        <div class="col">
+          <TestCard {...card} />
+        </div>
+      ))
+    }
+  </div>
+</div>
+</Layout>
+

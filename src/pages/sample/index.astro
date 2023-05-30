@@ -1,0 +1,48 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import DashHeader from '../../components/DashHeader.astro'
+---
+	
+<Layout title="Samples">
+<DashHeader/>
+<div class="bg-gray-900" style="width:100%;min-height: 100vh; padding: 90px 0;">
+    	<div class="py-5 container mx-auto px-4" id="row"></div>
+    </div>
+<Layout/> 	
+<script is:inline>
+	
+	const Api_URL='https://xirurgabdukarim.uz/wp-json/wp/v2/posts/';
+async function show() {
+	const row=document.getElementById("row");
+    row.innerHTML='';
+	const response = await fetch(Api_URL);
+	const json= await response.json();
+	console.log(json)
+	json.forEach(el => {
+		 row.innerHTML+=`
+		 <details class="px-3 my-2 py-1 bg-gray-200 rounded">
+         <summary class="bg-gray-700 text-white rounded px-3 font-bold" style="margin:10px 0; padding:20px; font-size: 18px;">${el.title.rendered}</summary>
+         <p class="py-3">${el.content.rendered}</p>
+		 </details>`
+	});
+
+}
+
+show();
+</script>
+
+<style>
+		summary{
+			width: 100%;
+			margin: 10px 0;
+			padding: 20px 20px;
+			border: 1px solid #f6f6fa;
+			border-radius: 5px;
+			font-size: 18px;
+			font-weight:bold;
+		}
+
+		
+
+	</style>
+

