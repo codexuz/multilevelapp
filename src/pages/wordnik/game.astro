@@ -28,7 +28,7 @@ import 'font-awesome/css/font-awesome.min.css'
       <div id="progress"></div>
     </div>
     <div class="d-flex align-items-center justify-content-right">
-      <button onclick="nextFlashcard()" class="next-btn-arr"><i class="fa fa-angle-double-right 
+      <button onclick="nextFlashcard()" class="next-btn-arr px-3"><i class="fa fa-angle-double-right 
 "></i></button>
     </div>
   </div>
@@ -265,7 +265,11 @@ const flashcards = [
   { word: "send off", trans: "o'yindan chetlashtirmoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/S/BS116ELP2AIL.mp3"},
   { word: "take up", trans: "odatni boshlamoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/T/1HPL979AGBZDP.mp3"},
   { word: "turn down", trans: "ovozni pasaytirmoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/T/LXD8YWITKZDY.mp3"},
-  { word: "turn up", trans: "ovozni ko'tarmoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/T/DISVSANPNUD.mp3"}
+  { word: "turn up", trans: "ovozni ko'tarmoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/T/DISVSANPNUD.mp3"},
+  { word: "bored with", trans: "dan zerikkan", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/B/NPK3HP3EWK3Z.mp3"},
+  { word: "crazy about", trans: "...ning ashaddiy muhlisi", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/D2ODZOYMQEZG.mp3"},
+  { word: "good at", trans: "...da qobiliyatli", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/G/1C361RWL0RWKM.mp3"},
+  { word: "bored with", trans: "dan zerikkan", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/B/NPK3HP3EWK3Z.mp3"}
 ];
 
 
@@ -273,6 +277,7 @@ const flashcards = [
 let currentFlashcard = 0;
 let score = 0;
 let progress = 0;
+
 
 // Get the elements
 const length = document.getElementById("length")
@@ -300,17 +305,24 @@ function startSpeechRecognition() {
     const spokenWord = event.results[0][0].transcript.toLowerCase();
     if (spokenWord === flashcards[currentFlashcard].word) {
       score++;
-      feed.innerText="🎉 Good!";
+      feed.style.fontSize="25px"
+      feed.innerText="👏 Good!";
+      setTimeout(()=>{
+       feed.innerText=""
+      },1500)
       feed.style.color="green"
-      scoreContainer.innerText = `${score}/37`;
+      scoreContainer.innerText = `${score}`;
     } else {
-      console.log("Oh no");
-      feed.innerText="😋 Oh,no!";
+      feed.style.fontSize="25px"
+      feed.innerText="😩 Oh,no!";
       feed.style.color="red";
+      setTimeout(()=>{
+       feed.innerText=""
+      },1500)
       turn.innerText="You said: "+spokenWord
       setTimeout(function(){
        turn.innerText=""
-      }, 2000) 
+      }, 1500) 
     }
     nextFlashcard();
   };
