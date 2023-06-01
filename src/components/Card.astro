@@ -7,7 +7,7 @@ export interface Props {
 const { href, title } = Astro.props;
 ---
 
-<a href={href} class="link-card flex justify-between items-center bg-blue-500 text-white text-2xl shadow dark:bg-gray-800 boder-2 dark:border-gray-700 my-2 rounded-full">
+<a href={href} class="link-card flex justify-between items-center py-3 w-full px-5 bg-blue-500 text-white text-2xl shadow dark:bg-gray-800 boder-2 dark:border-gray-700 my-2 rounded-full">
 		<h1>
 			{title}
 		</h1>
@@ -23,15 +23,6 @@ const { href, title } = Astro.props;
 
 	}
 
-	.card {
-		width: 100%;
-		text-decoration: none;
-		line-height: 1.4;
-		padding: 1.2rem 1.3rem;
-		display:flex;
-		justify-content: space-between;
-		align-items: center;
-	}
 	
 
 </style>
