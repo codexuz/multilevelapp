@@ -1,0 +1,192 @@
+---
+import 'bootstrap/dist/css/bootstrap.css';
+import 'mdb-ui-kit/css/mdb.min.css'
+import 'font-awesome/css/font-awesome.min.css'
+---
+
+<nav class="navbar bg-white shadow-sm justify-content-between align-items-center">
+    <a href="/" class="navbar-brand mx-4"><i class="fa fa-home text-primary"></i></a>
+</nav>
+<center><img id="img-success" class="img rounded-circle my-3" src="/static/congratulations.svg"></center>
+<h3 class="text-success text-center" id="success-text">Sent Successfully</h3>
+<div class="container mt-4">
+ 
+<p id="essay-que"></p>
+<div class="d-flex justify-content-between align-items-center">
+<div id="word_count" class="bg-primary text-center px-5 py-2 my-4 text-white fw-bold"> Words: 0</div>
+<div id="timer" class=" py-2 text-dark fw-bold" style="font-size: 30px;">00:00</div>
+
+</div>
+<grammarly-editor-plugin>
+  <textarea spellcheck="true" translate="yes"  id="writing" class="form-control textarea"  placeholder="Essayni shu yerga yozishni boshlang..."></textarea>
+</grammarly-editor-plugin>
+</div>
+
+
+<div class="footer">
+  <button id="start-btn" class="btn mx-2 btn-primary px-4">Start</button>
+  <button id="download-btn" class="btn btn-info" onclick="downloadAsDoc()">Download</button>
+  <button onclick="showSend()" disabled  type="button"  id="send-btn" class="btn mx-2 text-white flex"  style="background: rgb(12, 214, 137);"><svg class="h-6 w-6" fill="white" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"></path><path d="M12.45 16h2.09L9.43 3H7.57L2.46 16h2.09l1.12-3h5.64l1.14 3zm-6.02-5L8.5 5.48 10.57 11H6.43zm15.16.59l-8.09 8.09L9.83 16l-1.41 1.41 5.09 5.09L23 13l-1.41-1.41z"></path></svg>&nbsp; Send For Checking</button>
+</div>
+
+ <style>
+        grammarly-editor-plugin, textarea{
+            width: 100%;
+            height:400px;
+            max-height: 700px;
+            margin-bottom: 330px;
+        }
+        .footer{
+          height:65px;
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          display: flex;
+          background-color: rgb(253, 253, 253);
+          align-items: center;
+          justify-content: center;
+        }
+#img-success{
+  display: none;
+}
+
+#download-btn{
+  display: none;
+}
+
+#success-text{
+  display: none;
+}
+
+</style>
+<script is:inline>
+    document.getElementById("writing")
+  .addEventListener("keyup", function countWord() {
+    let res = [];
+    let str = this.value.replace(/[\t\n\r\.\?\!]/gm, " ").split(" ");
+    str.map((s) => {
+      let trimStr = s.trim();
+      if (trimStr.length > 0) {
+        res.push(trimStr);
+      }
+    });
+    document.querySelector("#word_count").innerText =
+      "Words: " + res.length;
+  });
+
+
+function countdownTime(){
+  // Set the date/time of the countdown (40 minutes from now)
+var countDownDate = new Date().getTime() + 2400000;
+
+// Update the countdown every second
+var x = setInterval(function() {
+
+  // Get the current date/time
+  var now = new Date().getTime();
+    
+  // Calculate the distance between now and the countdown date/time
+  var distance = countDownDate - now;
+    
+  // Calculate minutes and seconds
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  
+  // Add a leading zero to seconds if they're less than 10
+  if (seconds < 10) {
+    seconds = "0" + seconds;
+  }
+    
+  // Display the countdown in the "timer" element
+  document.getElementById("timer").innerHTML = minutes + ":" + seconds;
+    
+  // If the countdown is finished, display "EXPIRED" and stop the timer
+  if (distance < 0) {
+    clearInterval(x);
+    showSend();
+  }
+}, 1000);
+
+}
+
+document.getElementById("start-btn").addEventListener("click", function(){
+  countdownTime();
+  document.querySelector("#start-btn").style.display="none";
+document.querySelector("#send-btn").disabled=false;
+
+});
+
+
+
+ function showSend(){
+  var textArea=document.getElementById("writing").value
+  if(textArea==""){
+    alert("Blank answer can't be sent")
+  }
+  else{
+    sendData();
+    document.getElementById("timer").style.display="none"
+  }
+}
+
+function sendData(){
+  const token = '5958284810:AAG8rgBipqXomln5MxLqqDcP1vTFm0oaNiQ';
+  const chatId = '1483919112';
+  const input = document.getElementById('writing');
+  const essayAnswer=input.value;
+  const title=document.getElementById("essay-que")
+  var titleName=title.innerHTML
+  const imagine= document.getElementById("happy");
+  const essayfull=`Q: ${titleName} Answer: ${essayAnswer}`
+  console.log(essayfull)
+ 
+
+fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ chat_id: chatId, text: essayfull })
+})
+  .then(response => {
+    document.querySelector("#send-btn").disabled=true;
+    document.getElementById("download-btn").style.display="inline-block"
+    document.getElementById("img-success").style.display="block";
+    document.getElementById("success-text").style.display="block"
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    console.log('Message sent!');
+  })
+  .catch(error => {
+    console.error(error);
+  });
+
+}
+
+
+
+//Download as docs
+
+
+function downloadAsDoc() {
+  const text = document.querySelector('#writing').value;
+  
+  const doc = new Blob(['\ufeff', text], {type:'application/msword'});
+  const url = URL.createObjectURL(doc);
+  
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'document.doc';
+  document.body.appendChild(link);
+  window.open(link, '_blank');
+  setTimeout(() => {
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);  
+  }, 0);
+}
+
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@grammarly/editor-sdk?clientId=client_9RyqGXjwEswHovZhL8F3Ym" is:inline></script>
+<script src="/static/essay.js" is:inline></script>
