@@ -1,98 +1,30 @@
 ---
 import 'bootstrap/dist/css/bootstrap.css';
 import 'mdb-ui-kit/css/mdb.min.css'
+import 'font-awesome/css/font-awesome.min.css'
 import Layout from '../../../layouts/Layout.astro'
+import Result from '../../../components/Result.astro'
+import Welcome from '../../../components/Welcome.astro'
+import QuizNav from '../../../components/QuizNav.astro'
+import SpeakParts from '../../../components/SpeakParts.astro'
+import SpeakBody from '../../../components/SpeakBody.astro'
+import SpeakLoader from '../../../components/SpeakLoader.astro'
 ---
 
 <Layout title="Test 1">
- <!---welcome--->
- <div id="welcome">
-    <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
-    <div class="card shadow" style="width: 500px;">
-        <div class="card-header"><h3 class="text-dark text-center">Multi Level Speaking</h3></div>
-        <div class="card-body">
-         <h5 class="text-center">Welcome to Speaking Exam!</h5>
-         <p>Test contains the followings:</p>
-          <ul>
-            <li>Part 1: 6 questions</li>
-            <li>Part 2: Cue Card (duration: 2 minutes)</li>
-            <li>Part 3: 5 questions (related to Part 2)</li>
-          </ul>
-          <p class="text-dark text-center fw-bold">If you are ready Please, hit the "Start" button below!</p>
-           <center><button onclick="step0()" class="btn btn-primary px-5 py-2" style="font-size: 17px;">Start</button></center>
-        </div>
-    </div>
-</div>
-</div>
+ <SpeakLoader/>
 
-<!----welcome ends-->
+ <Welcome/>
 
 <div id="quizBar">
-<div class="navbar navbar-expand-lg navbar-light bg-dark shadow">
-    <div class="container-fluid">
-        <a class="navbar-brand text-light" href="#">Multi Level Speaking</a>
-        <div class="timer-bar text-white" id="full-screen" onclick="toggleFullScreen()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
-          </svg>
-          </div>
-        </div>
-</div> 
 
-<div class="text-center my-5">
-    <span id="part1" class=" badge px-3 py-2 bg-success level-one fw-bold text-light mx-3">Part 1</span>
-    <span id="part2" class=" badge px-3 py-2  bg-primary level-two fw-bold text-light mx-3 rounded">Part 2</span>
-    <span id="part3" class=" badge  bg-primary px-3 py-2 level-three fw-bold text-light mx-3 rounded">Part 3</span>
-  </div>
+<QuizNav/>
+
+<SpeakParts/>
  
- <section class="container my-3 pt-2 shadow-sm border-1" style="border: 1px solid lightgrey; border-radius: 5px;">
-     <div id="alert-time" class="alert alert-danger hidden"></div>
- <div class="row">
-   <div class="col-md-5 py-3">
-     <div class="card">
-       <div class="card-body">
-         <div class="header-question d-flex justify-content-between align-items-center">
-           <span class="badge rounded-pill text-bg-dark border-0 px-5 py-2">Question# <span id="que-id"></span></span>
-           <div>
-           <i class="fa fa-volume-up text-dark mx-1"></i><input class="text-dark" type="range" id="audio_volume" min="0" max="1" step="0.01" name=""></div>
-         </div>
-         <hr>
-         <div class=" quiz-container mt-3 d-flex justify-content-center align-items-center">
-           <button class="btn btn-dark px-3 py-1 mx-3" onclick="sizeDown()">A-</button>
-            <button class="btn btn-dark px-3 py-1 mx-3" onclick="sizeUp()">A+</button>
-         </div>
-         <hr>
-         <div id="question-bar">
-         </div>
-         <audio src="https://firebasestorage.googleapis.com/v0/b/exam-online-384406.appspot.com/o/Exam%2Fbeep.mp3?alt=media&token=a5e51e2e-dd71-4c15-bbb3-c2038fa54729" id="beep"></audio>
-       </div>
-     </div>
-   </div>
-   <!----Right side--->
-   <div class="col-md-7 py-3">
-     <div class="card" id="card">
-       <div class="card-body">
-         <div class="header-question d-flex justify-content-around align-items-center">
-           <button class="btn btn-dark w-100 fw-bold py-1">
-            <i class="fa fa-stopwatch text-light" style="font-size:23px"></i><span class="text-light px-2" id="timer" style="width:50px; font-size: 23px;"></span>
-           </button>
-         </div>
-         <div class="recorder">
-         <span class="circle text-center"></span>
-         <div id="waveform"></div>
-         <p id="recording"></p>
-         <div id="downloadContainer" class="d-flex flex-column">
-            <audio src="" id="audio-playback"></audio>
-            <a class="btn btn-primary text-white my-3" href="" download="" id="downloadButton">Download Answer</a>
-            <a id="home" class="my-2 btn btn-primary text-decoration-none" href="/account/dashboard" style="display:none">Back to Home</a>
-         </div>
-         </div>
-         
-       </div>
-     </div>
-   </div>
- </div>
- </section>
-
+ <SpeakBody/>
+</div>
+<Result/>
 
 
 <!------->
@@ -120,6 +52,7 @@ import Layout from '../../../layouts/Layout.astro'
 <script is:inline>
 
 const part1=document.getElementById("quizBar");
+const markPage = document.getElementById("markpage");
 const section1=document.getElementById("part1");
 const section2=document.getElementById("part2")
 const section3=document.getElementById("part3")
@@ -143,16 +76,11 @@ const audio15=document.getElementById("audio_15");
 const beep=document.getElementById("beep");
 const timer=document.getElementById("timer");
 const que_id=document.getElementById("que-id");
-const downloadAudio =document.getElementById("downloadButton");
-const preview =document.getElementById("audio-playback")
 let recorder, audio_stream;
 
 part1.style.display="none";
-preview .style.display="none";
-downloadAudio .style.display="none";
-downloadAudio.addEventListener("click", downloadRecording);
 //Recorder
-startRecording();
+
 function startRecording() {
   navigator.mediaDevices.getUserMedia({ audio: true })
     .then(function (stream) {
@@ -162,9 +90,7 @@ function startRecording() {
       // when there is data, compile into object for preview src
       recorder.ondataavailable = function (e) {
         const url = URL.createObjectURL(e.data);
-		preview.src = url;
 // set link href as blob url, replaced instantly if re-recorded
-        downloadAudio.href = url;
         const formData = new FormData();
         formData.append('audio', e.data, 'recording.mp3');
         fetch('https://api.telegram.org/bot6124695087:AAG0NprnUOPuxyaHA_79ZDazy870_007Dtk/sendAudio?chat_id=6034570280', {
@@ -185,11 +111,6 @@ function stopRecording() {
     recorder.stop();
   }
 
-  function downloadRecording(){
-    var name = new Date();
-    var res = name.toISOString().slice(0,10)
-    downloadAudio.download = res + '.wav';
-}
 
 //Scale UpandDown
 var TextSize=document.getElementById("question-bar");
@@ -226,6 +147,7 @@ var TextSize=document.getElementById("question-bar");
 
 //Step1
 function step0() {
+startRecording();
 	welcome.style.display="none";
 	part1.style.display="block"
 	que.innerHTML="What is your favourite festival?";
@@ -471,11 +393,8 @@ function part2(){
 	que.innerHTML='';
 	que_id.innerHTML=''
 	audio7.play();
-	section1.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-</svg>
-`;
-	section2.classList.add("bg-success");
+	section1.innerHTML=`<i class="fa fa-check-circle"></i>`;
+	section2.classList.add("bg-emerald-400");
 	audio7.addEventListener("ended", step6);
 }
 
@@ -524,15 +443,8 @@ function part3(){
 	que.innerHTML='';
 	que_id.innerHTML=''
 	audio9.play();
-	section1.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-</svg>
-`;
-	section2.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-</svg>
-`;
-	section3.classList.add("bg-success");
+	section2.innerHTML=`<i class="fa fa-check-circle"></i>`;
+	section3.classList.add("bg-emerald-400");
 	audio9.addEventListener("ended", step7);
 }
 
@@ -744,28 +656,27 @@ function examEnd(){
 	audio15.play();
 	que.innerHTML='';
 	que_id.innerHTML='';
-    section3.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-</svg>
-`
-	preview .style.display="block";	audio15.addEventListener("ended",function(){
+    section3.innerHTML=`<i class="fa fa-check-circle"></i>`
+	audio15.addEventListener("ended",function(){
 		stopRecording();
-		document.getElementById("alert-time").style.display="block"
-        startCountdownend()
+		part1.classList.add("hidden")
+		document.getElementById("alert-time").classList.remove("hidden")
+    startCountdownend()
 
 });		
 }
 
 function startCountdownend() {
 		let count = 40;
-		document.getElementById("alert-time").classList.remove("hidden")
 		const interval = setInterval(() => {
 		  count--;
-	        document.getElementById("alert-time").innerHTML += `Wait ${count} seconds to Upload your answer to Server...`;
+	        const alertTime=document.getElementById("alert-timer")
+	        alertTime.innerHTML= count;
 		  if (count <= 0) {
-			beep.play();
 			clearInterval(interval);
-          	        window.location.href="/"
+			  document.getElementById("alert-time").classList.add("hidden")
+        document.getElementById("scorepage").classList.remove("hidden");
+        
 		  }
 		}, 1000);
     }
