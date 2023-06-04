@@ -61,6 +61,11 @@ import 'font-awesome/css/font-awesome.min.css'
 
 </style>
 <script is:inline>
+
+var ValueBox=document.getElementById("writing").value
+localStorage.setItem("answer", ValueBox)
+var baseInput=localStorage.getItem("answer");
+document.getElementById("writing").value=baseInput
     document.getElementById("writing")
   .addEventListener("keyup", function countWord() {
     let res = [];
@@ -105,6 +110,7 @@ var x = setInterval(function() {
   if (distance < 0) {
     clearInterval(x);
     showSend();
+
   }
 }, 1000);
 
