@@ -131,7 +131,8 @@ document.querySelector("#send-btn").disabled=false;
   }
   else{
     sendData();
-    document.getElementById("timer").style.display="none"
+    document.getElementById("timer").style.display="none";
+      localStorage.removeItem("answer");
   }
 }
 
