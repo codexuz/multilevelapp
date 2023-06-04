@@ -61,13 +61,12 @@ import 'font-awesome/css/font-awesome.min.css'
 
 </style>
 <script is:inline>
-
-var ValueBox=document.getElementById("writing").value
-localStorage.setItem("answer", ValueBox)
 var baseInput=localStorage.getItem("answer");
 document.getElementById("writing").value=baseInput
     document.getElementById("writing")
   .addEventListener("keyup", function countWord() {
+    var ValueBox=document.getElementById("writing").value
+    localStorage.setItem("answer", ValueBox)
     let res = [];
     let str = this.value.replace(/[\t\n\r\.\?\!]/gm, " ").split(" ");
     str.map((s) => {
