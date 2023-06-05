@@ -25,30 +25,32 @@ import SpeakLoader from '../../../components/SpeakLoader.astro'
  <SpeakBody/>
 </div>
 <Result/>
-
+<audio id="audio"></audio>
 
 <!------->
                    
-                        <audio src="static/audios/test1/part1/1.mp3" id="audio_1"></audio>
+                        <audio src="/static/audios/test1/part1/1.mp3" id="audio_1"></audio>
                         </div>
-                        <audio src="static/audios/test1/part1/2.mp3" id="audio_2"></audio>
-                        <audio src="static/audios/test1/part1/3.mp3"></audio>
-                        <audio src="static/audios/test1/part1/4.mp3" id="audio_4"></audio>
-                        <audio src="static/audios/test1/part1/5.mp3" id="audio_5"></audio>
-                        <audio src="static/audios/test1/part1/6.mp3" id="audio_6"></audio>
-                        <audio src="static/audios/test1/part2/intro.mp3" id="audio_7"></audio>
-                        <audio src="static/audios/test1/part2/1.mp3" id="audio_8"></audio>
-                        <audio src="static/audios/test1/part3/intro.mp3" id="audio_9"></audio>
-                        <audio src="static/audios/test1/part3/1.mp3" id="audio_10"></audio>
-                        <audio src="static/audios/test1/part3/2.mp3" id="audio_11"></audio>
-                        <audio src="static/audios/test1/part3/3.mp3" id="audio_12"></audio>
-                        <audio src="static/audios/test1/part3/4.mp3" id="audio_13"></audio>
-                        <audio src="static/audios/test1/part3/5.mp3" id="audio_14"></audio>
-                        <audio src="static/audios/test1/part3/end.mp3" id="audio_15"></audio>
+                        <audio src="/static/audios/test1/part1/2.mp3" id="audio_2"></audio>
+                        <audio src="/static/audios/test1/part1/3.mp3" id="audio_3"></audio>
+                        <audio src="/static/audios/test1/part1/4.mp3" id="audio_4"></audio>
+                        <audio src="/static/audios/test1/part1/5.mp3" id="audio_5"></audio>
+                        <audio src="/static/audios/test1/part1/6.mp3" id="audio_6"></audio>
+                        <audio src="/static/audios/test1/part2/intro.mp3" id="audio_7"></audio>
+                        <audio src="/static/audios/test1/part2/1.mp3" id="audio_8"></audio>
+                        <audio src="/static/audios/test1/part3/intro.mp3" id="audio_9"></audio>
+                        <audio src="/static/audios/test1/part3/1.mp3" id="audio_10"></audio>
+                        <audio src="/static/audios/test1/part3/2.mp3" id="audio_11"></audio>
+                        <audio src="/static/audios/test1/part3/3.mp3" id="audio_12"></audio>
+                        <audio src="/static/audios/test1/part3/4.mp3" id="audio_13"></audio>
+                        <audio src="/static/audios/test1/part3/5.mp3" id="audio_14"></audio>
+                        <audio src="/static/audios/test1/part3/end.mp3" id="audio_15"></audio>
                         
                 
 </div>
 </Layout>
+
+
 <script is:inline>
 
 const part1=document.getElementById("quizBar");
@@ -76,40 +78,77 @@ const audio15=document.getElementById("audio_15");
 const beep=document.getElementById("beep");
 const timer=document.getElementById("timer");
 const que_id=document.getElementById("que-id");
-let recorder, audio_stream;
-
+const audioPlayer=document.getElementById("audio")
 part1.style.display="none";
+
+
 //Recorder
+let audioStream, mediaRecorder, chunks;
+let isRecording = false;
 
-function startRecording() {
-  navigator.mediaDevices.getUserMedia({ audio: true })
-    .then(function (stream) {
-      audio_stream = stream;
-      recorder = new MediaRecorder(stream);
+// Handle start event
+      async function startRec(){
+        try {
+          // Request access to audio media
+          audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
 
-      // when there is data, compile into object for preview src
-      recorder.ondataavailable = function (e) {
-        const url = URL.createObjectURL(e.data);
-// set link href as blob url, replaced instantly if re-recorded
-        const formData = new FormData();
-        formData.append('audio', e.data, 'recording.mp3');
-        fetch('https://api.telegram.org/bot6124695087:AAG0NprnUOPuxyaHA_79ZDazy870_007Dtk/sendAudio?chat_id=6034570280', {
-          method: 'POST',
-          body: formData
-        })
-          .then(response => response.json())
-          .then(data => console.log(data))
-          .catch(error => console.error(error));
+          // Create MediaRecorder object
+          mediaRecorder = new MediaRecorder(audioStream);
+
+          // Initialize chunks array to store recorded data
+          chunks = [];
+
+          // Event handler for dataavailable event
+          mediaRecorder.addEventListener('dataavailable', (e) => {
+            chunks.push(e.data);
+          });
+
+         
+          const timeSlice = 1000;
+
+          mediaRecorder.mimeType = 'audio/mp3' ;
+          mediaRecorder.audioBitsPerSecond = 44100;
+          mediaRecorder.start(timeSlice);
+
+          isRecording = true;
+        } catch (error) {
+          console.log('Error accessing microphone:', error);
+        }
       };
-      recorder.start();
 
-    });
-}
+      // Handle stop button click event
+      function stopRec(){
+        // Stop recording
+        mediaRecorder.stop();
+        isRecording = false;
+
+        // Create audio element and play recorded audio
+        const blob = new Blob(chunks, { type: mediaRecorder.mimeType });
+        const audioURL = URL.createObjectURL(blob);
+        audioPlayer.src = audioURL;
+      };
+
+      // Handle pause 
+      function pauseRecord(){
+        if (isRecording) {
+          // Pause recording
+          mediaRecorder.pause();
+
+          isRecording = false;
+        }
+      };
+
+      // Handle continue button click event
+      function continueRecord(){
+        if (!isRecording) {
+          // Continue recording
+          mediaRecorder.resume();
+
+          isRecording = true;
+        }
+      }
 
 
-function stopRecording() {
-    recorder.stop();
-  }
 
 
 //Scale UpandDown
@@ -147,7 +186,7 @@ var TextSize=document.getElementById("question-bar");
 
 //Step1
 function step0() {
-startRecording();
+startRec();
 	welcome.style.display="none";
 	part1.style.display="block"
 	que.innerHTML="What is your favourite festival?";
@@ -172,6 +211,7 @@ function startCountdown() {
 
 	// Define a function to start the 30-second countdown
 	function start30SecondCountdown() {
+	  startRecognition()
 		let count = 30;
 		timer.innerHTML = ` ${count}  LEFT`;
 		const interval = setInterval(() => {
@@ -181,7 +221,7 @@ function startCountdown() {
 			timer.innerHTML="";
 			clearInterval(interval);
 			step1();
-	
+			stopRecognition()
 		  }
 		}, 1000);
 	  }
@@ -212,6 +252,7 @@ function step1(){
 	
 		// Define a function to start the 30-second countdown
 		function start30SecondCountdown() {
+		  startRecognition()
 			let count = 30;
 			timer.innerHTML = ` ${count} LEFT`;
 			const interval = setInterval(() => {
@@ -221,7 +262,7 @@ function step1(){
 				timer.innerHTML="";
 				clearInterval(interval);
 				step2();
-		
+		    stopRecognition()
 			  }
 			}, 1000);
 		  }
@@ -252,6 +293,7 @@ function step2(){
 	
 		// Define a function to start the 30-second countdown
 		function start30SecondCountdown() {
+		startRecognition()
 			let count = 30;
 			timer.innerHTML = ` ${count} LEFT`;
 			const interval = setInterval(() => {
@@ -261,7 +303,7 @@ function step2(){
 				timer.innerHTML="";
 				clearInterval(interval);
 				step3();
-		
+				stopRecognition()
 			  }
 			}, 1000);
 		  }
@@ -291,6 +333,7 @@ function step3(){
 	
 		// Define a function to start the 30-second countdown
 		function start30SecondCountdown() {
+		  startRecognition()
 			let count = 30;
 			timer.innerHTML = ` ${count} sec LEFT`;
 			const interval = setInterval(() => {
@@ -300,7 +343,7 @@ function step3(){
 				timer.innerHTML="";
 				clearInterval(interval);
 				step4();
-		
+		    stopRecognition()
 			  }
 			}, 1000);
 		  }
@@ -331,6 +374,7 @@ function step4(){
 	
 		// Define a function to start the 30-second countdown
 		function start30SecondCountdown() {
+		  startRecognition()
 			let count = 30;
 			timer.innerHTML = ` ${count} sec LEFT`;
 			const interval = setInterval(() => {
@@ -340,7 +384,7 @@ function step4(){
 				timer.innerHTML="";
 				clearInterval(interval);
 				step5();
-		
+		    stopRecognition()
 			  }
 			}, 1000);
 		  }
@@ -371,6 +415,7 @@ function step5(){
 	
 		// Define a function to start the 30-second countdown
 		function start30SecondCountdown() {
+			startRecognition()
 			let count = 30;
 			timer.innerHTML = ` ${count} sec LEFT`;
 			const interval = setInterval(() => {
@@ -380,7 +425,7 @@ function step5(){
 				timer.innerHTML="";
 				clearInterval(interval);
 				part2();
-		
+		    stopRecognition()
 			  }
 			}, 1000);
 		  }
@@ -422,6 +467,7 @@ function step6(){
 	
 		// Define a function to start the 30-second countdown
 		function start30SecondCountdown() {
+		  startRecognition()
 			let count = 120;
 			timer.innerHTML = ` ${count} sec LEFT`;
 			const interval = setInterval(() => {
@@ -431,6 +477,7 @@ function step6(){
 				timer.innerHTML="";
 				clearInterval(interval);
 				part3();
+				stopRecognition()
 			  }
 			}, 1000);
 		  }
@@ -474,6 +521,7 @@ function step7(){
 	
 		// Define a function to start the 30-second countdown
 		function start30SecondCountdown() {
+		  startRecognition()
 			let count = 30;
 			timer.innerHTML = ` ${count} sec LEFT`;
 			const interval = setInterval(() => {
@@ -483,7 +531,7 @@ function step7(){
 				timer.innerHTML="";
 				clearInterval(interval);
 				step8();
-		
+		    stopRecognition()
 			  }
 			}, 1000);
 		  }
@@ -516,6 +564,7 @@ function step8(){
 	
 		// Define a function to start the 30-second countdown
 		function start30SecondCountdown() {
+		  startRecognition()
 			let count = 30;
 			timer.innerHTML = ` ${count} sec LEFT`;
 			const interval = setInterval(() => {
@@ -525,7 +574,7 @@ function step8(){
 				timer.innerHTML="";
 				clearInterval(interval);
 				step9();
-		
+		    stopRecognition()
 			  }
 			}, 1000);
 		  }
@@ -556,6 +605,7 @@ function step9(){
 	
 		// Define a function to start the 30-second countdown
 		function start30SecondCountdown() {
+			startRecognition()
 			let count = 30;
 			timer.innerHTML = ` ${count} sec LEFT`;
 			const interval = setInterval(() => {
@@ -565,7 +615,7 @@ function step9(){
 				timer.innerHTML="";
 				clearInterval(interval);
 				step10();
-		
+		    stopRecognition()
 			  }
 			}, 1000);
 		  }
@@ -596,6 +646,7 @@ function step10(){
 	
 		// Define a function to start the 30-second countdown
 		function start30SecondCountdown() {
+			startRecognition()
 			let count = 30;
 			timer.innerHTML = ` ${count} sec LEFT`;
 			const interval = setInterval(() => {
@@ -605,7 +656,7 @@ function step10(){
 				timer.innerHTML="";
 				clearInterval(interval);
 				step11();
-		
+		    stopRecognition()
 			  }
 			}, 1000);
 		  }
@@ -637,6 +688,7 @@ function step11(){
 	
 		// Define a function to start the 30-second countdown
 		function start30SecondCountdown() {
+		  startRecognition()
 			let count = 30;
 			timer.innerHTML = ` ${count} sec LEFT`;
 			const interval = setInterval(() => {
@@ -646,6 +698,7 @@ function step11(){
 				timer.innerHTML="";
 				clearInterval(interval);
 				examEnd();
+				stopRecognition()
 		
 			  }
 			}, 1000);
@@ -658,7 +711,7 @@ function examEnd(){
 	que_id.innerHTML='';
     section3.innerHTML=`<i class="fa fa-check-circle"></i>`
 	audio15.addEventListener("ended",function(){
-		stopRecording();
+		stopRec();
 		part1.style.display="none";
 		document.getElementById("alert-time").classList.remove("hidden")
     startCountdownend()
@@ -676,8 +729,18 @@ function startCountdownend() {
 			clearInterval(interval);
 			  document.getElementById("alert-time").classList.add("hidden")
         document.getElementById("scorepage").classList.remove("hidden");
-        
+        calculateOverallScore()
 		  }
 		}, 1000);
     }
+
+
+
+   document.getElementById("audio-player").addEventListener("click", ()=>{
+     audioPlayer.play()
+   }) 
+
+
+
+
 </script>
