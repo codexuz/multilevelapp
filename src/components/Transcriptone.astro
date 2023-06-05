@@ -32,15 +32,6 @@ recognition.onresult = function(event) {
 
 
 
-function showTranscriptsLength() {
-    var TextTrim=textboxVal.value.trim()
-     TextLength=TextTrim.split(' ')
-  console.log(TextLength.length)
-}
-
-
-
-
 function startRecognition() {
   if (content.length) {
     content += ' ';
@@ -50,13 +41,14 @@ function startRecognition() {
 
 function stopRecognition(){
   recognition.stop();
-showTranscriptsLength();
 
 }
 
 function calculateOverallScore() {
     evaluateVocabularyLevel(transcript);
-
+ var TextTrim=textboxVal.value.trim()
+     TextLength=TextTrim.split(' ')
+  console.log(TextLength.length)
     
 // Call the functions to display the information
 
