@@ -13,11 +13,10 @@ var textboxVal=document.getElementById("hidden-textbox");
 var score = document.getElementById("score");
 var content = '';
 let valueText;
-var transcript
-let allsentence=[]
+var transcript;
 let TextLength;
 
-recognition.continuous = true;
+recognition.lang = "en-US";
 
 recognition.onresult = function(event) {
     var current = event.resultIndex;
