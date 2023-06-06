@@ -17,7 +17,6 @@ var transcript;
 let TextLength;
 
 recognition.lang = "en-US";
-recognition.continuous=false;
 recognition.onresult = function(event) {
     var current = event.resultIndex;
     transcript = event.results[current][0].transcript;
