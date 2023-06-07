@@ -1,4 +1,75 @@
 <div class="mb-5 w-full p-8 bg-white rounded-lg border-2 border-indigo-300 shadow-lg">
-  <p id="textbox"></p>
-  <textarea style="display: none;" name="" id="hidden-textbox" cols="30" rows="10"></textarea>
+  <div class="result">
+  <p class="interim"></p>
 </div>
+</div>
+
+<script is:inline>
+  result = document.querySelector(".result")
+  let speechResult;
+
+let SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition, recognition,
+  recording = false;
+
+
+function startRecognition() {
+  try {
+    recognition = new SpeechRecognition();
+    recognition.interimResults = true;
+    recognition.lang="en-US";
+    recognition.start();
+    recognition.onresult = (event) => {
+       speechResult = event.results[0][0].transcript;
+      if (event.results[0].isFinal) {
+        result.innerHTML += capitalize(speechResult) + '.  ';
+        result.querySelector("p").remove();
+      } else {
+        if (!document.querySelector(".interim")) {
+          const interim = document.createElement("p");
+          interim.classList.add("interim");
+          result.appendChild(interim);
+        }
+        document.querySelector(".interim").innerHTML = " " + speechResult;
+      }
+    };
+    recognition.onspeechend = () => {
+      startRecognition();
+    };
+    recognition.onerror = (event) => {
+      stopRecognition();
+      if (event.error === "no-speech") {
+        console.log("No speech was detected. Stopping...");
+      } else if (event.error === "audio-capture") {
+        console.log("No microphone was found. Ensure that a microphone is installed.");
+      } else if (event.error === "not-allowed") {
+        console.log("Permission to use microphone is blocked.");
+      } else if (event.error === "aborted") {
+        console.log("Listening Stopped.");
+      } else {
+        console.log("Error occurred in recognition: " + event.error);
+      }
+    };
+  } catch (error) {
+    recording = false;
+
+    console.log(error);
+  }
+}
+
+
+
+function stopRecognition() {
+  recognition.stop();
+  recording = false;
+}
+
+
+function capitalize(sentence) {
+  return sentence.charAt(0).toUpperCase() + sentence.slice(1);
+}
+
+ 
+
+</script>
+
