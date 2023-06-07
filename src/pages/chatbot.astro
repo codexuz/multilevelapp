@@ -1,8 +1,14 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import ChatBot from '../components/ChatBot.astro'
+import Header from '../components/Header.astro';
+import Loader from '../components/Loader.astro';
 ---
 
 <Layout title="Chat Bot">
+<Loader/>
+<Header/>
+<div style="margin-top:50px;padding-bottom:80px;">
 <ChatBot/>
+</div>
 </Layout>
