@@ -47,7 +47,7 @@ const friends = friendsSnapshot.docs.map((doc) => ({
   {
     friends.map((friend) => (
       <li class="flex">
-        <a style="color:blue; font-weight:bold "  href={`/account/friend/${friend.id}`}>{"Hello, " + friend.name}</a>
+        <a style="color:blue; font-weight:bold ">{"Hello, " + friend.name}</a>
       </li>
     ))
   }
