@@ -3,8 +3,10 @@ import Layout from '../layouts/Layout.astro';
 import Course from '../components/Course.astro'
 import Header from '../components/Header.astro';
 import Loader from '../components/Loader.astro';
-import Card from '../components/Card.astro';
-import HeroSection from '../components/HeroSection.astro';
+import HelloPage from '../components/HelloPage.astro';
+import BoxCard from '../components/BoxCard.astro';
+import TryButton from '../components/TryButton.astro'
+
 ---
 
 <Layout title="Home">
@@ -12,20 +14,28 @@ import HeroSection from '../components/HeroSection.astro';
    <Loader/>
 <Header/>
 <div style="margin-top:50px;padding-bottom:80px;">
-<HeroSection/>	
-<Course/> 
-   <div class="mx-auto px-4 py-2">   
-   <Card
-      title="Shadowing"
-      href="https://speaking-practice-alpha.vercel.app/"
-   />
-   <Card
-      title="IELTS Speaking"
-      href="https://speak.speechace.co/placement/courses/96/quizzes/443/speakingTest/1"
-   />
-   </div>
-   </div>
+<HelloPage/>	
+<Course/>
+<section class="container mx-auto mb-12">
+<h2 class="text-black text-3xl py-3 font-bold dark:text-white ">Features</h2>
+<BoxCard
+href="https://speaking-practice-alpha.vercel.app/"
+title="Shadowing"
+/> 
+
+<BoxCard
+href="https://speak.speechace.co/placement/courses/96/quizzes/443/speakingTest/1"
+title="IELTS Simul..."
+/>  
+
+<BoxCard
+href="/chatbot"
+title="Idea Generate"
+/>  
+</section>
 </div>
+</div>
+<TryButton/>
 </Layout>
 
 <style>
