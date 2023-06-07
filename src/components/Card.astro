@@ -7,45 +7,22 @@ export interface Props {
 const { href, title } = Astro.props;
 ---
 
-<a href={href} class="link-card my-2 rounded-full">
-	<div class="card rounded-full">
-		<h1>
-			{title}
-		</h1>
-		<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-			<path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-		  </svg>		  
-	</div>
-	</a>
-<style>
-	.link-card {
-		list-style: none;
-		display: flex;
-		padding: 0.30rem;
-		background-color: rgb(81, 5, 143);
-		background-image: none;
-		background-size: 400%;
-		background-position: 100%;
-		transition: background-position 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-		box-shadow: 0 0 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-		background-image: var(--accent-gradient);
-		background-position: 0;
+<a href={href} class=" px-5 py-3 my-3 flex justify-between items-center bg-indigo-600 text-white dark:bg-slate-800 shadow-sm rounded-lg border">
+<div class="flex justify-left items-center">
 
-	}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-10 h-10 mr-2 text-white dark:text-blue-600 ">
+  <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm0 8.625a1.125 1.125 0 100 2.25 1.125 1.125 0 000-2.25zM15.375 12a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0zM7.5 10.875a1.125 1.125 0 100 2.25 1.125 1.125 0 000-2.25z" clip-rule="evenodd" />
+</svg>
 
-	.card {
-		width: 100%;
-		text-decoration: none;
-		line-height: 1.4;
-		padding: 1.2rem 1.3rem;
-		border-radius: 30px;
-		color: white;
-		background-color: rgb(51, 9, 78);
-		opacity: 0.8;
-		display:flex;
-		justify-content: space-between;
-		align-items: center;
-	}
-	
 
-</style>
+<h2 class="text-2xl text-white dark:text-blue-600 ">{title}</h2>
+</div>
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-white dark:text-blue-600">
+  <path fill-rule="evenodd" d="M4.72 3.97a.75.75 0 011.06 0l7.5 7.5a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 01-1.06-1.06L11.69 12 4.72 5.03a.75.75 0 010-1.06zm6 0a.75.75 0 011.06 0l7.5 7.5a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 11-1.06-1.06L17.69 12l-6.97-6.97a.75.75 0 010-1.06z" clip-rule="evenodd" />
+</svg>
+
+</div>
+</a>
+
+		
