@@ -34,10 +34,7 @@ async function handleUserInput() {
   const message = userInput.value.trim();
   userInput.value = '';
 
-  const botTypingIndicatorElement = document.createElement('div');
-  botTypingIndicatorElement.classList.add('chat', 'chat-start', 'chat-bubble');
-  botTypingIndicatorElement.textContent = 'Typing';
-  messagesContainer.appendChild(botTypingIndicatorElement);
+ 
   
   const userMessageContainer = document.createElement('div');
   const userMessageElement= document.createElement('div')
@@ -47,7 +44,11 @@ async function handleUserInput() {
   userMessageContainer.appendChild(userMessageElement)
   messagesContainer.appendChild(userMessageContainer);
 
-
+ const botTypingIndicatorContainer = document.createElement('div');
+  botTypingIndicatorContainer.classList.add('chat', 'chat-start', 'chat-bubble');
+  botTypingIndicatorElement=document.createElement('div');
+  botTypingIndicatorElement.classList.add('')
+  messagesContainer.appendChild(botTypingIndicatorContainer);
 
   const reply = await chatWithGPT(message);
 
