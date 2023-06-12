@@ -46,8 +46,9 @@ async function handleUserInput() {
 
  const botTypingIndicatorContainer = document.createElement('div');
   botTypingIndicatorContainer.classList.add('chat', 'chat-start', 'chat-bubble');
-  botTypingIndicatorElement=document.createElement('div');
+ const botTypingIndicatorElement=document.createElement('div');
   botTypingIndicatorElement.textContent="Typing...";
+  botTypingIndicatorContainer.appendChild(botTypingIndicatorElement)
   messagesContainer.appendChild(botTypingIndicatorContainer);
 
   const reply = await chatWithGPT(message);
