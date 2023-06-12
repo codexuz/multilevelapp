@@ -47,12 +47,13 @@ async function handleUserInput() {
  const botTypingIndicatorContainer = document.createElement('div');
   botTypingIndicatorContainer.classList.add('chat', 'chat-start', 'chat-bubble');
   botTypingIndicatorElement=document.createElement('div');
-  botTypingIndicatorElement.classList.add('typing-indicator')
+  botTypingIndicatorElement.textContent="Typing...";
   messagesContainer.appendChild(botTypingIndicatorContainer);
 
   const reply = await chatWithGPT(message);
 
-  messagesContainer.removeChild(botTypingIndicatorElement); 
+  messagesContainer.removeChild(botTypingIndicatorContainer); 
+  
   // Check grammar and provide feedback
   const grammarFeedback = checkGrammar(message);
   const botMessageContainer = document.createElement('div');
