@@ -10,7 +10,50 @@
 
 
 <style>     
-    
+    .typing-indicator {
+  display: inline-block;
+  position: relative;
+  width: 5px;
+  height: 5px;
+}
+
+.typing-indicator:before,
+.typing-indicator:after,
+.typing-indicator span {
+  content: '';
+  display: inline-block;
+  background-color: #000;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  animation: typing-indicator-bounce 1s infinite;
+}
+
+.typing-indicator:before {
+  margin-right: 2px;
+  animation-delay: 0s;
+}
+
+.typing-indicator:after {
+  margin-right: 2px;
+  animation-delay: 0.2s;
+}
+
+.typing-indicator span {
+  animation-delay: 0.4s;
+}
+
+@keyframes typing-indicator-bounce {
+  0%,
+  100% {
+    transform: scale(0);
+  }
+
+  50% {
+    transform: scale(1);
+  }
+}
+
 .message.red {
       color: red;
     }
