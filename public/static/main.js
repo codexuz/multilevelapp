@@ -43,7 +43,7 @@ async function handleUserInput() {
   messagesContainer.appendChild(userMessageContainer);
 
 const botTypingIndicatorElement = document.createElement('div');
-  botTypingIndicatorElement.classList.add('message', 'bot');
+  botTypingIndicatorElement.classList.add('chat', 'chat-start');
   botTypingIndicatorElement.innerHTML = '<div class="typing-indicator"></div>';
   messagesContainer.appendChild(botTypingIndicatorElement);
 
