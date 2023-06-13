@@ -1,7 +1,60 @@
 <div class="mb-5 w-full p-8 bg-white rounded-lg border-2 border-indigo-300 shadow-lg">
-  <div class="result">
-  <p class="interim"></p>
-</div>
+  <textarea id="result" class="border-0 text-blue-500 w-full" style="height:300px"></textarea>
+  <p id="interm" class="hidden"></p>
 </div>
 
+<script type="module" is:inline>
+
+import { BrowserClient, BrowserMicrophone  } from 'https://cdn.jsdelivr.net/npm/@speechly/browser-client@2.6/+esm' 
+
+  const microphone = new BrowserMicrophone();
+const client = new BrowserClient({
+  appId: '4f5424a4-db20-4d24-b4e0-3a60ec67f7d5',
+  logSegments: true,
+  debug: true,
+})
+
+const micBtn = document.getElementById('start-btn');
+
+const attachMicrophone = async () => {
+  if (microphone.mediaStream) return;
+  await microphone.initialize();
+  await client.attach(microphone.mediaStream);
+};
+
+const handleClick = async () => {
+  if (client.isActive()) {
+    await client.stop();
+    micBtn.innerText = 'Start microphone';
+  } else {
+    await attachMicrophone();
+    await client.start();
+    micBtn.innerText = 'Stop microphone';
+  }
+};
+
+micBtn.addEventListener('click', handleClick);
+
+const transcripts = document.getElementById('result');
+const tentative = document.getElementById('interm');
+
+client.onSegmentChange((segment) => {
+  const text = segment.words.map((word) => word.value).join(' ');
+  tentative.innerHTML = `<em>${text}</em>`;
+  if (segment.isFinal) {
+    transcripts.innerHTML += capitalize(text) + '. ';
+    tentative.innerHTML = '';
+  }
+});
+
+function capitalize(sentence) {
+return sentence.charAt(0).toUpperCase() + sentence.slice(1);
+}
+
+var transValue=transcripts.innerHTML
+var trimtext=transValue.trim().split()
+console.log(trimtext.length)
+console.log(trimtext)
+
+</script>
 
