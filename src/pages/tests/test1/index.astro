@@ -83,75 +83,6 @@ part1.style.display="none";
 
 
 
-//Speech Recognition
-
- result = document.querySelector(".result")
-  let speechResult;
-
-let SpeechRecognition =
-    window.SpeechRecognition || window.webkitSpeechRecognition, recognition,
-  recording = false;
-
-
-function startRecognition() {
-  try {
-    recognition = new SpeechRecognition();
-    recognition.interimResults = true;
-    recognition.lang="en-US";
-    recognition.start();
-    recognition.onresult = (event) => {
-       speechResult = event.results[0][0].transcript;
-      if (event.results[0].isFinal) {
-        result.innerHTML += capitalize(speechResult) + '.  ';
-        result.querySelector("p").remove();
-      } else {
-        if (!document.querySelector(".interim")) {
-          const interim = document.createElement("p");
-          interim.classList.add("interim");
-          result.appendChild(interim);
-        }
-        document.querySelector(".interim").innerHTML = " " + speechResult;
-      }
-    };
-    recognition.onspeechend = () => {
-      startRecognition();
-    };
-    recognition.onerror = (event) => {
-      stopRecognition();
-      if (event.error === "no-speech") {
-        console.log("No speech was detected. Stopping...");
-      } else if (event.error === "audio-capture") {
-        console.log("No microphone was found. Ensure that a microphone is installed.");
-      } else if (event.error === "not-allowed") {
-        console.log("Permission to use microphone is blocked.");
-      } else if (event.error === "aborted") {
-        console.log("Listening Stopped.");
-      } else {
-        console.log("Error occurred in recognition: " + event.error);
-      }
-    };
-  } catch (error) {
-    recording = false;
-
-    console.log(error);
-  }
-}
-
-
-
-function stopRecognition() {
-  recognition.stop();
-  recording = false;
-}
-
-
-function capitalize(sentence) {
-  return sentence.charAt(0).toUpperCase() + sentence.slice(1);
-}
-
-
-
-
 //Recorder
 let audioStream, mediaRecorder, chunks;
 let isRecording = false;
@@ -281,7 +212,6 @@ function startCountdown() {
 
 	// Define a function to start the 30-second countdown
 	function start30SecondCountdown() {
-	  startRecognition()
 		let count = 30;
 		timer.innerHTML = ` ${count}  LEFT`;
 		const interval = setInterval(() => {
@@ -291,7 +221,6 @@ function startCountdown() {
 			timer.innerHTML="";
 			clearInterval(interval);
 			step1();
-			stopRecognition()
 		  }
 		}, 1000);
 	  }
@@ -322,7 +251,6 @@ function step1(){
 	
 		// Define a function to start the 30-second countdown
 		function start30SecondCountdown() {
-		  startRecognition()
 			let count = 30;
 			timer.innerHTML = ` ${count} LEFT`;
 			const interval = setInterval(() => {
@@ -332,7 +260,6 @@ function step1(){
 				timer.innerHTML="";
 				clearInterval(interval);
 				step2();
-		    stopRecognition()
 			  }
 			}, 1000);
 		  }
@@ -363,7 +290,6 @@ function step2(){
 	
 		// Define a function to start the 30-second countdown
 		function start30SecondCountdown() {
-		startRecognition()
 			let count = 30;
 			timer.innerHTML = ` ${count} LEFT`;
 			const interval = setInterval(() => {
@@ -373,7 +299,6 @@ function step2(){
 				timer.innerHTML="";
 				clearInterval(interval);
 				step3();
-				stopRecognition()
 			  }
 			}, 1000);
 		  }
@@ -403,7 +328,6 @@ function step3(){
 	
 		// Define a function to start the 30-second countdown
 		function start30SecondCountdown() {
-		  startRecognition()
 			let count = 30;
 			timer.innerHTML = ` ${count} sec LEFT`;
 			const interval = setInterval(() => {
@@ -413,7 +337,6 @@ function step3(){
 				timer.innerHTML="";
 				clearInterval(interval);
 				step4();
-		    stopRecognition()
 			  }
 			}, 1000);
 		  }
@@ -444,7 +367,6 @@ function step4(){
 	
 		// Define a function to start the 30-second countdown
 		function start30SecondCountdown() {
-		  startRecognition()
 			let count = 30;
 			timer.innerHTML = ` ${count} sec LEFT`;
 			const interval = setInterval(() => {
@@ -454,7 +376,6 @@ function step4(){
 				timer.innerHTML="";
 				clearInterval(interval);
 				step5();
-		    stopRecognition()
 			  }
 			}, 1000);
 		  }
@@ -485,7 +406,6 @@ function step5(){
 	
 		// Define a function to start the 30-second countdown
 		function start30SecondCountdown() {
-			startRecognition()
 			let count = 30;
 			timer.innerHTML = ` ${count} sec LEFT`;
 			const interval = setInterval(() => {
@@ -495,7 +415,6 @@ function step5(){
 				timer.innerHTML="";
 				clearInterval(interval);
 				part2();
-		    stopRecognition()
 			  }
 			}, 1000);
 		  }
@@ -537,7 +456,6 @@ function step6(){
 	
 		// Define a function to start the 30-second countdown
 		function start30SecondCountdown() {
-		  startRecognition()
 			let count = 120;
 			timer.innerHTML = ` ${count} sec LEFT`;
 			const interval = setInterval(() => {
@@ -547,7 +465,6 @@ function step6(){
 				timer.innerHTML="";
 				clearInterval(interval);
 				part3();
-				stopRecognition()
 			  }
 			}, 1000);
 		  }
@@ -591,7 +508,6 @@ function step7(){
 	
 		// Define a function to start the 30-second countdown
 		function start30SecondCountdown() {
-		  startRecognition()
 			let count = 30;
 			timer.innerHTML = ` ${count} sec LEFT`;
 			const interval = setInterval(() => {
@@ -601,7 +517,6 @@ function step7(){
 				timer.innerHTML="";
 				clearInterval(interval);
 				step8();
-		    stopRecognition()
 			  }
 			}, 1000);
 		  }
@@ -634,7 +549,6 @@ function step8(){
 	
 		// Define a function to start the 30-second countdown
 		function start30SecondCountdown() {
-		  startRecognition()
 			let count = 30;
 			timer.innerHTML = ` ${count} sec LEFT`;
 			const interval = setInterval(() => {
@@ -644,7 +558,6 @@ function step8(){
 				timer.innerHTML="";
 				clearInterval(interval);
 				step9();
-		    stopRecognition()
 			  }
 			}, 1000);
 		  }
@@ -675,7 +588,6 @@ function step9(){
 	
 		// Define a function to start the 30-second countdown
 		function start30SecondCountdown() {
-			startRecognition()
 			let count = 30;
 			timer.innerHTML = ` ${count} sec LEFT`;
 			const interval = setInterval(() => {
@@ -685,7 +597,6 @@ function step9(){
 				timer.innerHTML="";
 				clearInterval(interval);
 				step10();
-		    stopRecognition()
 			  }
 			}, 1000);
 		  }
@@ -716,7 +627,6 @@ function step10(){
 	
 		// Define a function to start the 30-second countdown
 		function start30SecondCountdown() {
-			startRecognition()
 			let count = 30;
 			timer.innerHTML = ` ${count} sec LEFT`;
 			const interval = setInterval(() => {
@@ -726,7 +636,6 @@ function step10(){
 				timer.innerHTML="";
 				clearInterval(interval);
 				step11();
-		    stopRecognition()
 			  }
 			}, 1000);
 		  }
@@ -758,7 +667,6 @@ function step11(){
 	
 		// Define a function to start the 30-second countdown
 		function start30SecondCountdown() {
-		  startRecognition()
 			let count = 30;
 			timer.innerHTML = ` ${count} sec LEFT`;
 			const interval = setInterval(() => {
@@ -768,7 +676,6 @@ function step11(){
 				timer.innerHTML="";
 				clearInterval(interval);
 				examEnd();
-				stopRecognition()
 		
 			  }
 			}, 1000);
