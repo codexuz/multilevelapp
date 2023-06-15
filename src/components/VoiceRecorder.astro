@@ -1,0 +1,233 @@
+---
+import 'font-awesome/css/font-awesome.min.css'
+---
+<style>
+
+ button{
+            cursor: pointer;
+        }
+
+        #record{
+            background: white;
+            color: black;
+            padding: 6px 12px;
+            border: 1px solid white;
+            border-radius: 30px;
+        }
+
+         #stop{
+            background: red;
+            color: white;
+            padding: 6px 12px;
+            border: 1px solid red;
+            border-radius: 30px;
+        }
+
+        #bar{
+            width: 100%;
+            height: 80px;
+            border: 1px solid transparent;
+            display: flex;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            justify-content: center;
+            align-items: center;
+            margin-top: 150px;
+            user-select: none;
+            z-index:9999
+       }
+        #player{
+            user-select: none;
+            margin-top: 150px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index:9999
+        }
+        
+        #save, #play, #cancel{
+        color: white;
+        font-size:22px;
+        }
+
+        .text-icon{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            font-size: 13px;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .mic{
+            position: fixed;
+            cursor: pointer;
+            right: 15px;
+            bottom: 100px;
+            color: white;
+            z-index:5 ;
+            user-select: none;
+            
+        }
+
+
+</style>
+
+
+<!---Mic starts here---->
+<button class=" flex mic p-2 rounded-full shadow-lg border-2 border-rose-800 bg-rose-600">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8">
+  <path d="M8.25 4.5a3.75 3.75 0 117.5 0v8.25a3.75 3.75 0 11-7.5 0V4.5z" />
+  <path d="M6 10.5a.75.75 0 01.75.75v1.5a5.25 5.25 0 1010.5 0v-1.5a.75.75 0 011.5 0v1.5a6.751 6.751 0 01-6 6.709v2.291h3a.75.75 0 010 1.5h-7.5a.75.75 0 010-1.5h3v-2.291a6.751 6.751 0 01-6-6.709v-1.5A.75.75 0 016 10.5z" />
+</svg>
+
+</button>    
+<div id="bar" class="bg-gray-800">
+    <div class="status-bar">
+    <button id="record">Record answer</button>
+    </div>
+    <button id="stop">Stop record...</button>
+</div>
+<div id="player" class="bg-gray-800">
+    <div class="text-icon">
+    <a href="" download="" id="save"><i class="fa fa-save"></i></a>
+    <span>Save</span>
+    </div>
+    <div class="text-icon">
+    <i id="play" class="fa fa-play-circle"></i>
+    <span>Listen</span>
+</div>
+<div class="text-icon">
+    <i id="cancel" class="fa fa-times-circle"></i>
+    <span>Close</span>
+</div>
+</div>
+<audio src="" id="preview" controls onended="hiddenIcon()"></audio>
+
+
+<script is:inline>
+
+//Variables
+let recorder, audio_stream;
+const preview = document.getElementById("preview");
+const downloadAudio = document.getElementById("save");
+const stopBtn=document.getElementById("stop")
+const recBtn=document.getElementById("record");
+const player=document.getElementById("player");
+const bar=document.getElementById("bar");
+const status=document.getElementById("status")
+const cancelBtn=document.getElementById("cancel")
+
+//Mini funksiyalar
+preview.style.display="none";
+bar.style.display="none"
+downloadAudio.addEventListener("click", downloadRecording);
+stopBtn.style.display="none";
+stopBtn.addEventListener("click", stopRecording);  
+recBtn.addEventListener("click", startRecording)
+player.style.display="none";
+
+
+document.querySelector(".mic").addEventListener("click", function(){
+    if(bar.style.display=="none"){
+        bar.style.display="flex";
+    }
+    else{
+        bar.style.display="none";
+    }
+    
+    stopBtn.style.display="none";
+    recBtn.style.display="block"
+});
+
+//Stop Btn
+
+stopBtn.addEventListener("click", function(){
+   player.style.display="flex";
+   bar.style.display="none";
+});
+
+//Play function
+document.getElementById("play").addEventListener("click", function(){
+    var audio=document.getElementById("preview")
+    if (audio.paused || audio.ended) {
+       audio.play();
+       document.getElementById("play").classList.remove("fa-play-circle");
+       document.getElementById("play").classList.add("fa-pause-circle");
+    }
+    else{
+        audio.pause();
+        document.getElementById("play").classList.add("fa-play-circle");
+       document.getElementById("play").classList.remove("fa-pause-circle");
+
+    }
+});
+
+function hiddenIcon(){
+    document.getElementById("play").classList.remove("fa-pause-circle");
+    document.getElementById("play").classList.add("fa-play-circle");
+};
+    
+//Start Btn recStart
+recBtn.addEventListener("click", function(){
+     recBtn.style.display="none";
+     stopBtn.style.display="block";
+    });
+
+
+//Clear cancelBtn
+
+cancelBtn.addEventListener("click", function(){
+ player.style.display="none"
+});
+
+//Start record
+
+    function startRecording() {
+    navigator.mediaDevices.getUserMedia({ audio: true })
+        .then(function (stream) {
+            audio_stream = stream;
+            recorder = new MediaRecorder(stream);
+
+            // when there is data, compile into object for preview src
+            recorder.ondataavailable = function (e) {
+                const url = URL.createObjectURL(e.data);
+                preview.src = url;
+
+                // set link href as blob url, replaced instantly if re-recorded
+                downloadAudio.href = url;
+            };
+            recorder.start();
+
+        });
+}
+
+
+
+
+
+
+
+//rec stop
+
+function stopRecording() {
+    recorder.stop();
+    audio_stream.getAudioTracks()[0].stop();
+}
+
+function downloadRecording(){
+    var name = new Date();
+    var res = name.toISOString().slice(0,10)
+    downloadAudio.download = res + '.wav';
+}
+
+
+</script>
