@@ -1,0 +1,87 @@
+  ---
+  import Layout from '../../layouts/Layout.astro'
+  import Module1 from '../../components/writing/Module1.astro'
+  import Module2 from '../../components/writing/Module2.astro'
+  import ModuleHeader from '../../components/writing/ModuleHeader.astro'
+  import ModuleSidebar from '../../components/writing/ModuleSidebar.astro'
+  ---
+
+
+<Layout title="Task 1 Course">
+<ModuleHeader/>
+<ModuleSidebar/>
+<main>
+<Module1/>
+<Module2/>
+</main>
+</Layout>
+<style>
+  body{
+      user-select: none;
+    }
+   
+   main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    margin: 130px 10%;
+   }
+  </style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous"  is:inline></script>
+
+<script is:inline>
+
+    $("#toggle").click(function(){
+      $(".overlay").show()
+      $(".sidebar").show()
+    })
+
+    $(".overlay").click(function(){
+      $(this).hide()
+    })
+
+    
+    // JavaScript Code
+    function nextLevel() {
+      // Retrieve user progress from local storage
+      var userProgress = localStorage.getItem('userProgress');
+      
+      // Check if progress exists
+      if (userProgress) {
+        // Get the module ID to display
+        var currentModule = JSON.parse(userProgress).currentModule;
+        
+        // Hide all modules except the current one
+        var modules = document.getElementsByClassName('module');
+        for (var i = 0; i < modules.length; i++) {
+          modules[i].style.display = 'none';
+
+        }
+        document.getElementById(currentModule).style.display = 'block';
+      }
+
+      // Add event listeners to module links
+      var moduleLinks = document.getElementsByClassName('module-link');
+      for (var i = 0; i < moduleLinks.length; i++) {
+        moduleLinks[i].addEventListener('click', function(event) {
+          event.preventDefault();
+          var module = this.getAttribute('data-module');
+          
+          // Show selected module and hide others
+          var modules = document.getElementsByClassName('module');
+          for (var i = 0; i < modules.length; i++) {
+            modules[i].style.display = 'none';
+          }
+          document.getElementById(module).style.display = 'block';
+
+          // Update user progress in local storage
+          var userProgress = { currentModule: module };
+          localStorage.setItem('userProgress', JSON.stringify(userProgress));
+        });
+      }
+    };
+
+   window.onload=nextLevel()
+  </script>
