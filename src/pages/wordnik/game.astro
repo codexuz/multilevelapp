@@ -1,381 +1,149 @@
 ---
-import 'bootstrap/dist/css/bootstrap.css';
 import Layout from '../../layouts/Layout.astro'
-import 'mdb-ui-kit/css/mdb.min.css'
-import 'font-awesome/css/font-awesome.min.css'
+import Welcome from '../../components/wordnik/Welcome.astro'
+import GameCard from '../../components/wordnik/GameCard.astro'
+import NextButton from '../../components/wordnik/NextButton.astro'
+import Feedback from '../../components/wordnik/Feedback.astro'
+import ScorePage from '../../components/wordnik/ScorePage.astro'
 ---
 
 <Layout title="Wordnik Game">
-<main class="container">
-  <div id="welcome" class="card d-flex justify-content-center align-items-center">
-    <div class="card-body p-5 text-center">
-      <h4 class="fw-bold">Wordnik Game</h4>
-      <p class="text-dark my-3">Ushbu bo'limda siz lug'atlarni o'yin shaklida o'rganasiz, so'z ijro etilgandan o'ng, o'sha so'zni to'g'ri talaffuz qilishga harakat qiling. Agar tayyor bo'lsangiz, "Start Game" tugmasini bosing!</p>
-      <button class="btn btn-primary rounded" id="start-btn">Start Game</button>
-    </div>
-  </div>
-  <section id="gameCard">
-  <p class="float:right" id="length"></p>
-  <div class="flashcard card">
-    <p id="turn" style="color:darkred;" class="fw-bold"></p>
-    <div  class="word-container card-body">
-      <span id="word"></span>
-    </div>
-    <span id="word-tr"></span>
-    <div id="play" class="badge-info rounded-circle shadow-lg text-center" style="width:40px; height: 40px"><i class="fa fa-volume-up"></i></div>
-    <div class="my-3" id="feed"></div>
-    <div id="progress-container">
-      <div id="progress"></div>
-    </div>
-    <div class="d-flex align-items-center justify-content-right">
-      <button onclick="nextFlashcard()" class="next-btn-arr px-3"><i class="fa fa-angle-double-right 
-"></i></button>
-    </div>
-  </div>
-</section>
-<div id="scorePage" class="card shadow w-100 my-3 d-none" style="height: 450px;">
-  <div class="card-body d-flex flex-column align-items-center">
-    <div class="stars mt-4">
-      <i class="fa fa-star star-left mx-4"></i>
-      <i class="fa fa-star star-center"></i>
-      <i class="fa fa-star star-right mx-4"></i>
-    </div>
-    <h5 class="display mt-5">Congratulations!</h5>
-    <h5 id="score" class="score my-3">0</h5>
-    <div class="buttons align-items-center">
-      <button class="btn mx-2 my-2" style="background: #0ad1b0;" onclick="restart()"><i class="fa fa-refresh"></i> Restart</button>
-      <button class="btn mx-2 my-2" style="background:#05def2" onclick="homeBack()"><i class="fa fa-home"></i> Home</button>
-    </div>
-
-  </div>
-</div>
+  <main class="min-h-screen w-full bg-white flex items-center justify-center">  
+ <Welcome/> 
+ <GameCard/>
+ <NextButton/>
+ <Feedback/>
+ <ScorePage/>
 </main>
-<audio id="audio"></audio>
-<audio id="victory"  src="https://firebasestorage.googleapis.com/v0/b/exam-online-384406.appspot.com/o/Exam%2Fvictory.mp3?alt=media&token=ad69b471-1133-4b36-be57-c7b480b0696a"></audio>
+<audio id="audio" src=""></audio>
 </Layout>
 
-<style>
-
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-#gameCard{
-  display: none;
-}
-
-.flashcard {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 72px;
-  width: 300px;
-  border: 2px solid darkviolet;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: white;
-}
-
-.word-container {
-  font-size: 32px;
-  margin-bottom: 16px;
-}
-
-
-#progress-container {
-  width: 100%;
-  height: 8px;
-  background-color: white;
-  border: 1px solid blueviolet;
-  border-radius: 30px;
-  overflow: hidden;
-  margin-top: 16px;
-}
-
-#progress {
-  height: 100%;
-  background-color: blueviolet;
-  transition: width 0.5s ease;
-}
-
-#play{
-  color: darkviolet;
-  font-weight: bold;
-  cursor: pointer;
-  font-size: 23px;
-  margin: 8px 0;
-}
-
-
-.next-btn-arr{
-  background-color: dodgerblue;
-  color: white;
-  font-size: 20px;
-  padding: 5px 10px;
-  border: 1px solid dodgerblue;
-  border-radius: 10px;
-  position: absolute;
-  right: 10px;
-}
-
-
-.score{
-  border-radius: 8px;
-  width: 70px;
-  height: 60px;
-  background-color: darkviolet;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  color: white;
-  font-size: 23px;
-  font-weight: bold;
-}
-
-.stars{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size:50px;
-  color: orange;
-  margin-top: 50px;
-}
-
-.star-center{
-  display:block;
-  position: absolute;
-  top:30px;
-  animation-name: rotate-anim;
-  animation-duration: 1s;
-  animation-iteration-count: 1;
-  transition-timing-function: ease;
-}
-
-.star-left{
-  animation-name: rotate-anim-1;
-  animation-duration: 1s;
-  animation-iteration-count: 2;
-  transition-timing-function: ease;
-}
-
-.star-right{
- animation-name: rotate-anim-1;
-  animation-duration: 1s;
-  animation-iteration-count: 2;
-  transition-timing-function: ease;
-}
-.display{
-  font-size: 40px;
-}
-
-.buttons{
-  display: flex;
-}
-@media screen and (max-width:360px){
-  .display{
-  font-size: 30px;
-}
-}
-
-
-
-@media screen and (max-width:280px){
-  .display{
-  font-size: 23px;
-}
-
-.buttons{
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-}
-
-#word-tr{
-  font-size: 23px;
-  text-align:center
-}
-
-@keyframes rotate-anim{
-  0%{
-    transform: rotate(0deg);
-  }
-  100%{
-    transform: rotate(90deg);
-  }
-}
-
-@keyframes rotate-anim-1{
-  0%{
-    transform: rotate(0deg);
-  }
-  100%{
-    transform: rotate(-90deg);
-  }
-}
-
-</style>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous"  is:inline></script>
 
 <script is:inline>
 
- // Define the flashcards
-const flashcards = [
-  { word: "beat", trans: "yutmoq, mag'lub qilmoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/B/1ACSXW5O0LHMW.mp3" },
-  { word: "board game", trans: "doskali o'yin", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/B/14NNGV6O77O9S.mp3" },
-  { word: "captain", trans: "kapitan, rahbar", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/V225C1U9FWDC.mp3" },
-  { word: "challenge", trans: "1. da'vat etmoq; 2. sinov, muammo", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/VB0P1BNZUKVG.mp3" },
-  { word: "champion", trans: "chempion", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/155H3687XIHW5.mp3" },
-  { word: "cheat", trans: "g'irromlik qilmoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/X9SD28D8V9V4.mp3"},
-  { word: "classical music", trans: "mumtoz musiqa", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/1UKEZT55R98W.mp3"},
-  { word: "club", trans: "klub", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/RASIW3TVPCH1.mp3"},
-  { word: "coach", trans: "murabbiy", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/7FZIAJRQLL4Y.mp3"},
-  { word: "competition", trans: "musobaqa", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/1R8G92UQDJ8IW.mp3"},
-  { word: "concert", trans: "konsert", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/KIHYOJ4SJDKD.mp3"},
-  { word: "defeat", trans: "g'alaba qozonmoq, mag'lub qilmoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/D/1DFF78E09R26H.mp3"},
-  { word: "entertaining", trans: "qiziqarli, maroqli", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/E/1A475EMBCSDOG.mp3"},
-  { word: "folk music", trans: "milliy musiqa", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/F/U18538MBU21I.mp3"},
-  { word: "group", trans: "guruh", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/G/1S63O9R96D1MT.mp3"},
-  { word: "gym", trans: "workout zali, gimnastika zali", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/G/EZVLZ71UYC5Z.mp3"},
-  { word: "interest", trans: "qiziqtirmoq, qiziqish, hobbi", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/I/AY1NG5KTXQJX.mp3"},
-  { word: "member", trans: "a'zo", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/M/1KJL6X56IKRT8.mp3"},
-  { word: "opponent", trans: "raqib", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/O/11011ANO72RIO.mp3"},
-  { word: "organise", trans: "tashkillashtirmoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/O/KGN22P835TF9.mp3"},
-  { word: "pleasure", trans: "mamnuniyat, lazzat, xursandchilik", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/P/14CUIZBMZKB92.mp3"},
-  { word: "referee", trans: "hakam", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/R/HK988CHIMAI7.mp3"},
-  { word: "rhythm", trans: "ritm, muvozanat", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/R/1N5GNNW0P5LW2.mp3"},
-  { word: "risk", trans: "tavakkal, xavf", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/R/VHZ4TKC425DB.mp3"},
-  { word: "score", trans: "ball, natija, hisob", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/S/1QIQLMD8GY9FM.mp3"},
-  { word: "support", trans: "qo'llab-quvvatlamoq, yoqlamoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/S/B31YLZWC48XA.mp3"},
-  { word: "team", trans: "jamoa", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/T/1B8HW4VSFKDHY.mp3"},
-  { word: "train", trans: "mashq qilmoq, shug'ullanmoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/T/92UF9L4VKTCH.mp3"},
-  { word: "video game", trans: "video o'yinlar", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/V/1B1MGZ6YZW2OD.mp3"},
-  { word: "carry on", trans: "davom ettirmoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/15YZZ1476OB40.mp3"},
-  { word: "eat out", trans: "restoranda ovqatlanmoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/E/LJS4H5HOLFVD.mp3"},
-  { word: "give up", trans: "odatni tashlamoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/G/1NT6RTOYNR0LF.mp3"},
-  { word: "join", trans: "ishtirok etmoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/J/PTPTO0IBUQ6K.mp3"},
-  { word: "send off", trans: "o'yindan chetlashtirmoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/S/BS116ELP2AIL.mp3"},
-  { word: "take up", trans: "odatni boshlamoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/T/1HPL979AGBZDP.mp3"},
-  { word: "turn down", trans: "ovozni pasaytirmoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/T/LXD8YWITKZDY.mp3"},
-  { word: "turn up", trans: "ovozni ko'tarmoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/T/DISVSANPNUD.mp3"},
-  { word: "bored with", trans: "dan zerikkan", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/B/NPK3HP3EWK3Z.mp3"},
-  { word: "crazy about", trans: "...ning ashaddiy muhlisi", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/D2ODZOYMQEZG.mp3"},
-  { word: "good at", trans: "...da qobiliyatli", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/G/1C361RWL0RWKM.mp3"},
-  { word: "bored with", trans: "dan zerikkan", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/B/NPK3HP3EWK3Z.mp3"}
-];
-
-
-// Initialize variables
-let currentFlashcard = 0;
-let score = 0;
-let progress = 0;
-
-
-// Get the elements
-const length = document.getElementById("length")
-const turn = document.getElementById("turn")
-const welcome = document.getElementById("welcome")
-const feed = document.getElementById("feed")
-const gameCard=document.getElementById("gameCard")
-const scorePage= document.getElementById("scorePage")
-const startBtn=document.getElementById("start-btn")
-const wordContainer = document.getElementById("word");
-const wordTr=document.getElementById("word-tr")
-const scoreContainer = document.getElementById("score");
-const audioElement = document.getElementById("audio");
-const victory = document.getElementById("victory")
-const progressContainer = document.getElementById("progress");
-progressContainer.style.width = `${progress}%`;
-
-
-// Function to start speech recognition
-function startSpeechRecognition() {
-  const recognition = new window.webkitSpeechRecognition();
-  recognition.continuous = false;
-  recognition.lang = "en-US";
-  recognition.onresult = function(event) {
-    const spokenWord = event.results[0][0].transcript.toLowerCase();
-    if (spokenWord === flashcards[currentFlashcard].word) {
-      score++;
-      feed.style.fontSize="25px"
-      feed.innerText="👏 Good!";
-      setTimeout(()=>{
-       feed.innerText=""
-      },1500)
-      feed.style.color="green"
-      scoreContainer.innerText = `${score}`;
-    } else {
-      feed.style.fontSize="25px"
-      feed.innerText="😩 Oh,no!";
-      feed.style.color="red";
-      setTimeout(()=>{
-       feed.innerText=""
-      },1500)
-      turn.innerText="You said: "+spokenWord
-      setTimeout(function(){
-       turn.innerText=""
-      }, 1500) 
-    }
-    nextFlashcard();
-  };
-  recognition.start();
-}
-
-
-// Function to move to the next flashcard
-function nextFlashcard() {
-  currentFlashcard++;
-  progress += 3;
+  // Initialize variables
+  let currentFlashcard = 0;
+  let score = 0;
+  let progress = 0;    
+  const progressContainer = document.getElementById("progress");
   progressContainer.style.width = `${progress}%`;
-  if (currentFlashcard === flashcards.length) {
-    scorePage.classList.remove("d-none");
-    victory.play()
-    gameCard.classList.add("d-none")
-
-    /*
-    currentFlashcard = 0;
-    score = 0;
-    scoreContainer.innerText = score;
-    progress = 0;
-    progressContainer.style.width = `${progress}%`;
-    */
+  const wordContainer = document.getElementById("word");
+  const wordTr=document.getElementById("translation")
+  const audioElement = document.getElementById("audio");
+  
+  
+  
+   // Define the flashcards
+  const flashcards = [
+    { word: "beat", trans: "yutmoq, mag'lub qilmoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/B/1ACSXW5O0LHMW.mp3" },
+    { word: "board game", trans: "doskali o'yin", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/B/14NNGV6O77O9S.mp3" },
+    { word: "captain", trans: "kapitan, rahbar", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/V225C1U9FWDC.mp3" },
+    { word: "challenge", trans: "1. da'vat etmoq; 2. sinov, muammo", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/VB0P1BNZUKVG.mp3" },
+    { word: "champion", trans: "chempion", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/155H3687XIHW5.mp3" },
+    { word: "cheat", trans: "g'irromlik qilmoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/X9SD28D8V9V4.mp3"},
+    { word: "classical music", trans: "mumtoz musiqa", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/1UKEZT55R98W.mp3"},
+    { word: "club", trans: "klub", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/RASIW3TVPCH1.mp3"},
+    { word: "coach", trans: "murabbiy", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/7FZIAJRQLL4Y.mp3"},
+    { word: "competition", trans: "musobaqa", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/1R8G92UQDJ8IW.mp3"},
+    { word: "concert", trans: "konsert", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/KIHYOJ4SJDKD.mp3"},
+    { word: "defeat", trans: "g'alaba qozonmoq, mag'lub qilmoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/D/1DFF78E09R26H.mp3"},
+    { word: "entertaining", trans: "qiziqarli, maroqli", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/E/1A475EMBCSDOG.mp3"},
+    { word: "folk music", trans: "milliy musiqa", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/F/U18538MBU21I.mp3"},
+    { word: "group", trans: "guruh", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/G/1S63O9R96D1MT.mp3"},
+    { word: "gym", trans: "workout zali, gimnastika zali", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/G/EZVLZ71UYC5Z.mp3"},
+    { word: "interest", trans: "qiziqtirmoq, qiziqish, hobbi", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/I/AY1NG5KTXQJX.mp3"},
+    { word: "member", trans: "a'zo", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/M/1KJL6X56IKRT8.mp3"},
+    { word: "opponent", trans: "raqib", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/O/11011ANO72RIO.mp3"},
+    { word: "organise", trans: "tashkillashtirmoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/O/KGN22P835TF9.mp3"},
+    { word: "pleasure", trans: "mamnuniyat, lazzat, xursandchilik", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/P/14CUIZBMZKB92.mp3"},
+    { word: "referee", trans: "hakam", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/R/HK988CHIMAI7.mp3"},
+    { word: "rhythm", trans: "ritm, muvozanat", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/R/1N5GNNW0P5LW2.mp3"},
+    { word: "risk", trans: "tavakkal, xavf", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/R/VHZ4TKC425DB.mp3"},
+    { word: "score", trans: "ball, natija, hisob", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/S/1QIQLMD8GY9FM.mp3"},
+    { word: "support", trans: "qo'llab-quvvatlamoq, yoqlamoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/S/B31YLZWC48XA.mp3"},
+    { word: "team", trans: "jamoa", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/T/1B8HW4VSFKDHY.mp3"},
+    { word: "train", trans: "mashq qilmoq, shug'ullanmoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/T/92UF9L4VKTCH.mp3"},
+    { word: "video game", trans: "video o'yinlar", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/V/1B1MGZ6YZW2OD.mp3"},
+    { word: "carry on", trans: "davom ettirmoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/15YZZ1476OB40.mp3"},
+    { word: "eat out", trans: "restoranda ovqatlanmoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/E/LJS4H5HOLFVD.mp3"},
+    { word: "give up", trans: "odatni tashlamoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/G/1NT6RTOYNR0LF.mp3"},
+    { word: "join", trans: "ishtirok etmoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/J/PTPTO0IBUQ6K.mp3"},
+    { word: "send off", trans: "o'yindan chetlashtirmoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/S/BS116ELP2AIL.mp3"},
+    { word: "take up", trans: "odatni boshlamoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/T/1HPL979AGBZDP.mp3"},
+    { word: "turn down", trans: "ovozni pasaytirmoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/T/LXD8YWITKZDY.mp3"},
+    { word: "turn up", trans: "ovozni ko'tarmoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/T/DISVSANPNUD.mp3"}
+  ];
+  
+  
+  // Function to start speech recognition
+  function startSpeechRecognition() {
+    const recognition = new window.webkitSpeechRecognition();
+    recognition.continuous = false;
+    recognition.lang = "en-US";
+    recognition.onresult = function(event) {
+      const spokenWord = event.results[0][0].transcript.toLowerCase();
+      if (spokenWord === flashcards[currentFlashcard].word) {
+        score++;
+  
+        $("#Feedback").show()
+        $("#feed").text("Well Done!");
+        $("#feed").css("color","white")
+        $("#Feedback").css("background", "#25f20a")
+        $("#score").text(`${score}/37`);
+      } else {
+        console.log("Oh no");
+        $("#Feedback").show()
+        $("#Feedback").css("background", "#e61037")
+        $("#feed").text("Wrong. Try again!");
+        $("#feed").css("color","white")
+        $("#play").addClass("animate-ping")
+        setTimeout(()=>{
+          $("#play").removeClass("animate-ping")
+        },1800)
+      }
+      //nextFlashcard();
+    };
+    recognition.start();
   }
+  
+  // Function to move to the next flashcard
+  function nextFlashcard() {
+    currentFlashcard++;
+    progress += 3;
+    $("#Feedback").fadeOut("fast", function(){
+          $("#feed").text("");
+  })
+  
+    progressContainer.style.width = `${progress}%`;
+    if (currentFlashcard === flashcards.length) {
+      $("#score-page").show()
+      //victory.play()
+      $("#gameCard").hide()
+      $("#nextBtnContainer").hide()
+  
+    }
+    wordContainer.innerText = flashcards[currentFlashcard].word;
+    wordTr.innerText= flashcards[currentFlashcard].trans;
+    audioElement.src = flashcards[currentFlashcard].audio;
+    audioElement.play();
+    $("#play").click(()=>{
+     audioElement.play()
+    })
+    audioElement.onended = startSpeechRecognition;
+  }
+  
+  // Set the initial word and audio
   wordContainer.innerText = flashcards[currentFlashcard].word;
   wordTr.innerText= flashcards[currentFlashcard].trans;
   audioElement.src = flashcards[currentFlashcard].audio;
-  audioElement.play();
-  document.getElementById("play").addEventListener("click", ()=>{
-   audioElement.play()
+  $("#start-btn").click(function(){
+    audioElement.play();
+    $("#welcome").hide()
+      $("#gameCard").show()
+      $("#nextBtnContainer").show()
+  
   })
   audioElement.onended = startSpeechRecognition;
-}
-
-
-// Set the initial word and audio
-wordContainer.innerText = flashcards[currentFlashcard].word;
-wordTr.innerText= flashcards[currentFlashcard].trans;
-audioElement.src = flashcards[currentFlashcard].audio;
-startBtn.addEventListener("click", function(){
-  audioElement.play();
-  welcome.classList.add("d-none")
-  gameCard.style.display="flex"
-
-})
-audioElement.onended = startSpeechRecognition;
-
-function restart(){
-  window.location.reload()
-}
-
-function homeBack(){
-  window.location.href="/"
-}
-</script>
+  
+  </script>
