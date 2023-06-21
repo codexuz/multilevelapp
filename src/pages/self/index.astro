@@ -124,7 +124,7 @@ import Layout from '../../layouts/Layout.astro'
 
 </Layout>
 
-
+<script src="https://code.responsivevoice.org/responsivevoice.js" is:inline></script>
 <script is:inline>
 window.history.pushState(null, null, window.location.href);
 window.onpopstate = function () {
@@ -224,12 +224,13 @@ function step0() {
 	que.innerHTML=q1.value
 	que_id.innerHTML=1
 	// Create a new Text-to-Speech object
-  const tts1 = new SpeechSynthesisUtterance();
-  tts1.text = q1.value;
-  tts1.addEventListener("end", startCountdown);
-  
-  // Play the Text-to-Speech audio
-  speechSynthesis.speak(tts1);
+        // Create a new ResponsiveVoice speech utterance
+	const tts1 = new ResponsiveVoice(q1.value, "US English Female", {
+ 	 onend: startCountdown
+});
+
+// Play the Text-to-Speech audio
+tts1.play();
 }
 	// Define a function to start the 5-second countdown
 function startCountdown() {
