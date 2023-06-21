@@ -268,13 +268,10 @@ function startCountdown() {
 function step1(){
 	que.innerHTML=q2.value;
 	que_id.innerHTML=2
-	// Create a new Text-to-Speech object
-  const tts2 = new SpeechSynthesisUtterance();
-  tts2.text = q2.value;
-  tts2.addEventListener("end", startCountdown);
-  
-  // Play the Text-to-Speech audio
-  speechSynthesis.speak(tts2);
+	// Create a new ResponsiveVoice speech utterance
+ 	const text = q2.value;
+	const voiceName = "US English Female";
+	responsiveVoice.speak(text, voiceName, { onend: startCountdown });
 
 	//countdown 5 sec
 	function startCountdown() {
@@ -314,13 +311,10 @@ function step1(){
 function step2(){
 	que.innerHTML=q3.value;
 	que_id.innerHTML=3
-	// Create a new Text-to-Speech object
-  const tts3 = new SpeechSynthesisUtterance();
-  tts3.text = q3.value;
-  tts3.addEventListener("end", startCountdown);
-  
-  // Play the Text-to-Speech audio
-  speechSynthesis.speak(tts3);
+	// Create a new ResponsiveVoice speech utterance
+ 	const text = q3.value;
+	const voiceName = "US English Female";
+	responsiveVoice.speak(text, voiceName, { onend: startCountdown });
 
 	//countdown 5 sec
 	function startCountdown() {
