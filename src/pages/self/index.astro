@@ -225,12 +225,8 @@ function step0() {
 	que_id.innerHTML=1
 	// Create a new Text-to-Speech object
         // Create a new ResponsiveVoice speech utterance
-	const tts1 = new ResponsiveVoice(q1.value, "US English Female", {
- 	 onend: startCountdown
-});
-
-// Play the Text-to-Speech audio
-tts1.play();
+       responsiveVoice.speak(q.value)
+	
 }
 	// Define a function to start the 5-second countdown
 function startCountdown() {
