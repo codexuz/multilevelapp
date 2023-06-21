@@ -15,7 +15,17 @@ import TryButton from '../components/TryButton.astro'
 <Header/>
 <div style="margin-top:50px;padding-bottom:80px;">
 <HelloPage/>	
-<Course/>
+<main class=" container justify-center items-center px-3">
+    <h2 class="text-black text-3xl py-3 font-bold dark:text-white ">Courses</h2>
+    <div class="course-slider">
+    <Course
+     img="https://multiexam.vercel.app/img/writing.jpg"
+      title="Task 1"
+       descript="All about Task 1"
+       href="/writing/task1"
+     />
+    </div>
+</main>
 <section class="container mx-auto mb-12">
 <h2 class="text-black text-3xl py-3 font-bold dark:text-white ">Features</h2>
 
@@ -64,4 +74,19 @@ title="IELTS Simul..."
    body{
     background-color: rgb(252, 252, 252);
    }
+
+/* Course Slider Styles */
+.course-slider {
+  white-space: nowrap;
+  overflow-x: auto;
+}
+
+@media only screen and (max-width: 768px) {
+/* Course Slider Styles */
+  .course-slider {
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+    padding: 10px;
+  }
+}
 </style>
