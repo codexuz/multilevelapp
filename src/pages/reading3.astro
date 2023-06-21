@@ -1,0 +1,24 @@
+---
+import Layout from "../layouts/Layout.astro"
+
+let res = await fetch("https://xirurgabdukarim.uz/wp-json/wp/v2/reading3?per_page=100")
+let posts = await res.json();
+---
+<Layout title="Part 3 Reading">
+  <section>
+    <h1 class="text-3xl my-3 font-bold text-center">Part 3 Exercises</h1>
+    <div class="container mx-auto mb-8">
+    {
+      posts.map((post) => (
+      
+        <article class="bg-indigo-600 mx-4 my-3 text-center text-2xl font-bold py-8 rounded-lg shadow-lg text-white">
+          <h2>
+            <a href={`/reading3/${post.slug}/`} set:html={post.title.rendered} />
+          </h2>
+        </article>
+      ))
+    }
+  </div>
+
+  </section>
+</Layout>
