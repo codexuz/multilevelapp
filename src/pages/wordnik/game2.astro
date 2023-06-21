@@ -47,7 +47,7 @@ if (!user) {
 </style>
 
 <script src="/static/jquery.min.js" is:inline></script>
-<script src="https://code.responsivevoice.org/responsivevoice.js" is:inline></script>
+<script src="articulate.js" is:inline></script>
 
 <script is:inline>
 
@@ -178,8 +178,7 @@ for (var i = 0; i < h3.length; i++) {
   (function(index) {
     icons[index].addEventListener("click", function() {
        txt = h3[index];
-       const voiceName = "US English Female";
-       responsiveVoice.speak(txt, voiceName);
+       $(txt).articulate('speak');
     });
   })(i);
 }
