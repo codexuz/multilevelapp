@@ -10,10 +10,10 @@ const { href, title,  img, descript} = Astro.props;
 ---
 
       <div class="card1 text-white">
-        <img src="{img}" alt="Course Image">
+        <img src={img} alt="Course Image">
         <h2>{title}</h2>
         <p>{descript}</p>
-        <a href="{href}" class="button">Start Course</a>
+        <a href={href} class="button">Start Course</a>
       </div>  
    
     <style>
