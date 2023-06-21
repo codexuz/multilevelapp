@@ -47,7 +47,6 @@ if (!user) {
 </style>
 
 <script src="/static/jquery.min.js" is:inline></script>
-<script src="articulate.js" is:inline></script>
 
 <script is:inline>
 
@@ -75,7 +74,7 @@ const flashcards = [
   { id:"20", word: "journey", trans: "sayohat" },
   { id:"21", word: "luggage", trans: "bagaj, yuk" },
   { id:"22", word: "nearby", trans: "yaqin atrofdagi" },
-  { id:"23", word: "nearby (adv)", trans: "yaqin atrofda" },
+  { id:"23", word: "nearby", trans: "yaqin atrofda" },
   { id:"24", word: "pack", trans: "joylamoq" },
   { id:"25", word: "passport", trans: "pasport" },
   { id:"26", word: "platform", trans: "platforma (poyezd vokzalida)" },
@@ -138,11 +137,11 @@ const flashcards = [
   { id:"83", word: "suitable for", trans: "uchun mos" },
   { id:"84", word: "arrive at", trans: "...ga yetib bormoq/kelmoq (asosan yopiq binolarga: aeroport, vokzal)" },
   { id:"85", word: "arrive in", trans: "...ga yetib bormoq/kelmoq (asosan, shahar/davlatlarga)" },
-  { id:"86", word: "ask sb about", trans: "kimdandir ...haqida so'ramoq" },
+  { id:"86", word: "ask about", trans: "kimdandir ...haqida so'ramoq" },
   { id:"87", word: "ask for", trans: "biror narsa so'ramoq" },
   { id:"88", word: "look at", trans: "...ga qaramoq" },
   { id:"89", word: "prepare for", trans: "...uchun tayyorlanmoq" },
-  { id:"90", word: "provide sb with", trans: "...bilan ta'minlamoq" },
+  { id:"90", word: "provide with", trans: "...bilan ta'minlamoq" },
   { id:"91", word: "wait for", trans: "...ni kutmoq" },
   ];
 
@@ -177,7 +176,9 @@ for (var i = 0; i < h3.length; i++) {
   (function(index) {
     icons[index].addEventListener("click", function() {
        txt = h3[index];
-       $(txt).articulate('speak');
+       wordValue=txt.innerHTML
+      const voiceName = "US English Female";
+      responsiveVoice.speak(wordValue, voiceName);
     });
   })(i);
 }
