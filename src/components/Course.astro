@@ -1,30 +1,21 @@
+---
+export interface Props {
+	title: string;
+	href: string;
+    img: string;
+    descript:string
+}
 
-<main class=" container justify-center items-center px-3">
-    <h2 class="text-black text-3xl py-3 font-bold dark:text-white ">Courses</h2>
-    <div class="course-slider">
+const { href, title,  img, descript} = Astro.props;
+---
+
       <div class="card1 text-white">
-        <img src="https://multiexam.vercel.app/img/writing.jpg" alt="Course Image">
-        <h2>Task 2 (Essay)</h2>
-        <p>All about Task 2</p>
-        <a href="#" class="button">Tez kunda</a>
-      </div>
-
-      <div class="card1" onclick="window.location.href='writing.html'">
-        <img src="https://multiexam.vercel.app/img/letter.jpg" alt="Course Image">
-        <h2>Task 1 (Letter)</h2>
-        <p>Letter Writing and Exercises</p>
-        <a href="/writing/task1" class="button">Start Course</a>
-      </div>
-
-      <div class="card1">
-        <img src="https://multiexam.vercel.app/img/speaking.jpg" alt="Course Image">
-        <h2>Speaking Course</h2>
-        <p>Speaking Tips</p>
-        <a href="#" class="button">Tez kunda</a>
-      </div>
-    </div>
-    </main>
-
+        <img src="{img}" alt="Course Image">
+        <h2>{title}</h2>
+        <p>{descript}</p>
+        <a href="{href}" class="button">Start Course</a>
+      </div>  
+   
     <style>
 
 
@@ -75,11 +66,7 @@
   background-color: #2980b9;
 }
 
-/* Course Slider Styles */
-.course-slider {
-  white-space: nowrap;
-  overflow-x: auto;
-}
+
 
 @media only screen and (max-width: 768px) {
   /* Course Card Styles */
@@ -108,12 +95,6 @@
     padding: 8px;
   }
   
-  /* Course Slider Styles */
-  .course-slider {
-    overflow-x: scroll;
-    -webkit-overflow-scrolling: touch;
-    padding: 10px;
-  }
 }
 
     </style>
