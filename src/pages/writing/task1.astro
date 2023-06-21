@@ -1,9 +1,27 @@
   ---
   import Layout from '../../layouts/Layout.astro'
+  import { app } from "../../lib/firebase/server";
+  import { getFirestore } from "firebase-admin/firestore";
+  import { getAuth } from "firebase-admin/auth";
   import Module1 from '../../components/writing/Module1.astro'
   import Module2 from '../../components/writing/Module2.astro'
   import ModuleHeader from '../../components/writing/ModuleHeader.astro'
   import ModuleSidebar from '../../components/writing/ModuleSidebar.astro'
+
+const auth = getAuth(app);
+
+/* Check current session */
+const sessionCookie = Astro.cookies.get("session").value;
+
+if (!sessionCookie) {
+  return Astro.redirect("/account/signin");
+}
+const decodedCookie = await auth.verifySessionCookie(sessionCookie);
+const user = await auth.getUser(decodedCookie.uid);
+
+if (!user) {
+  return Astro.redirect("/account/signin");
+}
   ---
 
 
