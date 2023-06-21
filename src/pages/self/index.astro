@@ -475,17 +475,18 @@ function examEnd(){
 	que_id.innerHTML='';
 	preview .style.display="block";
 	// Create a new Text-to-Speech object
-  const tts7 = new SpeechSynthesisUtterance();
-  tts7.text = "This is the end of Speaking Test"
-   // Play the Text-to-Speech audio
-  speechSynthesis.speak(tts7);
+  
+  const text = "This is the end of Speaking Test";
+	const voiceName = "US English Female";
+	responsiveVoice.speak(text, voiceName, { onend: showResult });
 
-  tts7.addEventListener("end", function(){
+
+  function showResult(){
 		stopRecording();
 		downloadAudio.style.display="block"
 		document.getElementById("home").style.display="block"
 
-})
+}
 }
 
 
