@@ -154,7 +154,7 @@ const q2=document.getElementById("q2")
 const q3=document.getElementById("q3")
 let t;
 const preview =document.getElementById("audio-playback")
-const recorder = document.querySelector(".recorder")
+const blink = document.querySelector(".recorder")
 let recorder, audio_stream;
 
 part1.style.display="none";
@@ -246,7 +246,7 @@ function startCountdown() {
 		beep.play();
 		clearInterval(interval);
 		start30SecondCountdown();
-                recorder.classList.remove("hidden")
+                blink.classList.remove("hidden")
 	  }
 	}, 1000);
   }
@@ -262,7 +262,7 @@ function startCountdown() {
 			timer.innerHTML="";
 			clearInterval(interval);
 			step1();
-                        recorder.classList.add("hidden")
+                        blink.classList.add("hidden")
 	
 		  }
 		}, 1000);
@@ -291,7 +291,7 @@ function step1(){
 			beep.play();
 			clearInterval(interval);
 			start30SecondCountdown();
-			recorder.classList.remove("hidden")
+			blink.classList.remove("hidden")
 		  }
 		}, 1000);
 	  }
@@ -307,7 +307,7 @@ function step1(){
 				timer.innerHTML="";
 				clearInterval(interval);
 				step2();
-                                recorder.classList.add("hidden")
+                                blink.classList.add("hidden")
 		
 			  }
 			}, 1000);
@@ -336,7 +336,7 @@ function step2(){
 			beep.play();
 			clearInterval(interval);
 			start30SecondCountdown();
-			recorder.classList.remove("hidden")
+			blink.classList.remove("hidden")
 		  }
 		}, 1000);
 	  }
@@ -351,8 +351,9 @@ function step2(){
 			  if (count <= 0) {
 				timer.innerHTML="";
 				clearInterval(interval);
+ 				blink.classList.add("hidden")
 				examEnd();
-				recorder.classList.add("hidden")
+				
 		
 			  }
 			}, 1000);
