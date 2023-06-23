@@ -113,11 +113,6 @@ import Layout from '../../layouts/Layout.astro'
 
 <script src="https://code.responsivevoice.org/responsivevoice.js" is:inline></script>
 <script is:inline>
-window.history.pushState(null, null, window.location.href);
-window.onpopstate = function () {
-    window.history.go(2);
-};
-
 
 const part1=document.getElementById("quizBar");
 const welcome=document.getElementById("welcome")
