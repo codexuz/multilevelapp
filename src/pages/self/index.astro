@@ -47,7 +47,7 @@ import Layout from '../../layouts/Layout.astro'
 <!----welcome ends-->
 
 <div id="quizBar" class="hidden">
-<div class="navbar navbar-expand-lg navbar-light bg-dark shadow">
+<div class="navbar navbar-expand-lg navbar-light bg-primary shadow">
     <div class="container-fluid">
         <a class="navbar-brand text-light" href="#">Multi Level Speaking</a>
         <div class="timer-bar text-white" id="full-screen" onclick="toggleFullScreen()"><i class="fa fa-expand"></i></div>
@@ -61,14 +61,14 @@ import Layout from '../../layouts/Layout.astro'
      <div class="card">
        <div class="card-body">
          <div class="header-question d-flex justify-content-between align-items-center">
-           <span class="badge rounded-pill text-bg-dark border-0 px-5 py-2">Question# <span id="que-id"></span></span>
+           <span class="badge rounded-pill text-bg-primary border-0 px-5 py-2">Question# <span id="que-id"></span></span>
            <div>
-           <i class="fa fa-volume-up text-dark mx-1"></i><input class="text-dark" type="range" id="audio_volume" min="0" max="1" step="0.01" name=""></div>
+           <i class="fa fa-volume-up text-primary mx-1"></i><input class="text-dark" type="range" id="audio_volume" min="0" max="1" step="0.01" name=""></div>
          </div>
          <hr>
          <div class=" quiz-container mt-3 d-flex justify-content-center align-items-center">
-           <button class="btn btn-dark px-3 py-2.5 mx-3" onclick="sizeDown()">A-</button>
-            <button class="btn btn-dark px-3 py-2.5 mx-3" onclick="sizeUp()">A+</button>
+           <button class="btn btn-primary px-3 py-2.5 mx-3" onclick="sizeDown()">A-</button>
+            <button class="btn btn-primary px-3 py-2.5 mx-3" onclick="sizeUp()">A+</button>
          </div>
          <hr>
          <div id="question-bar">
@@ -82,7 +82,7 @@ import Layout from '../../layouts/Layout.astro'
      <div class="card" id="card">
        <div class="card-body">
          <div class="header-question d-flex justify-content-around align-items-center">
-           <button class="btn btn-dark w-100 fw-bold py-1">
+           <button class="btn btn-primary w-100 fw-bold py-1">
             <i class="fa fa-clock-o text-light" style="font-size:23px"></i><span class="text-light px-2" id="timer" style="width:50px; font-size: 23px;"></span>
            </button>
          </div>
@@ -110,7 +110,35 @@ import Layout from '../../layouts/Layout.astro'
 
 
 </Layout>
+<style>
+.circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #e60606;
+  position: relative;
+  animation: blink-mic 1s linear infinite;
+  margin-top: 30px;
+}
 
+@keyframes blink-mic {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.text-to-speech{
+  text-align:center
+}
+
+
+</style>
 <script src="https://code.responsivevoice.org/responsivevoice.js" is:inline></script>
 <script is:inline>
 
