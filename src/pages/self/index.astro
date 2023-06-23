@@ -87,7 +87,7 @@ import Layout from '../../layouts/Layout.astro'
            </button>
          </div>
          <div class="recorder">
-         <span class="circle text-center"></span>
+        <center><div id="rec-icon" class="microphone-wave"></div>
          <p id="recording"></p>
          <div id="downloadContainer" class="d-flex flex-column">
             <audio src="" id="audio-playback" controls></audio>
@@ -111,7 +111,7 @@ import Layout from '../../layouts/Layout.astro'
 
 </Layout>
 <style>
-.circle {
+.microphone-wave {
   width: 30px;
   height: 30px;
   border-radius: 50%;
