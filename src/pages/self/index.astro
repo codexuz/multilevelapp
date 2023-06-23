@@ -86,13 +86,13 @@ import Layout from '../../layouts/Layout.astro'
             <i class="fa fa-clock-o text-light" style="font-size:23px"></i><span class="text-light px-2" id="timer" style="width:50px; font-size: 23px;"></span>
            </button>
          </div>
-         <div class="recorder">
+         <div class="recorder hidden">
         <center><div id="rec-icon" class="microphone-wave"></div>
-         <p id="recording"></p>
+        <p id="rec-text" class="text-center">Recording...</p></center>
+        </div>
          <div id="downloadContainer" class="d-flex flex-column">
             <audio src="" id="audio-playback" controls></audio>
             <a id="home" class="my-2 btn btn-primary py-2.5 text-white my-3" href="/" style="display:none">Back to Home</a>
-         </div>
          </div>
          
        </div>
@@ -153,6 +153,7 @@ const q2=document.getElementById("q2")
 const q3=document.getElementById("q3")
 let t;
 const preview =document.getElementById("audio-playback")
+const recorder = document.querySelector(".recorder")
 let recorder, audio_stream;
 
 part1.style.display="none";
@@ -244,6 +245,7 @@ function startCountdown() {
 		beep.play();
 		clearInterval(interval);
 		start30SecondCountdown();
+                recorder.classList.remove("hidden")
 	  }
 	}, 1000);
   }
@@ -259,6 +261,7 @@ function startCountdown() {
 			timer.innerHTML="";
 			clearInterval(interval);
 			step1();
+                        recorder.classList.add("hidden")
 	
 		  }
 		}, 1000);
@@ -287,6 +290,7 @@ function step1(){
 			beep.play();
 			clearInterval(interval);
 			start30SecondCountdown();
+			recorder.classList.remove("hidden")
 		  }
 		}, 1000);
 	  }
@@ -302,6 +306,7 @@ function step1(){
 				timer.innerHTML="";
 				clearInterval(interval);
 				step2();
+                                recorder.classList.add("hidden")
 		
 			  }
 			}, 1000);
@@ -330,6 +335,7 @@ function step2(){
 			beep.play();
 			clearInterval(interval);
 			start30SecondCountdown();
+			recorder.classList.remove("hidden")
 		  }
 		}, 1000);
 	  }
@@ -344,7 +350,8 @@ function step2(){
 			  if (count <= 0) {
 				timer.innerHTML="";
 				clearInterval(interval);
-				examEnd()
+				examEnd();
+				recorder.classList.add("hidden")
 		
 			  }
 			}, 1000);
