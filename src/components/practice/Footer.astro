@@ -1,0 +1,42 @@
+<!------Audioplayer---->
+ <main class=" container py-1 d-flex flex-column">
+     <a style="width: 200px;" class="btn btn-primary text-white my-3" href="" download="" id="downloadButton">Download Answer</a>
+</main>
+
+
+                <div class="container d-flex align-items-center justify-content-center">
+                    <button id="start-btn" class=" btn btn-success mx-2" title="Start Recording">Start</button>
+                    <button onclick="window.location.reload()" id="refresh-btn" class="btn btn-danger mx-2" title=""><i class="fa fa-refresh"></i>&nbsp;Restart</button>
+                    <button onclick="window.location.replace('../pract3/index.html')" id="next-btn" class="btn btn-primary mx-2" title="">Practice 3 &nbsp; <i class="fa fa-arrow-right"></i> </button>
+                </div>
+
+                <div class="container mt-5 py-3">
+                        <div id="audio-list"></div>
+                    
+                </div>
+    
+</div>
+
+                        
+<style>
+
+     #refresh-btn{
+        display: none;
+    }
+
+    #next-btn{
+        display: none;
+    }
+    #downloadContainer{
+        display: none;
+    }
+
+    #downloadButton{
+        display: none;
+    }
+
+    #audio-playback{
+        display: none;
+    }
+
+</style>                        
