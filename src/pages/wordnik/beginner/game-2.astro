@@ -211,7 +211,7 @@ $("#answer").on("focus", function() {
     var lastScore=overallScore[scoreOver]
     var percent=lastScore*100/20
   	$("#overallscore").text(lastScore);
-  	$("#percent").text(percent.toFixed() +"%"+"/20")
+  	$("#percent").text(percent.toFixed() +"%")
   }
 
   $("#word").html(flashcards[currentFlashcard].word)
