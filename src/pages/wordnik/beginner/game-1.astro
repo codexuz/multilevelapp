@@ -120,12 +120,16 @@ const flashcards = [
 
 var audio=document.createElement("audio")
 var audio2=document.createElement("audio")
+var audio3=document.createElement("audio")
 audio.src="/static/audios/correct.wav"
 audio2.src="/static/audios/fail.mp3"
+audio3.src="/static/audios/end.wav"
 audio.setAttribute("id","correct")
 audio2.setAttribute("id","fail")
+audio3.setAttribute("id","end")
 $("#main").append(audio)
 $("#main").append(audio2)
+$("#main").append(audio3)
 
 
 //Random tabrik
@@ -212,6 +216,7 @@ $("#answer").on("focus", function() {
     var percent=lastScore*100/20
   	$("#overallscore").text(lastScore);
   	$("#percent").text(percent.toFixed() +"%")
+        document.getElementById("end").play()
   }
 
   $("#word").html(flashcards[currentFlashcard].word)
