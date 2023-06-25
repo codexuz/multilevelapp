@@ -1,0 +1,57 @@
+<div class="main  top-12 my-7">
+	<h1 class="text-xl font-bold">Quti ichiga <b>o'zbekcha tarjimasini</b> yozing.</h1>
+    <div class="flex items-center mt-5">
+    	<button id="play" class="btn btn-primary rounded-xl"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-white">
+  <path d="M13.5 4.06c0-1.336-1.616-2.005-2.56-1.06l-4.5 4.5H4.508c-1.141 0-2.318.664-2.66 1.905A9.76 9.76 0 001.5 12c0 .898.121 1.768.35 2.595.341 1.24 1.518 1.905 2.659 1.905h1.93l4.5 4.5c.945.945 2.561.276 2.561-1.06V4.06zM18.584 5.106a.75.75 0 011.06 0c3.808 3.807 3.808 9.98 0 13.788a.75.75 0 11-1.06-1.06 8.25 8.25 0 000-11.668.75.75 0 010-1.06z" />
+  <path d="M15.932 7.757a.75.75 0 011.061 0 6 6 0 010 8.486.75.75 0 01-1.06-1.061 4.5 4.5 0 000-6.364.75.75 0 010-1.06z" />
+</svg>
+</button>
+	<p title="" class="title-tip decoration-dotted	decoration-indigo-400 text-2xl px-3 underline" id="word"></p>
+
+    </div>
+</div>
+<div class="flex flex-col py-16 justify-center items-center container mx-auto">
+	<input id="answer" type="text" placeholder="Type translation here..." class="input input-bordered w-full"   />
+  <p class="mt-8 text-xl text-green-400 font-bold text-center py-3 px-3" id="comment"></p>
+</div>
+
+
+<style>
+        
+        /* title-tip down */
+.title-tip[title]:hover {
+  position: relative;
+}
+.title-tip[title]:hover:before {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 99999;
+  content: attr(title);
+  margin-top: 0.5em;
+  padding: 0.5em;
+  width: auto;    /* change it */
+  overflow: hidden;
+  word-wrap: break-word;
+  font-size: inherit;
+  color: #gray;
+  text-align: center;
+  background-color: #f6f6fa;
+  box-sizing: border-box;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
+.title-tip[title]:hover:after {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  z-index: 99999;
+  content: '';
+  margin-left: -0.125em;
+  width: 0;
+  height: 0;
+  border: 0.25em dashed transparent;
+  border-bottom: 0.25em solid #f6f6fa;
+  font-size: inherit;
+}
+</style>
