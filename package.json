@@ -28,6 +28,7 @@
     "flowbite": "^1.6.5",
     "font-awesome": "^4.7.0",
     "mdb-ui-kit": "^6.3.1",
+    "onsenui": "^2.12.8",
     "reveal.js": "^4.0.2",
     "socket.io": "^4.6.1",
     "solid-js": "^1.7.5",
@@ -37,5 +38,9 @@
     "wavesurfer.js": "^6.6.3",
     "zod": "^3.21.4",
     "zod-form-data": "^2.0.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.9",
+    "daisyui": "^3.1.6"
   }
 }
