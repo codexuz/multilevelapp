@@ -9,7 +9,7 @@ import Score from '../../../components/beginner/Score.astro'
 <head>
 <link href="https://cdn.jsdelivr.net/npm/daisyui@3.1.6/dist/full.css" rel="stylesheet" type="text/css" />
 </head>
-<Layout title="Beginner Game-1">
+<Layout title="Beginner Game-3">
 <Alert/>
 <div id="main" class="w-full mx-auto px-4 min-h-screen bg-white">
 <Header/>
@@ -25,7 +25,7 @@ import Score from '../../../components/beginner/Score.astro'
 let currentFlashcard = 0;
 let score = 0;
 let overallScore=[]
-let progress = 3;
+let progress = 5;
 
 $("#progress").val(progress)
 
@@ -198,7 +198,7 @@ $("#answer").on("focus", function() {
 	$("#next-btn").addClass("hidden");
   $("#answer").val('')
 	currentFlashcard++;
-  progress += 2.8;
+  progress += 5;
   $("#progress").val(progress)
   $("#feedbar").fadeOut("fast", function(){
     $("#feedback").text("");
@@ -209,9 +209,9 @@ $("#answer").on("focus", function() {
   	$("#last").show()
   	var scoreOver = overallScore.length - 1;
     var lastScore=overallScore[scoreOver]
-    var percent=lastScore*100/37
+    var percent=lastScore*100/20
   	$("#overallscore").text(lastScore);
-  	$("#percent").text(percent.toFixed() +"%")
+  	$("#percent").text(percent.toFixed() +"%"+"/20")
   }
 
   $("#word").html(flashcards[currentFlashcard].word)
