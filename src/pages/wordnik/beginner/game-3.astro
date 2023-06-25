@@ -1,0 +1,274 @@
+---
+import Layout from '../../../layouts/Layout.astro'
+import Alert from '../../../components/beginner/Alert.astro'
+import Header from '../../../components/beginner/Header.astro'
+import Main from '../../../components/beginner/Main.astro'
+import Footer from '../../../components/beginner/Footer.astro'
+import Score from '../../../components/beginner/Score.astro'
+---
+<head>
+<link href="https://cdn.jsdelivr.net/npm/daisyui@3.1.6/dist/full.css" rel="stylesheet" type="text/css" />
+</head>
+<Layout title="Beginner Game-1">
+<Alert/>
+<div id="main" class="w-full mx-auto px-4 min-h-screen bg-white">
+<Header/>
+<Main/>
+<Footer/>
+</div>
+<Score>
+</Layout>
+<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous" is:inline></script>
+<script is:inline>
+
+// Initialize variables
+let currentFlashcard = 0;
+let score = 0;
+let overallScore=[]
+let progress = 3;
+
+$("#progress").val(progress)
+
+
+//FlashCards
+
+ // Define the flashcards
+const flashcards = [
+    { 
+      word: "how about?",
+      translation: "sizchi?"
+    },
+    {
+      word: "what about you?",
+      translation: "sizchi?"
+    },
+    {
+      word: "have a good holiday",
+      translation: "ta'tilni yaxshi o'tkazing"
+    },
+    {
+      word: "beach",
+      translation: "sohil"
+    },
+    {
+      word: "skirt",
+      translation: "yubka"
+    },
+    {
+      word: "trausers",
+      translation: "shim"
+    },
+    {
+      word: "sing",
+      translation: "kuylamoq,sayramq"
+    },
+    {
+      word: "wait",
+      translation: "kutmoq"
+    },
+    {
+      word: "click",
+      translation: "bosmoq"
+    },
+    {
+      word: "fast",
+      translation: "tez"
+    },
+    {
+      word: "hard",
+      translation: "qattiq"
+    },
+    {
+      word: "job",
+      translation: "ish"
+    },
+    {
+      word: "rest",
+      translation: "dam olish"
+    },
+    {
+      word: "a driving license",
+      translation: "haydovchilik guvohnomasi"
+    },
+    {
+      word: "the dentist",
+      translation: "tish shifokori"
+    },
+    {
+      word: "easy",
+      translation: "oson"
+    },
+    {
+      word: "opinion",
+      translation: "fikr"
+    },
+    {
+      word: "literature",
+      translation: "adabiyot"
+    },
+    {
+      word: "train",
+      translation: "poyezd"
+    },
+    {
+      word: "exactly",
+      translation: "aniq,ravshan"
+    }
+]
+
+//Main function
+
+var audio=document.createElement("audio")
+var audio2=document.createElement("audio")
+audio.src="/static/audios/correct.wav"
+audio2.src="/static/audios/fail.mp3"
+audio.setAttribute("id","correct")
+audio2.setAttribute("id","fail")
+$("#main").append(audio)
+$("#main").append(audio2)
+
+
+//Random tabrik
+
+let randomMessage;
+
+function checkAnswer(){
+	const taken=$("#answer").val()
+const TypedValue=taken.toLowerCase()
+	if (TypedValue===flashcards[currentFlashcard].translation) {
+		score++
+		overallScore.push(score)
+		console.log(overallScore)
+    document.getElementById("correct").play()
+	  $("#check-btn").addClass("hidden");
+	   $("#next-btn").removeClass("hidden");
+	   $("#next-btn").removeClass("btn-secondary");
+	   $("#next-btn").addClass("btn-success");
+     $("#feedbar").show()
+     $("#feedback").text(randomMessage)
+     $("#feedbar").removeClass("bg-red-200")
+     $("#feedback").removeClass("text-red-600")
+     $("#feedbar").addClass("bg-green-200")
+     $("#feedback").addClass("text-green-600")
+     $("#score").html(score)
+}
+else{
+   document.getElementById("fail").play()
+	$("#check-btn").addClass("hidden");
+	   $("#next-btn").removeClass("hidden");
+	   $("#next-btn").removeClass("btn-success");
+	   $("#next-btn").addClass("btn-secondary");
+     $("#feedbar").fadeIn("fast")
+     $("#feedbar").addClass("bg-red-200")
+     $("#feedback").addClass("text-red-600")
+     $("#feedback").text("Wrong!")
+     $("#comment").text(`Answer: ${flashcards[currentFlashcard].translation}`)
+     $("#score").html(score)
+    
+}
+
+}
+ 
+
+ //Next word
+
+function nextFlashcard() {
+var congrats=["Good", "Super!","Perfect!"]
+var randomCongrats=Math.floor(Math.random()*congrats.length)
+randomMessage = congrats[randomCongrats];
+  $("#comment").text("")
+	$("#check-btn").attr("disabled", "disabled");	
+	$("#answer").on("input", function() {
+    if ($(this).val() === "") {
+      $("#check-btn").attr("disabled", "disabled");
+    } else {
+      $("#check-btn").removeAttr("disabled");
+       $("#check-btn").addClass("fixed")
+       $("#check-btn").addClass("bottom-6")
+    }
+  });
+
+//Fixed remove and add
+$("#answer").on("focus", function() {
+    $("#check-btn").removeClass("fixed")
+    $("#check-btn").removeClass("bottom-6")
+  });
+
+	$("#check-btn").removeClass("hidden");
+	$("#next-btn").addClass("hidden");
+  $("#answer").val('')
+	currentFlashcard++;
+  progress += 2.8;
+  $("#progress").val(progress)
+  $("#feedbar").fadeOut("fast", function(){
+    $("#feedback").text("");
+  })
+
+  if (currentFlashcard === flashcards.length) {
+  	$("#main").hide()
+  	$("#last").show()
+  	var scoreOver = overallScore.length - 1;
+    var lastScore=overallScore[scoreOver]
+    var percent=lastScore*100/37
+  	$("#overallscore").text(lastScore);
+  	$("#percent").text(percent.toFixed() +"%")
+  }
+
+  $("#word").html(flashcards[currentFlashcard].word)
+  $("#word").attr("title", (flashcards[currentFlashcard].translation))
+  var wordValue=$("#word").text()
+  const voiceName = "UK English Male";
+      responsiveVoice.speak(wordValue, voiceName);
+    $("#play").click(()=>{
+      wordValue=$("#word").text()
+      const voiceName = "UK English Male";
+      responsiveVoice.speak(wordValue, voiceName);
+    })
+}
+
+
+//Set initial page
+$("#word").html(flashcards[currentFlashcard].word)
+$("#word").attr("title", (flashcards[currentFlashcard].translation))
+
+$(document).ready(function(){
+    wordValue=wordValue=$("#word").text()
+      const voiceName = "UK English Male";
+      responsiveVoice.speak(wordValue, voiceName);
+       // Disable the "Check" button initially
+  $("#check-btn").attr("disabled", "disabled");
+  
+  })
+
+
+ $("#answer").on("input", function() {
+    if ($(this).val() === "") {
+      $("#check-btn").attr("disabled", "disabled");
+    } else {
+      $("#check-btn").removeAttr("disabled");
+      $("#check-btn").addClass("fixed")
+    $("#check-btn").addClass("bottom-6")
+    }
+  });
+
+ $("#answer").on("focus", function() {
+    $("#check-btn").removeClass("fixed")
+    $("#check-btn").removeClass("bottom-6")
+  });
+
+
+//Exit
+$("#exit").click(function(){
+  $("#alert").show()
+})
+
+$("#deny").click(()=>{
+  $("#alert").hide()
+})
+
+$("#accept").click(()=>{
+  window.open("/")
+  window.close()
+})
+
+</script>
