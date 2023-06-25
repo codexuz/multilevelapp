@@ -97,16 +97,17 @@ import 'font-awesome/css/font-awesome.min.css'
     <button id="stop">Stop record...</button>
 </div>
 <div id="player" class="bg-gray-800 hidden">
-    <div class="text-icon">
-    <a href="" download="" id="save"><i class="fa fa-save"></i></a>
-    <span>Save</span>
-    </div>
-    <div class="text-icon">
-    <i id="play" class="fa fa-play-circle"></i>
+    <div class="text-icon" id="play">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-white">
+  <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm14.024-.983a1.125 1.125 0 010 1.966l-5.603 3.113A1.125 1.125 0 019 15.113V8.887c0-.857.921-1.4 1.671-.983l5.603 3.113z" clip-rule="evenodd" />
+</svg>
     <span>Listen</span>
 </div>
-<div class="text-icon">
-    <i id="cancel" class="fa fa-times-circle"></i>
+<div class="text-icon" id="cancel">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-white">
+  <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.72 6.97a.75.75 0 10-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 101.06 1.06L12 13.06l1.72 1.72a.75.75 0 101.06-1.06L13.06 12l1.72-1.72a.75.75 0 10-1.06-1.06L12 10.94l-1.72-1.72z" clip-rule="evenodd" />
+</svg>
+
     <span>Close</span>
 </div>
 </div>
@@ -160,13 +161,17 @@ document.getElementById("play").addEventListener("click", function(){
     var audio=document.getElementById("preview")
     if (audio.paused || audio.ended) {
        audio.play();
-       document.getElementById("play").classList.remove("fa-play-circle");
-       document.getElementById("play").classList.add("fa-pause-circle");
+       document.getElementById("play").innerHTML="<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-white">
+  <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zM9 8.25a.75.75 0 00-.75.75v6c0 .414.336.75.75.75h.75a.75.75 0 00.75-.75V9a.75.75 0 00-.75-.75H9zm5.25 0a.75.75 0 00-.75.75v6c0 .414.336.75.75.75H15a.75.75 0 00.75-.75V9a.75.75 0 00-.75-.75h-.75z" clip-rule="evenodd" />
+</svg>"
+
     }
     else{
         audio.pause();
-        document.getElementById("play").classList.add("fa-play-circle");
-       document.getElementById("play").classList.remove("fa-pause-circle");
+        document.getElementById("play").innerHTML="<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-white">
+  <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm14.024-.983a1.125 1.125 0 010 1.966l-5.603 3.113A1.125 1.125 0 019 15.113V8.887c0-.857.921-1.4 1.671-.983l5.603 3.113z" clip-rule="evenodd" />
+</svg>"
+
 
     }
 });
