@@ -251,6 +251,18 @@ randomMessage = congrats[randomCongrats];
       $("#check-btn").removeAttr("disabled");
     }
   });
+
+//Fixed remove and add
+$("#answer").on("focus", function() {
+    $("#check-btn").removeClass("fixed")
+    $("#check-btn").removeClass("bottom-6")
+  });
+
+ $("#answer").on("blur", function() {
+    $("#check-btn").addClass("fixed")
+    $("#check-btn").addClass("bottom-6")
+  });
+
 	$("#check-btn").removeClass("hidden");
 	$("#next-btn").addClass("hidden");
   $("#answer").val('')
@@ -287,6 +299,7 @@ randomMessage = congrats[randomCongrats];
 //Set initial page
 $("#word").html(flashcards[currentFlashcard].word)
 $("#word").attr("title", (flashcards[currentFlashcard].translation))
+
 $(document).ready(function(){
     wordValue=wordValue=$("#word").text()
       const voiceName = "UK English Male";
@@ -303,6 +316,16 @@ $(document).ready(function(){
     } else {
       $("#check-btn").removeAttr("disabled");
     }
+  });
+
+ $("#answer").on("focus", function() {
+    $("#check-btn").removeClass("fixed")
+    $("#check-btn").removeClass("bottom-6")
+  });
+
+ $("#answer").on("blur", function() {
+    $("#check-btn").addClass("fixed")
+    $("#check-btn").addClass("bottom-6")
   });
 
 
