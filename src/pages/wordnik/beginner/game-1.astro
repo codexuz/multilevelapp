@@ -22,6 +22,9 @@ import Score from '../../../components/beginner/Score.astro'
 <script src="https://code.responsivevoice.org/responsivevoice.js?key=3Wzpm5HU" is:inline></script>
 <script src="https://cdn.jsdelivr.net/npm/kioskboard@2.3.0/dist/kioskboard-aio-2.3.0.min.js" is:inline></script>
 <script is:inline>
+KioskBoard.run('.js-virtual-keyboard', {
+   // ...init options
+});
 
 	// Initialize variables
 let currentFlashcard = 0;
