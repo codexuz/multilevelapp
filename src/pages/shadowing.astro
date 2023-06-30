@@ -80,6 +80,7 @@ We're told that on his body was found a diary. On the flyleaf under the heading,
     
     $("#replay").click(function(){
       $('#videoPlayer').trigger('play')
+       $('#userSpeech').val(''); 
       stopSpeechRecognition()
     })
      
@@ -96,7 +97,6 @@ We're told that on his body was found a diary. On the flyleaf under the heading,
       var videoObj = videos[currentVideoIndex];
       $('#videoPlayer').attr('src', videoObj.video);
       $('#text').text(videoObj.text);
-      $('#videoPlayer').trigger('play')
        $("#hint").hide()
     }
 
@@ -105,6 +105,7 @@ We're told that on his body was found a diary. On the flyleaf under the heading,
       if (currentVideoIndex < videos.length - 1) {
         currentVideoIndex++;
         playCurrentVideo();
+        $('#videoPlayer').trigger('play')
         stopSpeechRecognition()
         $("#replay").hide()
         // Clear user's speech
@@ -122,7 +123,9 @@ We're told that on his body was found a diary. On the flyleaf under the heading,
       annyang.addCallback('result', showUserSpeech);
       annyang.start({ autoRestart: true, continuous: true });
       $("#replay").show()
-      $("#hint").show()
+       setTimeout(()=>{
+        $("#hint").show()
+       }, 3500)
       isSpeechRecognitionActive = true;
     }
 
