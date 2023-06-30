@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro'
 ---
 
 <Layout title="Shadowing">
-<main class="container mx-auto px-4 py-8 min-h-screen bg-gray-50"> 
+ <main class="container mx-auto px-4 py-8 min-h-screen bg-gray-50"> 
   <div id="shadowing_page">
   <video class="aspect-video lg:w-full rounded-lg  mb-3" src="" onplaying="stopSpeechRecognition()" onended="startSpeechRecognition()" id="videoPlayer" width="700" height="409">
   </video>
@@ -13,13 +13,13 @@ import Layout from '../layouts/Layout.astro'
   <textarea id="userSpeech" rows="4" readonly="readonly" class="hidden my-5 block p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border outline-0 border-blue-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Your response shown here ..."></textarea>
 
     <center><button id="start" class="my-4 bg-green-400 rounded-lg text-white text-lg px-5 py-2">Start</button></center>
-  <button id="nextButton" class="hidden float-right bg-blue-600 rounded-lg text-white text-lg px-5 py-2">Next</button>
+  <button id="nextButton" class="hidden float-right bg-blue-600 rounded-lg text-white text-lg px-5 py-2 mb-5">Next</button>
   </div>  
   <div id="last_page" class="hidden">
     <center>
       <h3 class="text-2xl text-gray-900">We hope this section helped you to improve your Speaking skills.</h3>
-      <button class="bg-indigo-500 rounded-lg text-white text-lg px-5 py-2 my-3" onclick="window.open('/')">Go Home</button>
-        <button class="bg-rose-500 rounded-lg text-white text-lg px-5 py-2 my-3" onclick="window.location.reload()">Retry</button>
+      <button class="bg-indigo-500 rounded-lg text-white text-lg px-5 py-2 my-3 mx-1" onclick="window.open('/')">Go Home</button>
+        <button class="bg-rose-500 rounded-lg text-white text-lg px-5 py-2 my-3 mx-1" onclick="window.location.reload()">Retry</button>
     </center>
   </div>
 </main>
@@ -75,47 +75,12 @@ We're told that on his body was found a diary. On the flyleaf under the heading,
      }
     ];
 
-   document.addEventListener('DOMContentLoaded', function() {
-  // Open a connection to IndexedDB
-  var request = indexedDB.open('myDatabase', 1);
-
-  // Create the object store and define the structure
-  request.onupgradeneeded = function(event) {
-    var db = event.target.result;
-    var objectStore = db.createObjectStore('videos', { keyPath: 'video' });
-    objectStore.createIndex('video', 'video', { unique: true });
-  };
-
-  // Save the videos array into IndexedDB
-  request.onsuccess = function(event) {
-    var db = event.target.result;
-    var transaction = db.transaction('videos', 'readwrite');
-    var objectStore = transaction.objectStore('videos');
-
-    for (var i = 0; i < videos.length; i++) {
-      objectStore.put(videos[i]);
-    }
-
-    transaction.oncomplete = function() {
-      console.log('Videos saved into IndexedDB.');
-    };
-
-    transaction.onerror = function(event) {
-      console.error('Error saving videos into IndexedDB:', event.target.error);
-    };
-  };
-
-  request.onerror = function(event) {
-    console.error('Error opening IndexedDB:', event.target.error);
-  };
-});
-
-    var currentVideoIndex = 0;
+var currentVideoIndex = 0;
     var isSpeechRecognitionActive = false;
     
     $("#replay").click(function(){
       $('#videoPlayer').trigger('play')
-      $('#userSpeech').val(''); 
+      $('#userSpeech').val('');
       stopSpeechRecognition()
     })
      
@@ -128,85 +93,29 @@ We're told that on his body was found a diary. On the flyleaf under the heading,
     }) 
     
     // Function to play the current video
-function playCurrentVideo() {
-  // Retrieve videos from IndexedDB
-  var request = indexedDB.open('myDatabase', 1);
-  
-  request.onsuccess = function(event) {
-    var db = event.target.result;
-    var transaction = db.transaction('videos', 'readonly');
-    var objectStore = transaction.objectStore('videos');
-    var getAllRequest = objectStore.getAll();
-
-    getAllRequest.onsuccess = function(event) {
-      var videos = event.target.result;
-
-      // Check if there are videos in IndexedDB
-      if (videos.length > 0) {
-        var videoObj = videos[currentVideoIndex];
-        $('#videoPlayer').attr('src', videoObj.video);
-        $('#videoPlayer').trigger('play')
-        $('#text').text(videoObj.text);
-        $("#hint").hide();
-      } else {
-        console.log('No videos found in IndexedDB.');
-      }
-    };
-
-    getAllRequest.onerror = function(event) {
-      console.error('Error retrieving videos from IndexedDB:', event.target.error);
-    };
-  };
-
-  request.onerror = function(event) {
-    console.error('Error opening IndexedDB:', event.target.error);
-  };
-}
-
+    function playCurrentVideo() {
+      var videoObj = videos[currentVideoIndex];
+      $('#videoPlayer').attr('src', videoObj.video);
+      $('#text').text(videoObj.text);
+       $("#hint").hide()
+    }
 
     // Function to play the next video
-function playNextVideo() {
-  // Retrieve videos from IndexedDB
-  var request = indexedDB.open('myDatabase', 1);
-
-  request.onsuccess = function(event) {
-    var db = event.target.result;
-    var transaction = db.transaction('videos', 'readonly');
-    var objectStore = transaction.objectStore('videos');
-    var getAllRequest = objectStore.getAll();
-
-    getAllRequest.onsuccess = function(event) {
-      var videos = event.target.result;
-
-      // Check if there are videos in IndexedDB
-      if (videos.length > 0) {
-        if (currentVideoIndex < videos.length - 1) {
-          currentVideoIndex++;
-          playCurrentVideo();
-          $('#videoPlayer').trigger('play');
-          stopSpeechRecognition();
-          $("#replay").hide();
-          // Clear user's speech
-        } else {
-          $("#shadowing_page").hide();
-          $("#last_page").show();
-          $('#videoPlayer').trigger('pause');
-        }
-      } else {
-        console.log('No videos found in IndexedDB.');
+    function playNextVideo() {
+      if (currentVideoIndex < videos.length - 1) {
+        currentVideoIndex++;
+        playCurrentVideo();
+        $('#videoPlayer').trigger('play')
+        stopSpeechRecognition()
+        $("#replay").hide()
+        // Clear user's speech
       }
-    };
-
-    getAllRequest.onerror = function(event) {
-      console.error('Error retrieving videos from IndexedDB:', event.target.error);
-    };
-  };
-
-  request.onerror = function(event) {
-    console.error('Error opening IndexedDB:', event.target.error);
-  };
-}
-
+      else if(currentVideoIndex = videos.length){
+        $("#shadowing_page").hide()
+        $("#last_page").show()
+        $('#videoPlayer').trigger('pause')
+      }
+    }
 
     // Function to start speech recognition
     function startSpeechRecognition() {
