@@ -64,7 +64,7 @@ const flashcards = [
     },
     {
       word: "leave",
-      translation: "jo'nab ketmoq"
+      translation: "ketmoq"
     },
     {
       word: "lose",
@@ -80,7 +80,7 @@ const flashcards = [
     },
     {
       word: "ring",
-      translation: "telefon qilmoq"
+      translation: "uzuk"
     },
     {
       word: "sell",
@@ -99,8 +99,8 @@ const flashcards = [
       translation: "parvoz"
     },
     {
-      word: "two hours later",
-      translation: "ikki soatdan so'ng"
+      word: "later",
+      translation: "keyin"
     },
     {
       word: "check",
@@ -112,20 +112,25 @@ const flashcards = [
     },
     {
       word: "park",
-      translation: "mashina qo'yish joyi"
+      translation: "park"
     }
 ]
+
 
 //Main function
 
 var audio=document.createElement("audio")
 var audio2=document.createElement("audio")
+var audio3=document.createElement("audio")
 audio.src="/static/audios/correct.wav"
 audio2.src="/static/audios/fail.mp3"
+audio3.src="/static/audios/end.wav"
 audio.setAttribute("id","correct")
 audio2.setAttribute("id","fail")
+audio3.setAttribute("id","end")
 $("#main").append(audio)
 $("#main").append(audio2)
+$("#main").append(audio3)
 
 
 //Random tabrik
@@ -133,9 +138,10 @@ $("#main").append(audio2)
 let randomMessage;
 
 function checkAnswer(){
-	const taken=$("#answer").val()
+	const taken=$("#answer").val().replace(/\s|-|'/g, "")
 const TypedValue=taken.toLowerCase()
-	if (TypedValue===flashcards[currentFlashcard].translation) {
+  const correctTranslation = flashcards[currentFlashcard].translation.replace(/\s|-|'/g, "");
+	if (TypedValue===correctTranslation) {
 		score++
 		overallScore.push(score)
 		console.log(overallScore)
@@ -150,7 +156,9 @@ const TypedValue=taken.toLowerCase()
      $("#feedback").removeClass("text-red-600")
      $("#feedbar").addClass("bg-green-200")
      $("#feedback").addClass("text-green-600")
-     $("#score").html(score)
+     $("#score").html(score);
+      // Add true answer to the list
+    $("#your-answers").append(`<li class="text-green-400">${flashcards[currentFlashcard].translation}</li>`);
 }
 else{
    document.getElementById("fail").play()
@@ -164,6 +172,8 @@ else{
      $("#feedback").text("Wrong!")
      $("#comment").text(`Answer: ${flashcards[currentFlashcard].translation}`)
      $("#score").html(score)
+     // Add false answer to the list
+    $("#your-answers").append(`<li class="text-red-400">${flashcards[currentFlashcard].translation}</li>`);
     
 }
 
@@ -212,6 +222,7 @@ $("#answer").on("focus", function() {
     var percent=lastScore*100/20
   	$("#overallscore").text(lastScore);
   	$("#percent").text(percent.toFixed() +"%")
+        document.getElementById("end").play()
   }
 
   $("#word").html(flashcards[currentFlashcard].word)
