@@ -1,126 +1,86 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Real-time Speech-to-Text with Artyom.js</title>
-  <script src="artyom.min.js"></script>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
 </head>
 <body>
-  <button id="startButton">Start Speech Recognition</button>
-  <div id="output"></div>
-
+<button id="startButton">Start Speech Recognition</button><br>
+  <textarea id="output"></textarea>
+<script src="/static/artyom.window.min.js" is:inline></script>
   <script>
-    const finalRes = [];
+let FinalRes;
+let result;
+var outputDiv = document.getElementById('output');
+var startButton = document.getElementById('startButton');
 
-    document.addEventListener('DOMContentLoaded', function () {
-      var artyom = new Artyom();
+document.addEventListener('DOMContentLoaded', function () {
+  var artyom = new Artyom();
 
-      var outputDiv = document.getElementById('output');
-      var startButton = document.getElementById('startButton');
+  var isRecognizing = false;
 
-      var isRecognizing = false;
+  startButton.addEventListener('click', function () {
+    if (!isRecognizing) {
+      artyom.fatality();
 
-      startButton.addEventListener('click', function () {
-        if (!isRecognizing) {
-          artyom.fatality();
-
-          setTimeout(function () {
-            artyom.initialize({
-              lang: 'en-US',
-              continuous: true,
-              listen: true,
-              interimResults: false,
-              debug: true,
-            }).then(function () {
-              console.log('Artyom initialized');
-              // artyom.say('Speech recognition started');
-            });
-          }, 250);
-        } else {
-          artyom.fatality();
-        }
-
-        isRecognizing = !isRecognizing;
-        startButton.innerText = isRecognizing ? 'Stop Speech Recognition' : 'Start Speech Recognition';
-      });
-
-      artyom.addCommands({
-        indexes: ['stop'],
-        action: function () {
-          artyom.fatality();
-          startButton.innerText = 'Start Speech Recognition';
-          isRecognizing = false;
-          outputDiv.innerHTML = '';
-
-          // Save finalRes array to local storage
-          localStorage.setItem('finalRes', JSON.stringify(finalRes));
-
-          // Send outputDiv value to OpenAI API
-          const content = outputDiv.innerText;
-          checkVocabularyLevel(content);
-          checkGrammar(content);
-        },
-      });
-
-      artyom.redirectRecognizedTextOutput(function (recognized, isFinal) {
-        if (isFinal) {
-          outputDiv.innerHTML += '<p>' + recognized + '</p>';
-
-          console.log(recognized);
-
-          // Add recognized text to finalRes array
-          finalRes.push(recognized);
-        }
-      });
-    });
-
-    // Retrieve saved data from local storage
-    const savedData = localStorage.getItem('finalRes');
-    const finalRes = savedData ? JSON.parse(savedData) : [];
-
-    // Get the length of the finalRes array
-    const finalResLength = finalRes.length;
-    console.log('Length of finalRes:', finalResLength);
-
-    function checkVocabularyLevel(content) {
-      const openaiApiKey = 'YOUR_OPENAI_API_KEY';
-      const openaiUrl = 'https://api.openai.com/v1/engines/davinci-codex/completions';
-
-      const prompt = `What is the vocabulary level of the given text? "${content}"`;
-
-      fetch(openaiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${openaiApiKey}`
-        },
-        body: JSON.stringify({
-          prompt: prompt,
-          max_tokens: 1,
-          temperature: 0.0
-        })
-      })
-      .then(response => response.json())
-      .then(data => {
-        const vocabularyLevel = data.choices[0].text.trim();
-        console.log('Vocabulary Level:', vocabularyLevel);
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
+      setTimeout(function () {
+        artyom.initialize({
+          lang: 'en-US',
+          continuous: true,
+          listen: true,
+          interimResults: false,
+          debug: true,
+        }).then(function () {
+          console.log('Artyom initialized');
+          // artyom.say('Speech recognition started');
+        });
+      }, 250);
+    } else {
+      artyom.fatality();
+      MarkingSection()
     }
 
-    function checkGrammar(content) {
-      const textgearsApiKey = 'YOUR_TEXTGEARS_API_KEY';
-      const textgearsUrl = 'https://api.textgears.com/grammar';
+    isRecognizing = !isRecognizing;
+    startButton.innerText = isRecognizing ? 'Stop Speech Recognition' : 'Start Speech Recognition';
+  });
 
-      fetch(`${textgearsUrl}?text=${encodeURIComponent(content)}&key=${textgearsApiKey}`)
-        .then(response => response.json())
-        .then(data => {
-          console.log('Grammar Check Results:', data);
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
+  artyom.addCommands({
+    indexes: ['zealous'],
+    action: function () {
+      artyom.fatality();
+      startButton.innerText = 'Start Speech Recognition';
+      isRecognizing = false;
+      outputDiv.value = '';
+
+    },
+  });
+
+  artyom.redirectRecognizedTextOutput(function (recognized, isFinal) {
+    if (isFinal) {
+      outputDiv.value += capitalize(recognized) + '. ';
+    }
+  });
+});
+
+function capitalize(sentence) {
+return sentence.charAt(0).toUpperCase() + sentence.slice(1);
+}
+
+const MarkingSection=()=>{
+  FinalRes=outputDiv.value.split(' ').filter(word => word !== '')
+  console.log(FinalRes.length)
+  checkGrammar(FinalRes)
+}
+
+async function checkGrammar(FinalRes) {
+      const textgearsApiKey = 'b0kj6Kg30fSduKSq';
+      const textgearsUrl = 'https://api.textgears.com/summarize';
+
+      const res=await fetch(`${textgearsUrl}?key=${textgearsApiKey}&text=${encodeURIComponent(FinalRes)}`)
+      const data=await res.json()
+      console.log(data)
+      
     }
   </script>
 </body>
