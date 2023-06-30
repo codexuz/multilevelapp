@@ -145,6 +145,7 @@ function playCurrentVideo() {
       if (videos.length > 0) {
         var videoObj = videos[currentVideoIndex];
         $('#videoPlayer').attr('src', videoObj.video);
+        $('#videoPlayer').trigger('play')
         $('#text').text(videoObj.text);
         $("#hint").hide();
       } else {
