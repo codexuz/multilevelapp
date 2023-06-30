@@ -137,9 +137,9 @@ $("#main").append(audio3)
 let randomMessage;
 
 function checkAnswer(){
-	const taken=$("#answer").val()
+	const taken=$("#answer").val().replace(/\s|-|'/g, "")
 const TypedValue=taken.toLowerCase()
-	if (TypedValue===flashcards[currentFlashcard].translation) {
+	if (TypedValue===flashcards[currentFlashcard].translation.replace(/\s|-|'/g, "")) {
 		score++
 		overallScore.push(score)
 		console.log(overallScore)
