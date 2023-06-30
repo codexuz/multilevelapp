@@ -75,12 +75,47 @@ We're told that on his body was found a diary. On the flyleaf under the heading,
      }
     ];
 
+   document.addEventListener('DOMContentLoaded', function() {
+  // Open a connection to IndexedDB
+  var request = indexedDB.open('myDatabase', 1);
+
+  // Create the object store and define the structure
+  request.onupgradeneeded = function(event) {
+    var db = event.target.result;
+    var objectStore = db.createObjectStore('videos', { keyPath: 'video' });
+    objectStore.createIndex('video', 'video', { unique: true });
+  };
+
+  // Save the videos array into IndexedDB
+  request.onsuccess = function(event) {
+    var db = event.target.result;
+    var transaction = db.transaction('videos', 'readwrite');
+    var objectStore = transaction.objectStore('videos');
+
+    for (var i = 0; i < videos.length; i++) {
+      objectStore.put(videos[i]);
+    }
+
+    transaction.oncomplete = function() {
+      console.log('Videos saved into IndexedDB.');
+    };
+
+    transaction.onerror = function(event) {
+      console.error('Error saving videos into IndexedDB:', event.target.error);
+    };
+  };
+
+  request.onerror = function(event) {
+    console.error('Error opening IndexedDB:', event.target.error);
+  };
+});
+
     var currentVideoIndex = 0;
     var isSpeechRecognitionActive = false;
     
     $("#replay").click(function(){
       $('#videoPlayer').trigger('play')
-       $('#userSpeech').val(''); 
+      $('#userSpeech').val(''); 
       stopSpeechRecognition()
     })
      
@@ -93,29 +128,85 @@ We're told that on his body was found a diary. On the flyleaf under the heading,
     }) 
     
     // Function to play the current video
-    function playCurrentVideo() {
-      var videoObj = videos[currentVideoIndex];
-      $('#videoPlayer').attr('src', videoObj.video);
-      $('#text').text(videoObj.text);
-       $("#hint").hide()
-    }
+function playCurrentVideo() {
+  // Retrieve videos from IndexedDB
+  var request = indexedDB.open('myDatabase', 1);
+  
+  request.onsuccess = function(event) {
+    var db = event.target.result;
+    var transaction = db.transaction('videos', 'readonly');
+    var objectStore = transaction.objectStore('videos');
+    var getAllRequest = objectStore.getAll();
+
+    getAllRequest.onsuccess = function(event) {
+      var videos = event.target.result;
+
+      // Check if there are videos in IndexedDB
+      if (videos.length > 0) {
+        var videoObj = videos[currentVideoIndex];
+        $('#videoPlayer').attr('src', videoObj.video);
+        $('#text').text(videoObj.text);
+        $('#videoPlayer').trigger('play');
+        $("#hint").hide();
+      } else {
+        console.log('No videos found in IndexedDB.');
+      }
+    };
+
+    getAllRequest.onerror = function(event) {
+      console.error('Error retrieving videos from IndexedDB:', event.target.error);
+    };
+  };
+
+  request.onerror = function(event) {
+    console.error('Error opening IndexedDB:', event.target.error);
+  };
+}
+
 
     // Function to play the next video
-    function playNextVideo() {
-      if (currentVideoIndex < videos.length - 1) {
-        currentVideoIndex++;
-        playCurrentVideo();
-        $('#videoPlayer').trigger('play')
-        stopSpeechRecognition()
-        $("#replay").hide()
-        // Clear user's speech
+function playNextVideo() {
+  // Retrieve videos from IndexedDB
+  var request = indexedDB.open('myDatabase', 1);
+
+  request.onsuccess = function(event) {
+    var db = event.target.result;
+    var transaction = db.transaction('videos', 'readonly');
+    var objectStore = transaction.objectStore('videos');
+    var getAllRequest = objectStore.getAll();
+
+    getAllRequest.onsuccess = function(event) {
+      var videos = event.target.result;
+
+      // Check if there are videos in IndexedDB
+      if (videos.length > 0) {
+        if (currentVideoIndex < videos.length - 1) {
+          currentVideoIndex++;
+          playCurrentVideo();
+          $('#videoPlayer').trigger('play');
+          stopSpeechRecognition();
+          $("#replay").hide();
+          // Clear user's speech
+        } else {
+          $("#shadowing_page").hide();
+          $("#last_page").show();
+          $('#videoPlayer').trigger('pause');
+        }
+      } else {
+        console.log('No videos found in IndexedDB.');
       }
-      else if(currentVideoIndex = videos.length){
-        $("#shadowing_page").hide()
-        $("#last_page").show()
-        $('#videoPlayer').trigger('pause')
-      }
-    }
+    };
+
+    getAllRequest.onerror = function(event) {
+      console.error('Error retrieving videos from IndexedDB:', event.target.error);
+    };
+  };
+
+  request.onerror = function(event) {
+    console.error('Error opening IndexedDB:', event.target.error);
+  };
+}
+
 
     // Function to start speech recognition
     function startSpeechRecognition() {
@@ -124,7 +215,7 @@ We're told that on his body was found a diary. On the flyleaf under the heading,
       annyang.start({ autoRestart: true, continuous: true });
       $("#replay").show()
       $("#hint").show()
-       setTimeout(()=>{
+      setTimeout(()=>{
         $("#hint").hide()
        }, 4000)
       isSpeechRecognitionActive = true;
@@ -150,5 +241,6 @@ We're told that on his body was found a diary. On the flyleaf under the heading,
         $('#userSpeech').val(''); 
       });
     });
+
   </script>
 
