@@ -123,9 +123,10 @@ We're told that on his body was found a diary. On the flyleaf under the heading,
       annyang.addCallback('result', showUserSpeech);
       annyang.start({ autoRestart: true, continuous: true });
       $("#replay").show()
+      $("#hint").show()
        setTimeout(()=>{
-        $("#hint").show()
-       }, 3500)
+        $("#hint").hide()
+       }, 4000)
       isSpeechRecognitionActive = true;
     }
 
