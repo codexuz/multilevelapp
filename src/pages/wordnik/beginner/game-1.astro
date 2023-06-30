@@ -157,7 +157,7 @@ const TypedValue=taken.toLowerCase()
      $("#feedback").addClass("text-green-600")
      $("#score").html(score);
       // Add true answer to the list
-    $("#your-answers").append("<li class="text-green-400">" + flashcards[currentFlashcard].translation + "</li>");
+    $("#your-answers").append(`<li class="text-green-400">flashcards[currentFlashcard].translation</li>`);
 }
 else{
    document.getElementById("fail").play()
@@ -172,7 +172,7 @@ else{
      $("#comment").text(`Answer: ${flashcards[currentFlashcard].translation}`)
      $("#score").html(score)
      // Add false answer to the list
-    $("#your-answers").append("<li class="text-red-400">" + flashcards[currentFlashcard].translation + "</li>");
+    $("#your-answers").append(`<li class="text-red-400">flashcards[currentFlashcard].translation</li>`);
     
 }
 
