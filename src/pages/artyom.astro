@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Real-time Speech-to-Text with Artyom.js</title>
+  <script src="artyom.min.js"></script>
+</head>
+<body>
+  <button id="startButton">Start Speech Recognition</button>
+  <div id="output"></div>
+
+  <script>
+    const finalRes = [];
+
+    document.addEventListener('DOMContentLoaded', function () {
+      var artyom = new Artyom();
+
+      var outputDiv = document.getElementById('output');
+      var startButton = document.getElementById('startButton');
+
+      var isRecognizing = false;
+
+      startButton.addEventListener('click', function () {
+        if (!isRecognizing) {
+          artyom.fatality();
+
+          setTimeout(function () {
+            artyom.initialize({
+              lang: 'en-US',
+              continuous: true,
+              listen: true,
+              interimResults: false,
+              debug: true,
+            }).then(function () {
+              console.log('Artyom initialized');
+              // artyom.say('Speech recognition started');
+            });
+          }, 250);
+        } else {
+          artyom.fatality();
+        }
+
+        isRecognizing = !isRecognizing;
+        startButton.innerText = isRecognizing ? 'Stop Speech Recognition' : 'Start Speech Recognition';
+      });
+
+      artyom.addCommands({
+        indexes: ['stop'],
+        action: function () {
+          artyom.fatality();
+          startButton.innerText = 'Start Speech Recognition';
+          isRecognizing = false;
+          outputDiv.innerHTML = '';
+
+          // Save finalRes array to local storage
+          localStorage.setItem('finalRes', JSON.stringify(finalRes));
+
+          // Send outputDiv value to OpenAI API
+          const content = outputDiv.innerText;
+          checkVocabularyLevel(content);
+          checkGrammar(content);
+        },
+      });
+
+      artyom.redirectRecognizedTextOutput(function (recognized, isFinal) {
+        if (isFinal) {
+          outputDiv.innerHTML += '<p>' + recognized + '</p>';
+
+          console.log(recognized);
+
+          // Add recognized text to finalRes array
+          finalRes.push(recognized);
+        }
+      });
+    });
+
+    // Retrieve saved data from local storage
+    const savedData = localStorage.getItem('finalRes');
+    const finalRes = savedData ? JSON.parse(savedData) : [];
+
+    // Get the length of the finalRes array
+    const finalResLength = finalRes.length;
+    console.log('Length of finalRes:', finalResLength);
+
+    function checkVocabularyLevel(content) {
+      const openaiApiKey = 'YOUR_OPENAI_API_KEY';
+      const openaiUrl = 'https://api.openai.com/v1/engines/davinci-codex/completions';
+
+      const prompt = `What is the vocabulary level of the given text? "${content}"`;
+
+      fetch(openaiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${openaiApiKey}`
+        },
+        body: JSON.stringify({
+          prompt: prompt,
+          max_tokens: 1,
+          temperature: 0.0
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        const vocabularyLevel = data.choices[0].text.trim();
+        console.log('Vocabulary Level:', vocabularyLevel);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
+
+    function checkGrammar(content) {
+      const textgearsApiKey = 'YOUR_TEXTGEARS_API_KEY';
+      const textgearsUrl = 'https://api.textgears.com/grammar';
+
+      fetch(`${textgearsUrl}?text=${encodeURIComponent(content)}&key=${textgearsApiKey}`)
+        .then(response => response.json())
+        .then(data => {
+          console.log('Grammar Check Results:', data);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    }
+  </script>
+</body>
+</html>
