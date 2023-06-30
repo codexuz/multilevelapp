@@ -146,7 +146,6 @@ function playCurrentVideo() {
         var videoObj = videos[currentVideoIndex];
         $('#videoPlayer').attr('src', videoObj.video);
         $('#text').text(videoObj.text);
-        $('#videoPlayer').trigger('play');
         $("#hint").hide();
       } else {
         console.log('No videos found in IndexedDB.');
