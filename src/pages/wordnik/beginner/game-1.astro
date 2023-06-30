@@ -139,7 +139,8 @@ let randomMessage;
 function checkAnswer(){
 	const taken=$("#answer").val().replace(/\s|-|'/g, "")
 const TypedValue=taken.toLowerCase()
-	if (TypedValue===flashcards[currentFlashcard].translation.replace(/\s|-|'/g, "")) {
+  const correctTranslation = flashcards[currentFlashcard].translation.replace(/\s|-|'/g, "");
+	if (TypedValue===correctTranslation) {
 		score++
 		overallScore.push(score)
 		console.log(overallScore)
@@ -154,7 +155,9 @@ const TypedValue=taken.toLowerCase()
      $("#feedback").removeClass("text-red-600")
      $("#feedbar").addClass("bg-green-200")
      $("#feedback").addClass("text-green-600")
-     $("#score").html(score)
+     $("#score").html(score);
+      // Add true answer to the list
+    $("#your-answers").append("<li class="text-green-400">" + flashcards[currentFlashcard].translation + "</li>");
 }
 else{
    document.getElementById("fail").play()
@@ -168,6 +171,8 @@ else{
      $("#feedback").text("Wrong!")
      $("#comment").text(`Answer: ${flashcards[currentFlashcard].translation}`)
      $("#score").html(score)
+     // Add false answer to the list
+    $("#your-answers").append("<li class="text-red-400">" + flashcards[currentFlashcard].translation + "</li>");
     
 }
 
