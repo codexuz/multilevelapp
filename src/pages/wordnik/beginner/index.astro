@@ -1,0 +1,85 @@
+---
+import Layout from '../../../layouts/Layout.astro'
+---
+
+
+<Layout title="Beginner Words">
+
+   <div class="container"></div> 
+
+
+</Layout>
+
+<style>
+        *{
+            
+            box-sizing: border-box;
+        }
+        .container{
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+        margin: 0 10%;
+        }
+
+        .flex{
+            display: flex;
+            align-items: center;
+        }
+
+        .card{
+            width: 100%;
+            height: auto;
+            padding: 1px 30px;
+            background-color: rgb(255, 255, 255);
+            border: 1px solid gainsboro;
+            margin: 10px 0;
+            border-radius: 8px;
+        }
+
+        .subtitle{
+            color: rgb(173, 173, 173);
+            font-size: 16px;
+            margin: 0 10px;
+        }
+
+        .desc{
+            font-style: italic;
+            font-weight: bold;
+
+        }
+    </style>
+
+
+<script is:inline>
+
+const container=document.querySelector(".container")
+
+const renderwords= async ()=>{
+    let box='';
+        const res=await fetch("http://localhost:3000/games")
+        const data=await res.json()     
+        data.forEach((el)=>{
+          box+=`
+          <a href="details?id=${el.id}" target="_blank" class="card">
+            <h3 class="title">${el.title}</h3>
+            <p class="desc">${el.desc}</p>
+            </a>
+            `
+
+        })
+        container.innerHTML=box
+    }
+
+
+
+window.addEventListener("DOMContentLoaded", ()=> renderwords())
+
+
+
+
+
+
+
+
+</script>
