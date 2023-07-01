@@ -9,7 +9,7 @@ import Score from '../../../components/beginner/Score.astro'
 <head>
 <link href="https://cdn.jsdelivr.net/npm/daisyui@3.1.6/dist/full.css" rel="stylesheet" type="text/css" />
 </head>
-<Layout title="Beginner Game-1">
+<Layout title="Beginner Game">
 <Alert/>
 <div id="main" class="w-full mx-auto px-4 min-h-screen bg-white">
 <Header/>
@@ -36,96 +36,6 @@ let progress = 5;
 $("#progress").val(progress)
 
 
-//FlashCards
-
- // Define the flashcards
-const flashcards = [
-	 {
-      word: "true",
-      translation: "to'g'ri"
-    },
-    {
-      word: "beautiful",
-      translation: "chiroyli"
-    },
-    {
-      word: "picture",
-      translation: "rasm"
-    },
-    {
-      word: "vegetarian",
-      translation: "o'txo'r"
-    },
-    {
-      word: "meat",
-      translation: "go'sht"
-    },
-    {
-      word: "friend",
-      translation: "do'st"
-    },
-    {
-      word: "parent",
-      translation: "ota-ona"
-    },
-    {
-      word: "start",
-      translation: "boshlamoq"
-    },
-    {
-      word: "snow",
-      translation: "qor"
-    },
-    {
-      word: "wrong",
-      translation: "xato"
-    },
-    {
-      word: "unemployed",
-      translation: "ishsiz"
-    },
-    {
-      word: "late",
-      translation: "kechikmoq"
-    },
-    {
-      word: "be tired",
-      translation: "charchamoq"
-    },
-    {
-      word: "a few",
-      translation: "bir nechta"
-    },
-    {
-      word: "ago",
-      translation: "oldin"
-    },
-    {
-      word: "a few minutes ago",
-      translation: "bir necha daqiqa oldin"
-    },
-    {
-      word: "better",
-      translation: "yaxshiroq"
-    },
-    {
-      word: "last night",
-      translation: "o'tgan tun"
-    },
-    {
-      word: "exam",
-      translation: "imtihon"
-    },
-    {
-      word: "holiday",
-      translation: "ta'til"
-    }
-]
-
-
-
-//Main function
-
 var audio=document.createElement("audio")
 var audio2=document.createElement("audio")
 var audio3=document.createElement("audio")
@@ -144,10 +54,16 @@ $("#main").append(audio3)
 
 let randomMessage;
 
-function checkAnswer(){
+const id = new URLSearchParams(window.location.search).get("id");
+
+  const renderdetails= async ()=>{
+    const res= await fetch('http://localhost:3000/games/'+ id);
+    var flashcards= await res.json();
+
+ $("#check-btn").click(function(){
 	const taken=$("#answer").val().replace(/\s|-|'/g, "")
 const TypedValue=taken.toLowerCase()
-  const correctTranslation = flashcards[currentFlashcard].translation.replace(/\s|-|'/g, "");
+  const correctTranslation = flashcards.words[currentFlashcard].translation.replace(/\s|-|'/g, "");
 	if (TypedValue===correctTranslation) {
 		score++
 		overallScore.push(score)
@@ -165,7 +81,7 @@ const TypedValue=taken.toLowerCase()
      $("#feedback").addClass("text-green-600")
      $("#score").html(score);
       // Add true answer to the list
-    $("#your-answers").append(`<li class="text-green-400">${flashcards[currentFlashcard].word} - ${flashcards[currentFlashcard].translation}</li>`);
+    $("#your-answers").append(`<li class="text-green-400">${flashcards.words[currentFlashcard].word} - ${flashcards.words[currentFlashcard].translation}</li>`);
 }
 else{
    document.getElementById("fail").play()
@@ -177,19 +93,19 @@ else{
      $("#feedbar").addClass("bg-red-200")
      $("#feedback").addClass("text-red-600")
      $("#feedback").text("Wrong!")
-     $("#comment").text(`Answer: ${flashcards[currentFlashcard].translation}`)
+     $("#comment").text(`Answer: ${flashcards.words[currentFlashcard].translation}`)
      $("#score").html(score)
      // Add false answer to the list
-    $("#your-answers").append(`<li class="text-red-400">${flashcards[currentFlashcard].word} - ${flashcards[currentFlashcard].translation}</li>`);
+    $("#your-answers").append(`<li class="text-red-400">${flashcards.words[currentFlashcard].word} - ${flashcards.words[currentFlashcard].translation}</li>`);
     
 }
 
-}
+});
  
 
  //Next word
 
-function nextFlashcard() {
+$("#next-btn").click(function(){
 var congrats=["Good", "Super!","Perfect!"]
 var randomCongrats=Math.floor(Math.random()*congrats.length)
 randomMessage = congrats[randomCongrats];
@@ -221,7 +137,7 @@ $("#answer").on("focus", function() {
     $("#feedback").text("");
   })
 
-  if (currentFlashcard === flashcards.length) {
+  if (currentFlashcard === flashcards.words.length) {
   	$("#main").hide()
   	$("#last").show()
   	var scoreOver = overallScore.length - 1;
@@ -232,8 +148,8 @@ $("#answer").on("focus", function() {
         document.getElementById("end").play()
   }
 
-  $("#word").html(flashcards[currentFlashcard].word)
-  $("#word").attr("title", (flashcards[currentFlashcard].translation))
+  $("#word").html(flashcards.words[currentFlashcard].word)
+  $("#word").attr("title", (flashcards.words[currentFlashcard].translation))
   var wordValue=$("#word").text()
   const voiceName = "UK English Male";
       responsiveVoice.speak(wordValue, voiceName);
@@ -242,12 +158,12 @@ $("#answer").on("focus", function() {
       const voiceName = "UK English Male";
       responsiveVoice.speak(wordValue, voiceName);
     })
-}
+});
 
 
 //Set initial page
-$("#word").html(flashcards[currentFlashcard].word)
-$("#word").attr("title", (flashcards[currentFlashcard].translation))
+$("#word").html(flashcards.words[currentFlashcard].word)
+$("#word").attr("title", (flashcards.words[currentFlashcard].translation))
 
 $(document).ready(function(){
     wordValue=wordValue=$("#word").text()
@@ -288,5 +204,9 @@ $("#accept").click(()=>{
   window.open("/")
   window.close()
 })
+
+}
+
+window.addEventListener("DOMContentLoaded", ()=> renderdetails())
 
 </script>
