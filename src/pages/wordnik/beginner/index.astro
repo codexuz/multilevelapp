@@ -22,10 +22,10 @@ const renderwords= async ()=>{
         const data=await res.json()     
         data.forEach((el)=>{
           box+=`
-          <a href="details?id=${el.id}" target="_blank" class="rounded-lg shadow-lg my-2 p-3 bg-white text-gray-900 dark:bg-slate-700 dark:text-white">
+          <div onclick="window.open('details?id=${el.id}') class="rounded-lg shadow-lg my-2 p-3 bg-white text-gray-900 dark:bg-slate-700 dark:text-white">
             <h3 class="text-xl font-bold">${el.title}</h3>
             <p class="text-lg">${el.desc}</p>
-            </a>
+            </div>
             `
 
         })
