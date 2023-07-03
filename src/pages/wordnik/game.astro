@@ -79,53 +79,38 @@ import ScorePage from '../../components/wordnik/ScorePage.astro'
 // Function to start speech recognition
 function startSpeechRecognition() {
   const artyom = new Artyom();
-  var isRecognizing = false;
-  
-  if (!isRecognizing) {
-    artyom.fatality();
 
-    setTimeout(function () {
-      artyom.initialize({
-        lang: 'en-US',
-        continuous: false,
-        listen: true,
-        interimResults: true,
-        debug: true,
-      }).then(function () {
-        console.log('Artyom initialized');
-        // artyom.say('Speech recognition started');
-      });
-    }, 250);
-  } else {
-    artyom.fatality();
-  }
+  // Set up Artyom's language
+  artyom.initialize({
+    lang: "en-US",
+    continuous: false,
+    listen: true,
+    debug: true
+  });
 
-  artyom.redirectRecognizedTextOutput(function (recognized, isFinal) {
-    if (recognized === flashcards[currentFlashcard].word) {
+  // Start listening for speech
+  artyom.on("result", function(event) {
+    const spokenWord = event[0].toLowerCase();
+    if (spokenWord === flashcards[currentFlashcard].word) {
       score++;
-      
+
       $("#Feedback").show();
       $("#feed").text("Well Done!");
       $("#feed").css("color", "white");
       $("#Feedback").css("background", "#25f20a");
       $("#score").text(`${score}/37`);
     } else {
-      // Handle wrong answer or timeout
+      console.log("Oh no");
+      $("#Feedback").show();
+      $("#Feedback").css("background", "#e61037");
+      $("#feed").text("Wrong. Try again!");
+      $("#feed").css("color", "white");
+      $("#play").addClass("animate-ping");
       setTimeout(() => {
-        console.log("Oh no");
-        $("#Feedback").show();
-        $("#Feedback").css("background", "#e61037");
-        $("#feed").text("Wrong. Try again!");
-        $("#feed").css("color", "white");
-        $("#play").addClass("animate-ping");
-        setTimeout(() => {
-          $("#play").removeClass("animate-ping");
-        }, 1800);
-
-        // Stop listening for speech
-        artyom.fatality();
-      }, 3500); // Adjust the timeout duration as per your requirement
+        $("#play").removeClass("animate-ping");
+      }, 1800);
     }
+    //nextFlashcard();
   });
 }
 
