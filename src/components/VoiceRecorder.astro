@@ -84,10 +84,14 @@ import 'font-awesome/css/font-awesome.min.css'
     <button id="stop">Stop record...</button>
 </div>
 <div id="player" class="bg-gray-800 hidden">
-    <svg id="play" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 text-white">
+   <svg id="save" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 mx-1">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9.75v6.75m0 0l-3-3m3 3l3-3m-8.25 6a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
+</svg>
+
+    <svg id="play" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 text-white mx-1">
   <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm14.024-.983a1.125 1.125 0 010 1.966l-5.603 3.113A1.125 1.125 0 019 15.113V8.887c0-.857.921-1.4 1.671-.983l5.603 3.113z" clip-rule="evenodd" />
 </svg>
- <svg id="cancel" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 text-white">
+ <svg id="cancel" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 text-white mx-1">
   <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.72 6.97a.75.75 0 10-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 101.06 1.06L12 13.06l1.72 1.72a.75.75 0 101.06-1.06L13.06 12l1.72-1.72a.75.75 0 10-1.06-1.06L12 10.94l-1.72-1.72z" clip-rule="evenodd" />
 </svg>
 
@@ -101,6 +105,7 @@ import 'font-awesome/css/font-awesome.min.css'
 let recorder, audio_stream;
 const preview = document.getElementById("preview");
 const stopBtn=document.getElementById("stop")
+const save=document.getElementById("save")
 const recBtn=document.getElementById("record");
 const player=document.getElementById("player");
 const bar=document.getElementById("bar");
@@ -111,6 +116,7 @@ const cancelBtn=document.getElementById("cancel")
 preview.style.display="none";
 bar.style.display="none"
 stopBtn.style.display="none";
+save.addEventListener("click", downloadRecording)
 stopBtn.addEventListener("click", stopRecording);  
 recBtn.addEventListener("click", startRecording)
 player.style.display="none";
@@ -176,23 +182,46 @@ cancelBtn.addEventListener("click", function(){
 
 //Start record
 
-    function startRecording() {
-    navigator.mediaDevices.getUserMedia({ audio: true })
-        .then(function (stream) {
-            audio_stream = stream;
-            recorder = new MediaRecorder(stream);
+  // Start Btn recStart
+recBtn.addEventListener("click", function(){
+  recBtn.style.display = "none";
+  stopBtn.style.display = "block";
+  startRecording();
+});
 
-            // when there is data, compile into object for preview src
-            recorder.ondataavailable = function (e) {
-                const url = URL.createObjectURL(e.data);
-                preview.src = url;
 
-                // set link href as blob url, replaced instantly if re-recorded
-                downloadAudio.href = url;
-            };
-            recorder.start();
 
-        });
+let recordedChunks = [];
+let audio_stream;
+let recorder;
+
+// Start record
+function startRecording() {
+  navigator.mediaDevices.getUserMedia({ audio: true })
+    .then(function (stream) {
+      audio_stream = stream;
+      recorder = new MediaRecorder(stream);
+
+      // when there is data, compile into object for preview src
+      recorder.ondataavailable = function (e) {
+        recordedChunks.push(e.data);
+        const url = URL.createObjectURL(e.data);
+        preview.src = url;
+
+        // set link href as blob url, replaced instantly if re-recorded
+        downloadAudio.href = url;
+      };
+      recorder.start();
+    });
+}
+
+function downloadRecording() {
+  const blob = new Blob(recordedChunks, { type: 'audio/webm' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'recording.webm';
+  a.click();
 }
 
 
@@ -207,8 +236,6 @@ function stopRecording() {
     recorder.stop();
     audio_stream.getAudioTracks()[0].stop();
 }
-
-
 
 
 </script>
