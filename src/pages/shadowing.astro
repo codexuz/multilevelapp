@@ -128,15 +128,15 @@ function playNextVideo() {
 }
 
 // Function to start speech recognition
-function startSpeechRecognition() {
-  attachMicrophone();
-  client.startContext();
+async function startSpeechRecognition() {
+  await attachMicrophone();
+    await client.start();
   isSpeechRecognitionActive = true;
 }
 
 // Function to stop speech recognition
-function stopSpeechRecognition() {
-  client.stopContext();
+async function stopSpeechRecognition() {
+  await client.stop();
   isSpeechRecognitionActive = false;
 }
 
@@ -150,9 +150,7 @@ function showUserSpeech(userSpeech) {
 const attachMicrophone = async () => {
   if (microphone.mediaStream) return;
   await microphone.initialize();
-  await client.initialize();
-  await client.startContext();
-  await client.attachAudioProcessor(microphone);
+  await client.attach(microphone.mediaStream);
 };
 
 // Event listener for the "nextButton"
