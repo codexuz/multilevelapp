@@ -7,7 +7,7 @@ import Layout from '../layouts/Layout.astro'
   <div id="shadowing_page">
   <video class="aspect-video lg:w-full rounded-lg  mb-3" src=""  id="videoPlayer" width="700" height="409">
   </video>
-  <center><button id="replay" class="hidden my-1 bg-rose-500 rounded-lg text-white text-lg px-5 py-2">Replay</button></center>
+  <center><button id="replay" class="my-1 bg-rose-500 rounded-lg text-white text-lg px-5 py-2">Replay</button></center>
   <p id="hint" class="hidden text-green-400 font-bold text-center my-1 text-lg">Start Speaking...</p>
   <p id="text" class="bg-indigo-500 p-3 text-white rounded-lg"></p>
   <textarea id="userSpeech" rows="4" readonly="readonly" class="hidden my-5 block p-2.5 w-full text-sm text-gray-900 bg-white rounded-lg border outline-0 border-blue-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Your response shown here ..."></textarea>
@@ -175,6 +175,6 @@ document.getElementById("videoPlayer").addEventListener("end", ()=>{
 startSpeechRecognition()
 $("#replay").show()
 })
-
+startSpeechRecognition()
   </script>
 
