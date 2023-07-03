@@ -87,9 +87,9 @@ function startSpeechRecognition() {
     setTimeout(function () {
       artyom.initialize({
         lang: 'en-US',
-        continuous: true,
+        continuous: false,
         listen: true,
-        interimResults: false,
+        interimResults: true,
         debug: true,
       }).then(function () {
         console.log('Artyom initialized');
