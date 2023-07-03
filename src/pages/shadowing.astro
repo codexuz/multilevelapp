@@ -137,7 +137,6 @@ async function startSpeechRecognition() {
 async function stopSpeechRecognition() {
   await client.stop();
   isSpeechRecognitionActive = false;
-$("#replay).show()
 }
 
 // Function to show user's speech
@@ -177,6 +176,7 @@ stopSpeechRecognition()
 
 document.getElementById("videoPlayer").addEventListener("end", ()=>{
 stopSpeechRecognition()
+$("#replay).show()
 })
 
   </script>
