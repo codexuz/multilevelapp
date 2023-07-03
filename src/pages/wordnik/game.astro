@@ -98,9 +98,7 @@ artyom.addCommands({
       $("#Feedback").css("background", "#25f20a");
       $("#score").text(`${score}/37`);
   },
- 
-});
-setTimeout( function(){
+  else: function() {
       console.log("Oh no");
       $("#Feedback").show();
       $("#Feedback").css("background", "#e61037");
@@ -110,7 +108,10 @@ setTimeout( function(){
       setTimeout(() => {
         $("#play").removeClass("animate-ping");
       }, 1800);
-},5000)
+    }
+ 
+});
+
 }
     
   
