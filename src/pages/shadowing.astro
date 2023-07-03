@@ -171,6 +171,13 @@ client.onSegmentChange((segment) => {
 // Initialize the video player and play the current video
 playCurrentVideo();
 
+document.getElementById("videoPlayer").addEventListener("playing", ()=>{
+stopSpeechRecognition()
+}
+
+document.getElementById("videoPlayer").addEventListener("end", ()=>{
+stopSpeechRecognition()
+}
 
   </script>
 
