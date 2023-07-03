@@ -88,18 +88,17 @@ function startSpeechRecognition() {
     debug: true
   });
 
-  // Start listening for speech
-  artyom.on("result", function(event) {
-    const spokenWord = event[0].toLowerCase();
-    if (spokenWord === flashcards[currentFlashcard].word) {
+artyom.addCommands({
+  indexes: [flashcards[currentFlashcard].word],
+  action: function() {
       score++;
-
       $("#Feedback").show();
       $("#feed").text("Well Done!");
       $("#feed").css("color", "white");
       $("#Feedback").css("background", "#25f20a");
       $("#score").text(`${score}/37`);
-    } else {
+  },
+ setTimeout( function(){
       console.log("Oh no");
       $("#Feedback").show();
       $("#Feedback").css("background", "#e61037");
@@ -109,10 +108,11 @@ function startSpeechRecognition() {
       setTimeout(() => {
         $("#play").removeClass("animate-ping");
       }, 1800);
-    }
-    //nextFlashcard();
-  });
-}
+},5000)
+});
+    
+  
+   
 
 
   
