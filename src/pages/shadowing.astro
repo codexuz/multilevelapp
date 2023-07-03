@@ -28,8 +28,7 @@ import Layout from '../layouts/Layout.astro'
 
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" is:inline></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/annyang/2.6.1/annyang.min.js" is:inline></script>
-  <script is:inline>
+  <script type="module" is:inline>
     var videos = [
       {
         video: "https://xirurgabdukarim.uz/shadow/1.mp4",
@@ -75,81 +74,106 @@ We're told that on his body was found a diary. On the flyleaf under the heading,
      }
     ];
 
+// Import Speechly browser client and microphone
+import { BrowserClient, BrowserMicrophone } from 'https://cdn.jsdelivr.net/npm/@speechly/browser-client@2.6/+esm';
+
 var currentVideoIndex = 0;
-    var isSpeechRecognitionActive = false;
-    
-    $("#replay").click(function(){
-      $('#videoPlayer').trigger('play')
-      $('#userSpeech').val('');
-      stopSpeechRecognition()
-    })
-     
-    $("#start").click(function(){
-      playCurrentVideo()
-      $('#videoPlayer').trigger('play')
-      $("#start").hide()
-      $("#nextButton").show()
-      $("#userSpeech").show()
-    }) 
-    
-    // Function to play the current video
-    function playCurrentVideo() {
-      var videoObj = videos[currentVideoIndex];
-      $('#videoPlayer').attr('src', videoObj.video);
-      $('#text').text(videoObj.text);
-       $("#hint").hide()
-    }
+var isSpeechRecognitionActive = false;
 
-    // Function to play the next video
-    function playNextVideo() {
-      if (currentVideoIndex < videos.length - 1) {
-        currentVideoIndex++;
-        playCurrentVideo();
-        $('#videoPlayer').trigger('play')
-        stopSpeechRecognition()
-        $("#replay").hide()
-        // Clear user's speech
-      }
-      else if(currentVideoIndex = videos.length){
-        $("#shadowing_page").hide()
-        $("#last_page").show()
-        $('#videoPlayer').trigger('pause')
-      }
-    }
+// Create instances of BrowserMicrophone and BrowserClient
+const microphone = new BrowserMicrophone();
+const client = new BrowserClient({
+  appId: '0925777a-aac9-49ce-bad8-6f0989cf30e6',
+  logSegments: true,
+  debug: true,
+});
 
-    // Function to start speech recognition
-    function startSpeechRecognition() {
-      //annyang.abort();
-      annyang.addCallback('result', showUserSpeech);
-      annyang.start({ autoRestart: true, continuous: true });
-      $("#replay").show()
-      $("#hint").show()
-      setTimeout(()=>{
-        $("#hint").hide()
-       }, 4000)
-      isSpeechRecognitionActive = true;
-    }
+$("#replay").click(function() {
+  $('#videoPlayer').trigger('play');
+  $('#userSpeech').val('');
+  stopSpeechRecognition();
+});
 
-    // Function to stop speech recognition
-    function stopSpeechRecognition() {
-      annyang.abort();
-      $("#hint").hide()
-      isSpeechRecognitionActive = false;
-    }
+$("#start").click(function() {
+  playCurrentVideo();
+  $('#videoPlayer').trigger('play');
+  $("#start").hide();
+  $("#nextButton").show();
+  $("#userSpeech").show();
+  startSpeechRecognition();
+});
 
-    // Function to show user's speech
-    function showUserSpeech(userSpeech) {
-      var userSpeechInput = $('#userSpeech');
-      userSpeechInput.val(userSpeech[0]); // Display user's speech
-    }
+// Function to play the current video
+function playCurrentVideo() {
+  var videoObj = videos[currentVideoIndex];
+  $('#videoPlayer').attr('src', videoObj.video);
+  $('#text').text(videoObj.text);
+  $("#hint").hide();
+}
 
-    $(document).ready(function() {
-      playCurrentVideo();
-      $('#nextButton').on('click', function() {
-        playNextVideo();
-        $('#userSpeech').val(''); 
-      });
-    });
+// Function to play the next video
+function playNextVideo() {
+  if (currentVideoIndex < videos.length - 1) {
+    currentVideoIndex++;
+    playCurrentVideo();
+    $('#videoPlayer').trigger('play');
+    stopSpeechRecognition();
+    $("#replay").hide();
+    $('#userSpeech').val('');
+  } else if (currentVideoIndex === videos.length - 1) {
+    $("#shadowing_page").hide();
+    $("#last_page").show();
+    $('#videoPlayer').trigger('pause');
+  }
+}
+
+// Function to start speech recognition
+function startSpeechRecognition() {
+  attachMicrophone();
+  client.startContext();
+  isSpeechRecognitionActive = true;
+}
+
+// Function to stop speech recognition
+function stopSpeechRecognition() {
+  client.stopContext();
+  isSpeechRecognitionActive = false;
+}
+
+// Function to show user's speech
+function showUserSpeech(userSpeech) {
+  var userSpeechInput = $('#userSpeech');
+  userSpeechInput.val(userSpeech);
+}
+
+// Create an async function to attach the microphone
+const attachMicrophone = async () => {
+  if (microphone.mediaStream) return;
+  await microphone.initialize();
+  await client.initialize();
+  await client.startContext();
+  await client.attachAudioProcessor(microphone);
+};
+
+// Event listener for the "nextButton"
+$('#nextButton').on('click', function() {
+  playNextVideo();
+  $('#userSpeech').val('');
+  stopSpeechRecognition();
+});
+
+// Event listener for the microphone button
+micBtn.addEventListener('click', startSpeechRecognition);
+
+// Event listener for the onSegmentChange event
+client.onSegmentChange((segment) => {
+  const text = segment.words.map((word) => word.value).join(' ');
+  showUserSpeech(text);
+});
+
+// Initialize the video player and play the current video
+playCurrentVideo();
+
 
   </script>
 
