@@ -100,7 +100,6 @@ $("#start").click(function() {
   $("#start").hide();
   $("#nextButton").show();
   $("#userSpeech").show();
-  startSpeechRecognition();
 });
 
 // Function to play the current video
@@ -138,6 +137,7 @@ async function startSpeechRecognition() {
 async function stopSpeechRecognition() {
   await client.stop();
   isSpeechRecognitionActive = false;
+$("#replay).show()
 }
 
 // Function to show user's speech
