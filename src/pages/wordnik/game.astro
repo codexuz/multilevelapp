@@ -77,35 +77,43 @@ import ScorePage from '../../components/wordnik/ScorePage.astro'
   
   
   // Function to start speech recognition
-  function startSpeechRecognition() {
-    const recognition = new window.webkitSpeechRecognition();
-    recognition.continuous = false;
-    recognition.lang = "en-US";
-    recognition.onresult = function(event) {
-      const spokenWord = event.results[0][0].transcript.toLowerCase();
-      if (spokenWord === flashcards[currentFlashcard].word) {
-        score++;
+function startSpeechRecognition() {
+  const artyom = new Artyom();
+
+  // Add commands for the expected spoken words
+  artyom.addCommands({
+    indexes: [flashcards[currentFlashcard].word],
+    action: function () {
+      score++;
+      
+      $("#Feedback").show();
+      $("#feed").text("Well Done!");
+      $("#feed").css("color","white");
+      $("#Feedback").css("background", "#25f20a");
+      $("#score").text(`${score}/37`);
+    }
+  });
+
+  // Start listening for speech
+  artyom.start();
   
-        $("#Feedback").show()
-        $("#feed").text("Well Done!");
-        $("#feed").css("color","white")
-        $("#Feedback").css("background", "#25f20a")
-        $("#score").text(`${score}/37`);
-      } else {
-        console.log("Oh no");
-        $("#Feedback").show()
-        $("#Feedback").css("background", "#e61037")
-        $("#feed").text("Wrong. Try again!");
-        $("#feed").css("color","white")
-        $("#play").addClass("animate-ping")
-        setTimeout(()=>{
-          $("#play").removeClass("animate-ping")
-        },1800)
-      }
-      //nextFlashcard();
-    };
-    recognition.start();
-  }
+  // Handle wrong answer or timeout
+  setTimeout(() => {
+    console.log("Oh no");
+    $("#Feedback").show();
+    $("#Feedback").css("background", "#e61037");
+    $("#feed").text("Wrong. Try again!");
+    $("#feed").css("color","white");
+    $("#play").addClass("animate-ping");
+    setTimeout(() => {
+      $("#play").removeClass("animate-ping");
+    }, 1800);
+    
+    // Stop listening for speech
+    artyom.fatality();
+  }, 5000); // Adjust the timeout duration as per your requirement
+}
+
   
   // Function to move to the next flashcard
   function nextFlashcard() {
