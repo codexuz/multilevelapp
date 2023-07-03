@@ -1,55 +1,111 @@
 <div class="mb-5 w-full p-8 bg-white rounded-lg border-2 border-indigo-300 shadow-lg">
   <textarea id="result" class="border-0 text-blue-500 w-full" style="height:300px"></textarea>
-  <p id="interm" class="hidden"></p>
 </div>
 
-<script type="module" is:inline>
+<script is:inline>
 
-import { BrowserClient, BrowserMicrophone  } from 'https://cdn.jsdelivr.net/npm/@speechly/browser-client@2.6/+esm' 
 
-  const microphone = new BrowserMicrophone();
-const client = new BrowserClient({
-  appId: '4f5424a4-db20-4d24-b4e0-3a60ec67f7d5',
-  logSegments: true,
-  debug: true,
-})
+// required dom elements
+const buttonEl = document.getElementById('start-btn');
+const messageEl = document.getElementById('result');
 
-const micBtn = document.getElementById('start-btn');
+// set initial state of application variables
+messageEl.style.display = 'none';
+let isRecording = false;
+let socket;
+let recorder;
 
-const attachMicrophone = async () => {
-  if (microphone.mediaStream) return;
-  await microphone.initialize();
-  await client.attach(microphone.mediaStream);
-};
+// stop recording and terminate session
+const stopRecording = () => {
+  if (socket) {
+    socket.send(JSON.stringify({ terminate_session: true }));
+    socket.close();
+    socket = null;
+  }
 
-const handleClick = async () => {
-  if (client.isActive()) {
-    await client.stop();
-    micBtn.innerText = 'Start microphone';
-  } else {
-    await attachMicrophone();
-    await client.start();
-    micBtn.innerText = 'Stop microphone';
+  if (recorder) {
+    recorder.pauseRecording();
+    recorder = null;
   }
 };
 
-micBtn.addEventListener('click', handleClick);
+// start recording and establish WebSocket connection
+const startRecording = async () => {
+  const response = await fetch('https://mock-chi-taupe.vercel.app/api'); // get temp session token from server.js (backend)
+  const data = await response.json();
 
-const transcripts = document.getElementById('result');
-const tentative = document.getElementById('interm');
-
-client.onSegmentChange((segment) => {
-  const text = segment.words.map((word) => word.value).join(' ');
-  tentative.innerHTML = `<em>${text}</em>`;
-  if (segment.isFinal) {
-    transcripts.innerHTML += capitalize(text) + '. ';
-    tentative.innerHTML = '';
+  if (data.error) {
+    alert(data.error);
+    return;
   }
-});
 
-function capitalize(sentence) {
-return sentence.charAt(0).toUpperCase() + sentence.slice(1);
-}
+  const { token } = data;
+
+  // establish wss with AssemblyAI (AAI) at 16000 sample rate
+  socket = await new WebSocket(`wss://api.assemblyai.com/v2/realtime/ws?sample_rate=16000&token=${token}`);
+
+  // handle incoming messages to display transcription to the DOM
+  const texts = {};
+  socket.onmessage = (message) => {
+    let msg = '';
+    const res = JSON.parse(message.data);
+    texts[res.audio_start] = res.text;
+    const keys = Object.keys(texts);
+    keys.sort((a, b) => a - b);
+    for (const key of keys) {
+      if (texts[key]) {
+        msg += ` ${texts[key]}`;
+      }
+    }
+    messageEl.innerText = msg;
+  };
+
+  socket.onerror = (event) => {
+    console.error(event);
+    socket.close();
+  };
+
+  socket.onclose = (event) => {
+    console.log(event);
+    socket = null;
+  };
+
+  socket.onopen = () => {
+    // once socket is open, begin recording
+    messageEl.style.display = '';
+    navigator.mediaDevices.getUserMedia({ audio: true })
+      .then((stream) => {
+        recorder = new RecordRTC(stream, {
+          type: 'audio',
+          mimeType: 'audio/webm;codecs=pcm', // endpoint requires 16bit PCM audio
+          recorderType: StereoAudioRecorder,
+          timeSlice: 250, // set 250 ms intervals of data that sends to AAI
+          desiredSampRate: 16000,
+          numberOfAudioChannels: 1, // real-time requires only one channel
+          bufferSize: 4096,
+          audioBitsPerSecond: 128000,
+          ondataavailable: (blob) => {
+            const reader = new FileReader();
+            reader.onload = () => {
+              const base64data = reader.result;
+
+              // audio data must be sent as a base64 encoded string
+              if (socket) {
+                socket.send(JSON.stringify({ audio_data: base64data.split('base64,')[1] }));
+              }
+            };
+            reader.readAsDataURL(blob);
+          },
+        });
+
+        recorder.startRecording();
+      })
+      .catch((err) => console.error(err));
+  };
+};
+
+
+buttonEl.addEventListener('click', startRecording);
 
 
 
