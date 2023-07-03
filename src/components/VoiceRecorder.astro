@@ -203,8 +203,6 @@ function startRecording() {
         const url = URL.createObjectURL(e.data);
         preview.src = url;
 
-        // set link href as blob url, replaced instantly if re-recorded
-        downloadAudio.href = url;
       };
       recorder.start();
     });
