@@ -100,17 +100,22 @@ artyom.addCommands({
   }
 });
 
-  artyom.onNotMatch(function() {
-    console.log("Oh no");
-    $("#Feedback").show();
-    $("#Feedback").css("background", "#e61037");
-    $("#feed").text("Wrong. Try again!");
-    $("#feed").css("color", "white");
-    $("#play").addClass("animate-ping");
-    setTimeout(() => {
-      $("#play").removeClass("animate-ping");
-    }, 1800);
+// Handle incorrect recognition within the action function
+  artyom.redirectRecognizedTextOutput(function(recognized, isFinal) {
+    if (isFinal && recognized !== flashcards[currentFlashcard].word) {
+      console.log("Oh no");
+      $("#Feedback").show();
+      $("#Feedback").css("background", "#e61037");
+      $("#feed").text("Wrong. Try again!");
+      $("#feed").css("color", "white");
+      $("#play").addClass("animate-ping");
+      setTimeout(() => {
+        $("#play").removeClass("animate-ping");
+      }, 1800);
+    }
   });
+
+
 }
     
   
