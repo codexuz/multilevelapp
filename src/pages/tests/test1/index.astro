@@ -82,7 +82,7 @@ const audioPlayer=document.getElementById("audio")
 part1.style.display="none";
 
 
-
+/*
 //Recorder
 let audioStream, mediaRecorder, chunks;
 let isRecording = false;
@@ -149,7 +149,7 @@ let isRecording = false;
         }
       }
 
-
+*/
 
 
 //Scale UpandDown
@@ -187,7 +187,7 @@ var TextSize=document.getElementById("question-bar");
 
 //Step1
 function step0() {
-startRec();
+//startRec();
 	welcome.style.display="none";
 	part1.style.display="block"
 	que.innerHTML="What is your favourite festival?";
@@ -688,7 +688,7 @@ function examEnd(){
 	que_id.innerHTML='';
     section3.innerHTML=`<i class="fa fa-check-circle"></i>`
 	audio15.addEventListener("ended",function(){
-		stopRec();
+		//stopRec();
 		part1.style.display="none";
 		document.getElementById("alert-time").classList.remove("hidden")
     startCountdownend()
