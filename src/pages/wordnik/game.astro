@@ -97,21 +97,20 @@ artyom.addCommands({
       $("#feed").css("color", "white");
       $("#Feedback").css("background", "#25f20a");
       $("#score").text(`${score}/37`);
-  },
-  else: function() {
-      console.log("Oh no");
-      $("#Feedback").show();
-      $("#Feedback").css("background", "#e61037");
-      $("#feed").text("Wrong. Try again!");
-      $("#feed").css("color", "white");
-      $("#play").addClass("animate-ping");
-      setTimeout(() => {
-        $("#play").removeClass("animate-ping");
-      }, 1800);
-    }
- 
+  }
 });
 
+  artyom.onNotMatch(function() {
+    console.log("Oh no");
+    $("#Feedback").show();
+    $("#Feedback").css("background", "#e61037");
+    $("#feed").text("Wrong. Try again!");
+    $("#feed").css("color", "white");
+    $("#play").addClass("animate-ping");
+    setTimeout(() => {
+      $("#play").removeClass("animate-ping");
+    }, 1800);
+  });
 }
     
   
