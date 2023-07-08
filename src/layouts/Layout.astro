@@ -23,6 +23,7 @@ const { title } = Astro.props;
      crossorigin="anonymous"></script>
 		<meta name="generator" content={Astro.generator} />
 <script src="https://unpkg.com/webtonative@1.0.44/webtonative.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/lookforward@0.1.1/css/lookforward.min.css">
 		<script>
 
 const { appReview: AppReview } = window.WTN
@@ -42,7 +43,7 @@ AppReview.prompt()
 	<body>
 		<slot />
 <script src="https://code.responsivevoice.org/responsivevoice.js?key=3Wzpm5HU" is:inline></script>
-
+<script src="https://unpkg.com/lookforward@0.1.1/js/lookforward.min.js"></script>
 	</body>
 </html>
 <style is:global>
