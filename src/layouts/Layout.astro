@@ -19,7 +19,6 @@ const { title } = Astro.props;
 	<meta name="author" content="Kubayev Javlon">
 	<meta name="keywords" content="Exam Online, Multi Level, Speaking, IELTS, ingliz tili, Multi Level Speaking, Speaking exam">
 	<link rel="shortcut icon" href="/public/favicon.ico" type="image/x-icon">
-       <link rel="stylesheet" href="https://unpkg.com/lookforward@0.1.1/css/lookforward.min.css">
 	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8302696123269910"
      crossorigin="anonymous"></script>
 		<meta name="generator" content={Astro.generator} />
@@ -37,7 +36,6 @@ AppReview.prompt()
         document.documentElement.classList.remove('dark')
     }
 
-new LookForward('.js-lookforward');
 </script>
 		<title>{title}</title>
 	
@@ -45,7 +43,6 @@ new LookForward('.js-lookforward');
 	<body>
 		<slot />
 <script src="https://code.responsivevoice.org/responsivevoice.js?key=3Wzpm5HU" is:inline></script>
-<script src="https://unpkg.com/lookforward@0.1.1/js/lookforward.min.js" is:inline></script>
 
 	</body>
 </html>
