@@ -11,11 +11,8 @@ let posts = await res.json();
     {
       posts.map((post) => (
       
-        <article class="bg-indigo-600 mx-4 my-3 text-center text-2xl font-bold py-8 rounded-lg shadow-lg text-white">
-          <h2>
-            <a href={`/reading1/${post.slug}/`} set:html={post.title.rendered} />
-          </h2>
-        </article>
+            <a class="bg-indigo-600 mx-4 my-3 text-center text-2xl font-bold py-8 rounded-lg shadow-lg text-white" href={`/reading1/${post.slug}/`} set:html={post.title.rendered} />
+         
       ))
     }
   </div>
