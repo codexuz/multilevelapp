@@ -3,7 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 
 const { slug } = Astro.params;
 
-let res = await fetch(`https://xirurgabdukarim.uz/wp-json/wp/v2/reading1?order=desc?slug=${slug}`)
+let res = await fetch(`https://xirurgabdukarim.uz/wp-json/wp/v2/reading1?slug=${slug}`)
 let [post] = await res.json();
 
 // The getStaticPaths() is required for static Astro sites.
