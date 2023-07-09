@@ -11,7 +11,7 @@ let posts = await res.json();
     {
       posts.map((post) => (
       
-            <a class="container mx-auto px-4 bg-indigo-600  my-3 text-center text-2xl font-bold py-8 rounded-lg shadow-lg text-white" href={`/reading1/${post.slug}/`} set:html={post.title.rendered} />
+            <a class="block container mx-auto px-4 bg-indigo-600  my-3 text-center text-2xl font-bold py-8 rounded-lg shadow-lg text-white" href={`/reading1/${post.slug}/`} set:html={post.title.rendered} />
          
       ))
     }
