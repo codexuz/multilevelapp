@@ -142,7 +142,7 @@ $("#answer").on("focus", function() {
   	$("#last").show()
   	var scoreOver = overallScore.length - 1;
     var lastScore=overallScore[scoreOver]
-    var percent=lastScore*100/20
+    var percent=lastScore*100/flashcards.words.length
   	$("#overallscore").text(lastScore);
   	$("#percent").text(percent.toFixed() +"%")
         document.getElementById("end").play()
