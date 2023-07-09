@@ -75,7 +75,7 @@ import BeginScore from '../../../components/wordnik/BeginScore.astro'
   console.log(flashcards.words.length)
 
   // Function to move to the next flashcard
-  function nextFlashcard() {
+  $("#next_btn").click(function() {
     currentFlashcard++;
     progress += 5;
     $("#Feedback").fadeOut("fast", function(){
@@ -100,7 +100,7 @@ import BeginScore from '../../../components/wordnik/BeginScore.astro'
       const voiceName = "US English Female";
       responsiveVoice.speak(wordValue, voiceName);
     })
-  }
+  });
   
   // Set the initial word and audio
   wordContainer.innerText = flashcards.words[currentFlashcard].word;
