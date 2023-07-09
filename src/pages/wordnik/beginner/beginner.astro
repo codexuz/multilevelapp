@@ -34,89 +34,11 @@ import BeginScore from '../../../components/wordnik/BeginScore.astro'
   
   
   
-   // Define the flashcards
-  const flashcards = [
-    {
-      word: "true",
-      translation: "rost"
-    },
-    {
-      word: "beautiful",
-      translation: "chiroyli"
-    },
-    {
-      word: "picture",
-      translation: "rasm"
-    },
-    {
-      word: "vegetarian",
-      translation: "o'txo'r"
-    },
-    {
-      word: "meat",
-      translation: "go'sht"
-    },
-    {
-      word: "friend",
-      translation: "do'st"
-    },
-    {
-      word: "parent",
-      translation: "ota-ona"
-    },
-    {
-      word: "start",
-      translation: "boshlamoq"
-    },
-    {
-      word: "snow",
-      translation: "qor"
-    },
-    {
-      word: "wrong",
-      translation: "xato"
-    },
-    {
-      word: "be unemployed",
-      translation: "ishsiz"
-    },
-    {
-      word: "be late",
-      translation: "kechikmoq"
-    },
-    {
-      word: "be tired",
-      translation: "charchamoq"
-    },
-    {
-      word: "a few",
-      translation: "bir nechta"
-    },
-    {
-      word: "ago",
-      translation: "oldin"
-    },
-    {
-      word: "a few minutes ago",
-      translation: "bir necha daqiqa oldin"
-    },
-    {
-      word: "better",
-      translation: "yaxshiroq"
-    },
-    {
-      word: "last night",
-      translation: "o'tgan tunda"
-    },
-    {
-      word: "exam",
-      translation: "imtihon"
-    },
-    {
-      word: "holiday",
-      translation: "ta'til"
-    } 
-  ];
+  const id = new URLSearchParams(window.location.search).get("id");
+
+  const renderdetails= async ()=>{
+    const res= await fetch('https://server-five-dusky.vercel.app/games/'+ id);
+    var flashcards= await res.json();
   
   /*
   // Function to start speech recognition
@@ -151,7 +73,7 @@ import BeginScore from '../../../components/wordnik/BeginScore.astro'
   }
   */
 
-  console.log(flashcards.length)
+  console.log(flashcards.words.length)
 
   // Function to move to the next flashcard
   function nextFlashcard() {
@@ -162,15 +84,15 @@ import BeginScore from '../../../components/wordnik/BeginScore.astro'
   })
   
     progressContainer.style.width = `${progress}%`;
-    if (currentFlashcard === flashcards.length) {
+    if (currentFlashcard === flashcards.words.length) {
       $("#score-page").show()
       //victory.play()
       $("#gameCard").hide()
       $("#nextBtnContainer").hide()
   
     }
-    wordContainer.innerText = flashcards[currentFlashcard].word;
-    wordTr.innerText= flashcards[currentFlashcard].translation;
+    wordContainer.innerText = flashcards.words[currentFlashcard].word;
+    wordTr.innerText= flashcards.words[currentFlashcard].translation;
      wordValue=wordContainer.innerText
       const voiceName = "US English Female";
       responsiveVoice.speak(wordValue, voiceName);
@@ -182,8 +104,8 @@ import BeginScore from '../../../components/wordnik/BeginScore.astro'
   }
   
   // Set the initial word and audio
-  wordContainer.innerText = flashcards[currentFlashcard].word;
-  wordTr.innerText= flashcards[currentFlashcard].translation;
+  wordContainer.innerText = flashcards.words[currentFlashcard].word;
+  wordTr.innerText= flashcards.words[currentFlashcard].translation;
   $("#start-btn").click(function(){
     wordValue=wordContainer.innerHTML
        console.log(wordValue)
