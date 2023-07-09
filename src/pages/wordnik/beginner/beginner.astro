@@ -39,7 +39,7 @@ import BeginScore from '../../../components/wordnik/BeginScore.astro'
     const res= await fetch('https://server-five-dusky.vercel.app/games/'+ id);
     var flashcards= await res.json();
   
-  /*
+  
   // Function to start speech recognition
   function startSpeechRecognition() {
     const recognition = new window.webkitSpeechRecognition();
@@ -47,7 +47,7 @@ import BeginScore from '../../../components/wordnik/BeginScore.astro'
     recognition.lang = "en-US";
     recognition.onresult = function(event) {
       const spokenWord = event.results[0][0].transcript.toLowerCase();
-      if (spokenWord === flashcards[currentFlashcard].word) {
+      if (spokenWord === flashcards.words[currentFlashcard].word) {
         score++;
   
         $("#Feedback").show()
@@ -70,7 +70,7 @@ import BeginScore from '../../../components/wordnik/BeginScore.astro'
     };
     recognition.start();
   }
-  */
+  
 
   console.log(flashcards.words.length)
 
