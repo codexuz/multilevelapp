@@ -36,43 +36,43 @@ import ScorePage from '../../components/wordnik/ScorePage.astro'
   
    // Define the flashcards
   const flashcards = [
-    { word: "beat", trans: "yutmoq, mag'lub qilmoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/B/1ACSXW5O0LHMW.mp3" },
-    { word: "board game", trans: "doskali o'yin", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/B/14NNGV6O77O9S.mp3" },
-    { word: "captain", trans: "kapitan, rahbar", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/V225C1U9FWDC.mp3" },
-    { word: "challenge", trans: "1. da'vat etmoq; 2. sinov, muammo", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/VB0P1BNZUKVG.mp3" },
-    { word: "champion", trans: "chempion", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/155H3687XIHW5.mp3" },
-    { word: "cheat", trans: "g'irromlik qilmoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/X9SD28D8V9V4.mp3"},
-    { word: "classical music", trans: "mumtoz musiqa", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/1UKEZT55R98W.mp3"},
-    { word: "club", trans: "klub", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/RASIW3TVPCH1.mp3"},
-    { word: "coach", trans: "murabbiy", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/7FZIAJRQLL4Y.mp3"},
-    { word: "competition", trans: "musobaqa", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/1R8G92UQDJ8IW.mp3"},
-    { word: "concert", trans: "konsert", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/KIHYOJ4SJDKD.mp3"},
-    { word: "defeat", trans: "g'alaba qozonmoq, mag'lub qilmoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/D/1DFF78E09R26H.mp3"},
-    { word: "entertaining", trans: "qiziqarli, maroqli", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/E/1A475EMBCSDOG.mp3"},
-    { word: "folk music", trans: "milliy musiqa", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/F/U18538MBU21I.mp3"},
-    { word: "group", trans: "guruh", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/G/1S63O9R96D1MT.mp3"},
-    { word: "gym", trans: "workout zali, gimnastika zali", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/G/EZVLZ71UYC5Z.mp3"},
-    { word: "interest", trans: "qiziqtirmoq, qiziqish, hobbi", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/I/AY1NG5KTXQJX.mp3"},
-    { word: "member", trans: "a'zo", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/M/1KJL6X56IKRT8.mp3"},
-    { word: "opponent", trans: "raqib", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/O/11011ANO72RIO.mp3"},
-    { word: "organise", trans: "tashkillashtirmoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/O/KGN22P835TF9.mp3"},
-    { word: "pleasure", trans: "mamnuniyat, lazzat, xursandchilik", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/P/14CUIZBMZKB92.mp3"},
-    { word: "referee", trans: "hakam", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/R/HK988CHIMAI7.mp3"},
-    { word: "rhythm", trans: "ritm, muvozanat", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/R/1N5GNNW0P5LW2.mp3"},
-    { word: "risk", trans: "tavakkal, xavf", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/R/VHZ4TKC425DB.mp3"},
-    { word: "score", trans: "ball, natija, hisob", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/S/1QIQLMD8GY9FM.mp3"},
-    { word: "support", trans: "qo'llab-quvvatlamoq, yoqlamoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/S/B31YLZWC48XA.mp3"},
-    { word: "team", trans: "jamoa", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/T/1B8HW4VSFKDHY.mp3"},
-    { word: "train", trans: "mashq qilmoq, shug'ullanmoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/T/92UF9L4VKTCH.mp3"},
-    { word: "video game", trans: "video o'yinlar", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/V/1B1MGZ6YZW2OD.mp3"},
-    { word: "carry on", trans: "davom ettirmoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/15YZZ1476OB40.mp3"},
-    { word: "eat out", trans: "restoranda ovqatlanmoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/E/LJS4H5HOLFVD.mp3"},
-    { word: "give up", trans: "odatni tashlamoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/G/1NT6RTOYNR0LF.mp3"},
-    { word: "join", trans: "ishtirok etmoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/J/PTPTO0IBUQ6K.mp3"},
-    { word: "send off", trans: "o'yindan chetlashtirmoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/S/BS116ELP2AIL.mp3"},
-    { word: "take up", trans: "odatni boshlamoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/T/1HPL979AGBZDP.mp3"},
-    { word: "turn down", trans: "ovozni pasaytirmoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/T/LXD8YWITKZDY.mp3"},
-    { word: "turn up", trans: "ovozni ko'tarmoq", audio: "http://s3.amazonaws.com/audio.vocabulary.com/1.0/us/T/DISVSANPNUD.mp3"}
+    { word: "beat", trans: "yutmoq, mag'lub qilmoq", audio: "https://s3.amazonaws.com/audio.vocabulary.com/1.0/us/B/1ACSXW5O0LHMW.mp3" },
+    { word: "board game", trans: "doskali o'yin", audio: "https://s3.amazonaws.com/audio.vocabulary.com/1.0/us/B/14NNGV6O77O9S.mp3" },
+    { word: "captain", trans: "kapitan, rahbar", audio: "https://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/V225C1U9FWDC.mp3" },
+    { word: "challenge", trans: "1. da'vat etmoq; 2. sinov, muammo", audio: "https://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/VB0P1BNZUKVG.mp3" },
+    { word: "champion", trans: "chempion", audio: "https://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/155H3687XIHW5.mp3" },
+    { word: "cheat", trans: "g'irromlik qilmoq", audio: "https://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/X9SD28D8V9V4.mp3"},
+    { word: "classical music", trans: "mumtoz musiqa", audio: "https://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/1UKEZT55R98W.mp3"},
+    { word: "club", trans: "klub", audio: "https://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/RASIW3TVPCH1.mp3"},
+    { word: "coach", trans: "murabbiy", audio: "https://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/7FZIAJRQLL4Y.mp3"},
+    { word: "competition", trans: "musobaqa", audio: "https://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/1R8G92UQDJ8IW.mp3"},
+    { word: "concert", trans: "konsert", audio: "https://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/KIHYOJ4SJDKD.mp3"},
+    { word: "defeat", trans: "g'alaba qozonmoq, mag'lub qilmoq", audio: "https://s3.amazonaws.com/audio.vocabulary.com/1.0/us/D/1DFF78E09R26H.mp3"},
+    { word: "entertaining", trans: "qiziqarli, maroqli", audio: "https://s3.amazonaws.com/audio.vocabulary.com/1.0/us/E/1A475EMBCSDOG.mp3"},
+    { word: "folk music", trans: "milliy musiqa", audio: "https://s3.amazonaws.com/audio.vocabulary.com/1.0/us/F/U18538MBU21I.mp3"},
+    { word: "group", trans: "guruh", audio: "https://s3.amazonaws.com/audio.vocabulary.com/1.0/us/G/1S63O9R96D1MT.mp3"},
+    { word: "gym", trans: "workout zali, gimnastika zali", audio: "https://s3.amazonaws.com/audio.vocabulary.com/1.0/us/G/EZVLZ71UYC5Z.mp3"},
+    { word: "interest", trans: "qiziqtirmoq, qiziqish, hobbi", audio: "https://s3.amazonaws.com/audio.vocabulary.com/1.0/us/I/AY1NG5KTXQJX.mp3"},
+    { word: "member", trans: "a'zo", audio: "https://s3.amazonaws.com/audio.vocabulary.com/1.0/us/M/1KJL6X56IKRT8.mp3"},
+    { word: "opponent", trans: "raqib", audio: "https://s3.amazonaws.com/audio.vocabulary.com/1.0/us/O/11011ANO72RIO.mp3"},
+    { word: "organise", trans: "tashkillashtirmoq", audio: "https://s3.amazonaws.com/audio.vocabulary.com/1.0/us/O/KGN22P835TF9.mp3"},
+    { word: "pleasure", trans: "mamnuniyat, lazzat, xursandchilik", audio: "https://s3.amazonaws.com/audio.vocabulary.com/1.0/us/P/14CUIZBMZKB92.mp3"},
+    { word: "referee", trans: "hakam", audio: "https://s3.amazonaws.com/audio.vocabulary.com/1.0/us/R/HK988CHIMAI7.mp3"},
+    { word: "rhythm", trans: "ritm, muvozanat", audio: "https://s3.amazonaws.com/audio.vocabulary.com/1.0/us/R/1N5GNNW0P5LW2.mp3"},
+    { word: "risk", trans: "tavakkal, xavf", audio: "https://s3.amazonaws.com/audio.vocabulary.com/1.0/us/R/VHZ4TKC425DB.mp3"},
+    { word: "score", trans: "ball, natija, hisob", audio: "https://s3.amazonaws.com/audio.vocabulary.com/1.0/us/S/1QIQLMD8GY9FM.mp3"},
+    { word: "support", trans: "qo'llab-quvvatlamoq, yoqlamoq", audio: "https://s3.amazonaws.com/audio.vocabulary.com/1.0/us/S/B31YLZWC48XA.mp3"},
+    { word: "team", trans: "jamoa", audio: "https://s3.amazonaws.com/audio.vocabulary.com/1.0/us/T/1B8HW4VSFKDHY.mp3"},
+    { word: "train", trans: "mashq qilmoq, shug'ullanmoq", audio: "https://s3.amazonaws.com/audio.vocabulary.com/1.0/us/T/92UF9L4VKTCH.mp3"},
+    { word: "video game", trans: "video o'yinlar", audio: "https://s3.amazonaws.com/audio.vocabulary.com/1.0/us/V/1B1MGZ6YZW2OD.mp3"},
+    { word: "carry on", trans: "davom ettirmoq", audio: "https://s3.amazonaws.com/audio.vocabulary.com/1.0/us/C/15YZZ1476OB40.mp3"},
+    { word: "eat out", trans: "restoranda ovqatlanmoq", audio: "https://s3.amazonaws.com/audio.vocabulary.com/1.0/us/E/LJS4H5HOLFVD.mp3"},
+    { word: "give up", trans: "odatni tashlamoq", audio: "https://s3.amazonaws.com/audio.vocabulary.com/1.0/us/G/1NT6RTOYNR0LF.mp3"},
+    { word: "join", trans: "ishtirok etmoq", audio: "https://s3.amazonaws.com/audio.vocabulary.com/1.0/us/J/PTPTO0IBUQ6K.mp3"},
+    { word: "send off", trans: "o'yindan chetlashtirmoq", audio: "https://s3.amazonaws.com/audio.vocabulary.com/1.0/us/S/BS116ELP2AIL.mp3"},
+    { word: "take up", trans: "odatni boshlamoq", audio: "https://s3.amazonaws.com/audio.vocabulary.com/1.0/us/T/1HPL979AGBZDP.mp3"},
+    { word: "turn down", trans: "ovozni pasaytirmoq", audio: "https://s3.amazonaws.com/audio.vocabulary.com/1.0/us/T/LXD8YWITKZDY.mp3"},
+    { word: "turn up", trans: "ovozni ko'tarmoq", audio: "https://s3.amazonaws.com/audio.vocabulary.com/1.0/us/T/DISVSANPNUD.mp3"}
   ];
   
   
@@ -124,7 +124,7 @@ artyom.addCommands({
 
   
   // Function to move to the next flashcard
-  function nextFlashcard() {
+  $("#next_btn").click(function() {
     currentFlashcard++;
     progress += 3;
     $("#Feedback").fadeOut("fast", function(){
@@ -147,7 +147,7 @@ artyom.addCommands({
      audioElement.play()
     })
     audioElement.onended = startSpeechRecognition;
-  }
+  });
   
   // Set the initial word and audio
   wordContainer.innerText = flashcards[currentFlashcard].word;
