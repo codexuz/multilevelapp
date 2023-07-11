@@ -20,6 +20,7 @@
     "@types/bootstrap": "^5.2.6",
     "astro": "^2.5.5",
     "astro-bootstrap": "^0.5.13",
+    "astrojs-service-worker": "^1.0.0",
     "axios": "^1.4.0",
     "bootstrap": "^5.2.3",
     "dotenv": "^16.0.3",
