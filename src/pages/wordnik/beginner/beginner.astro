@@ -93,11 +93,11 @@ import BeginScore from '../../../components/wordnik/BeginScore.astro'
     wordContainer.innerText = flashcards.words[currentFlashcard].word;
     wordTr.innerText= flashcards.words[currentFlashcard].translation;
      wordValue=wordContainer.innerText
-      const voiceName = "US English Female";
+      const voiceName = "UK English Female";
       responsiveVoice.speak(wordValue, voiceName);
     $("#play").click(()=>{
       wordValue=wordContainer.innerHTML
-      const voiceName = "US English Female";
+      const voiceName = "UK English Female";
       responsiveVoice.speak(wordValue, voiceName);
     })
   });
@@ -108,7 +108,7 @@ import BeginScore from '../../../components/wordnik/BeginScore.astro'
   $("#start-btn").click(function(){
     wordValue=wordContainer.innerHTML
        console.log(wordValue)
-      const voiceName = "US English Female";
+      const voiceName = "UK English Female";
       responsiveVoice.speak(wordValue, voiceName);
     $("#welcome").hide()
       $("#gameCard").show()
