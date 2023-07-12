@@ -7,15 +7,12 @@ let posts = await res.json();
 <Layout title="Part 2 Reading">
   <section>
     <h1 class="text-3xl my-3 font-bold text-center">Part 2 Exercises</h1>
-    <div class="container mx-auto mb-8">
+    <div class="container mx-auto mb-8 px-4">
     {
       posts.map((post) => (
       
-        <article class="bg-indigo-600 mx-4 my-3 text-center text-2xl font-bold py-8 rounded-lg shadow-lg text-white">
-          <h2>
-            <a href={`/reading2/${post.slug}/`} set:html={post.title.rendered} />
-          </h2>
-        </article>
+   <a class="block container mx-auto  bg-indigo-600  my-3 text-center text-2xl font-bold py-8 rounded-lg shadow-lg text-white" href={`/reading2/${post.slug}/`} set:html={post.title.rendered} />
+
       ))
     }
   </div>
