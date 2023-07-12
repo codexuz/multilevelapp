@@ -41,7 +41,8 @@ var link=document.querySelectorAll("a")
 link.addEventListener("click", ()=>{
 var h1=document.createElement("h1")
 h1.textContent="Loading"
-h1.classList.add("absolute","top-0")
+h1.classList.add("absolute")
+h1.style.top="50%";
 document.querySelector("body").appendChild(h1)
 })
 </script>
