@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	  <script src="https://cdn.tailwindcss.com"></script>
+
+	<script src="jquery.js"></script>
+  <script src="https://code.responsivevoice.org/responsivevoice.js?key=3Wzpm5HU"></script>
+  <style>
+		.box-model{
+			width: 100%;
+			margin: 0;
+			background: rgb(26, 2, 94);
+			height: 100%;
+			position: absolute;
+			top:0;
+			left: 0;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+
+		}
+
+		.game_card{
+			width: 450px;
+			margin: 30px 5%;
+			height: 80%;
+			background-color: white;
+			border-radius: 30px;
+			display: flex;
+			position: absolute;
+			flex-direction: column;
+			justify-content: flex-start;
+			align-items: center;
+		}
+
+		.top{
+			width: 100%;
+			position: absolute;
+			top: 0;
+			display: flex;
+			align-items: center;
+			flex-direction: column;
+			text-align: center;
+		}
+
+		.img_container{
+			width: 90%;
+			margin: 20px 5%;
+			border-top-left-radius: 60px;
+			border-top-right-radius: 60px;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			position: absolute;
+			height: 70%;
+		}
+
+		input[type="text"]{
+			padding: 7px 30px;
+			border-radius: 30px;
+			border: 3px solid #fafafa;
+			outline: none;
+		}
+
+		.btn-left{
+			border-radius: 30px;
+			padding: 6px 20px;
+			position: fixed;
+			left: 30px;
+			bottom: 25px;
+			
+		}
+
+		.btn-right{
+			border-radius: 30px;
+			padding: 6px 20px;
+			position: fixed;
+			right: 30px;
+			bottom: 25px;
+			
+		}
+
+
+		.btn-right:hover, .btn-left:hover{
+			box-shadow: 0 0 8px 2px rgb(110, 78, 255);
+		}
+
+		.divider{
+			height: 2px;
+			width: 40%;
+			background:gray;
+		}
+
+		#tr{
+			bottom: 90px;
+		}
+
+		#answer{
+     padding: 10px 50px;
+     border-right:none ;
+     border-top-left-radius:30px ;
+     border-bottom-left-radius:30px ;
+     outline: none;
+		}
+
+		#answer:hover{
+			box-shadow: 0 0 3px 2px blue;
+		}
+
+		#check{
+			padding: 8px 20px;
+			border-top-right-radius:30px ;
+     border-bottom-right-radius:30px ;
+
+		}
+
+
+		.progress{
+			width: 250px;
+			border-radius: 150px;
+			height: 20px;
+			position: fixed;
+			bottom: 25px;
+			display: flex;
+			justify-content: left;
+			padding-left: 3px;
+			align-items: center;
+		}
+
+		.progress_bar{
+			width: 240px;
+			border-radius: 150px;
+			place-items: center;
+			height: 10px;
+			background: #21eb75;
+			position: fixed;
+			bottom: 30px;
+		}
+
+		@media screen and (max-width:660px){
+			.game_card{
+			width: 90%;
+			margin: 30px 5%;
+			height: 70%;
+			background-color: white;
+			border-radius: 30px;
+			display: flex;
+			position: absolute;
+			flex-direction: column;
+			justify-content: flex-start;
+			align-items: center;
+		}
+
+		.progress{
+			width: 200px;
+			border-radius: 150px;
+			height: 20px;
+			position: fixed;
+			top: 55px;
+			display: flex;
+			justify-content: left;
+			align-items: left;
+		}
+
+		.progress_bar{
+			width: 190px;
+			border-radius: 150px;
+			place-items: center;
+			height: 10px;
+			background: #21eb75;
+			position: fixed;
+			top: 60px;
+		}
+
+		#idNum{
+			position: fixed;
+			top: 75px;
+			color: white;
+		}
+		}
+
+		@media screen and (max-width:405px){
+			#answer{
+     padding: 10px 30px;
+     border-right:none ;
+     border-top-left-radius:30px ;
+     border-bottom-left-radius:30px ;
+     outline: none;
+		}
+
+		#check{
+			padding: 8px 10px;
+			border-top-right-radius:30px ;
+     border-bottom-right-radius:30px ;
+
+		}
+		}
+
+	@media screen and (max-width:336px){
+			#answer{
+     padding: 10px 10px;
+     border-right:none ;
+     border-top-left-radius:30px ;
+     border-bottom-left-radius:30px ;
+     outline: none;
+		}
+
+		#check{
+			padding: 8px 8px;
+			border-top-right-radius:30px ;
+     border-bottom-right-radius:30px ;
+
+		}
+		}
+
+		
+
+		
+	</style>
+</head>
+<body>
+<main class="box-model" id="quiz_page">
+	<div class="top">
+	<h1 class="text-xl text-white my-5">Inglizcha tarjimasini yozing.</h1>
+	</div>
+<h3 id="cue" class="hidden"></h3>
+
+
+<div class="game_card">
+	<div class="img_container bg-blue-300">
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-13 h-13 text-blue-700">
+  <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm11.378-3.917c-.89-.777-2.366-.777-3.255 0a.75.75 0 01-.988-1.129c1.454-1.272 3.776-1.272 5.23 0 1.513 1.324 1.513 3.518 0 4.842a3.75 3.75 0 01-.837.552c-.676.328-1.028.774-1.028 1.152v.75a.75.75 0 01-1.5 0v-.75c0-1.279 1.06-2.107 1.875-2.502.182-.088.351-.199.503-.331.83-.727.83-1.857 0-2.584zM12 18a.75.75 0 100-1.5.75.75 0 000 1.5z" clip-rule="evenodd" />
+</svg>
+	</div>
+	<p id="tr" class="text-2xl text-gray-600 capitalize absolute"></p>
+	<div class="input_holder absolute bottom-8 flex justify-center items-center">
+		<input id="answer" type="" name="" class="border-2 border-gray-200" placeholder="Your answer">
+		<button id="check" class="bg-blue-700">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 text-white">
+  <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd" />
+</svg>
+
+		</button>
+	</div>
+</div>
+<div class="flex justify-around mt-5 items-center w-full">
+  <button class="btn-left transparent hover:bg-gray-700 border-2 border-gray-700" id="prev">
+  	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 text-gray-400 hover:text-indigo-400">
+  <path fill-rule="evenodd" d="M13.28 3.97a.75.75 0 010 1.06L6.31 12l6.97 6.97a.75.75 0 11-1.06 1.06l-7.5-7.5a.75.75 0 010-1.06l7.5-7.5a.75.75 0 011.06 0zm6 0a.75.75 0 010 1.06L12.31 12l6.97 6.97a.75.75 0 11-1.06 1.06l-7.5-7.5a.75.75 0 010-1.06l7.5-7.5a.75.75 0 011.06 0z" clip-rule="evenodd" />
+</svg>
+
+  </button>
+
+<div class="progress bg-gray-800 border-2 border-gray-700">
+	<div class="progress_bar"></div>
+</div>
+<div id="idNum" class="text-lg"></div>
+
+  <button class="btn-right transparent hover:bg-gray-700 border-2 border-gray-700"  id="next">
+  	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 text-gray-400 hover:text-indigo-400">
+  <path fill-rule="evenodd" d="M4.72 3.97a.75.75 0 011.06 0l7.5 7.5a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 01-1.06-1.06L11.69 12 4.72 5.03a.75.75 0 010-1.06zm6 0a.75.75 0 011.06 0l7.5 7.5a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 11-1.06-1.06L17.69 12l-6.97-6.97a.75.75 0 010-1.06z" clip-rule="evenodd" />
+</svg>
+
+</button>
+  <button class="hidden btn-right text-green-400 transparent hover:bg-gray-700 border-2 border-gray-700" id="result">View Result</button>
+
+  
+</main>	 
+
+<section class="flex flex-col bg-blue-900 min-h-screen w-full hidden" id="result_page">
+	<ol class="container mx-auto px-4 my-3" id="your-answers"></ol>
+</section>
+   <script src="/card.js"></script>
+   <script>
+   	$(".btn-right").click(()=>{
+   		$(".btn-right").css("transform", "scale(0.9)")
+   		setTimeout(()=>{
+   		$(".btn-right").css("transform", "scale(1.0)")	
+   		},220)
+   	})
+
+   	$(".btn-left").click(()=>{
+   		$(".btn-left").css("transform", "scale(0.9)")
+   		setTimeout(()=>{
+   		$(".btn-left").css("transform", "scale(1.0)")	
+   		},220)
+   	})
+   </script>
+</body>
+</html>
