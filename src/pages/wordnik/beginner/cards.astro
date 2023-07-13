@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title></title>
-	  <script src="https://cdn.tailwindcss.com"></script>
+---
+import Layout from '../../../layouts/Layout.astro'
+---
 
 	<script src="/static/jquery.js" is:inline></script>
   <script src="https://code.responsivevoice.org/responsivevoice.js?key=3Wzpm5HU" is:inline></script>
@@ -222,8 +218,7 @@
 
 		
 	</style>
-</head>
-<body>
+<Layout title="Quiz Card">
 <main class="box-model" id="quiz_page">
 	<div class="top">
 	<h1 class="text-xl text-white my-5">Inglizcha tarjimasini yozing.</h1>
@@ -275,6 +270,8 @@
 <section class="flex flex-col bg-blue-900 min-h-screen w-full hidden" id="result_page">
 	<ol class="container mx-auto px-4 my-3" id="your-answers"></ol>
 </section>
+
+</Layout>
    <script src="/static/js/cards.js" is:inline></script>
    <script is:inline>
    	$(".btn-right").click(()=>{
@@ -291,5 +288,3 @@
    		},220)
    	})
    </script>
-</body>
-</html>
