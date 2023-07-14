@@ -347,6 +347,12 @@ $("#result").click(()=>{
   $("#result_page").removeClass("hidden")
 })
 
+if($(window).width() < 660)
+{
+  $("#prev").hide()
+} else {
+  $("#prev").show()
+}
 
 
 
