@@ -185,7 +185,7 @@ import Layout from '../../../layouts/Layout.astro'
 	</div>
 </div>
 <div class="flex mt-5  justify-around items-center w-full">
-  <button class="btn-left float-left transparent hover:bg-gray-700 border-2 border-gray-700" id="prev">
+  <button class="btn-left hidden transparent hover:bg-gray-700 border-2 border-gray-700" id="prev">
   	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 text-gray-400 hover:text-indigo-400">
   <path fill-rule="evenodd" d="M13.28 3.97a.75.75 0 010 1.06L6.31 12l6.97 6.97a.75.75 0 11-1.06 1.06l-7.5-7.5a.75.75 0 010-1.06l7.5-7.5a.75.75 0 011.06 0zm6 0a.75.75 0 010 1.06L12.31 12l6.97 6.97a.75.75 0 11-1.06 1.06l-7.5-7.5a.75.75 0 010-1.06l7.5-7.5a.75.75 0 011.06 0z" clip-rule="evenodd" />
 </svg>
@@ -212,8 +212,6 @@ import Layout from '../../../layouts/Layout.astro'
 <script is:inline>
 //Game functions
 let currentFlashcard=0
-$("#prev").hide()
-
 
 const id = new URLSearchParams(window.location.search).get("id");
 
@@ -247,7 +245,7 @@ const TypedValue=taken.toLowerCase()
   
 }
 else{
-
+    setTimeout(nextWord, 1500)
     $(".img_container").html(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-13 h-13 text-rose-600">
   <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.72 6.97a.75.75 0 10-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 101.06 1.06L12 13.06l1.72 1.72a.75.75 0 101.06-1.06L13.06 12l1.72-1.72a.75.75 0 10-1.06-1.06L12 10.94l-1.72-1.72z" clip-rule="evenodd" />
 </svg>
@@ -298,7 +296,7 @@ $("#answer").val('')
     $(".img_container").removeClass("bg-red-300")
     $(".img_container").addClass("bg-blue-300")
     $(".progress_bar").width(progress+"%")
-    $("#prev").show()
+    $("#prev").removeClass("hidden")
     if(currentFlashcard===flashcards.words.length-1){
       $("#next").hide()
       $("#result").show()
