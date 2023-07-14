@@ -78,19 +78,12 @@ import ScorePage from '../../components/wordnik/ScorePage.astro'
   
 // Function to start speech recognition
 function startSpeechRecognition() {
-  const artyom = new Artyom();
-
-  // Set up Artyom's language
-  artyom.initialize({
-    lang: "en-US",
-    continuous: false,
-    listen: true,
-    debug: true
-  });
-
-artyom.addCommands({
-  indexes: [flashcards[currentFlashcard].word],
-  action: function() {
+  const recognition = new window.webkitSpeechRecognition();
+  recognition.continuous = false;
+  recognition.lang = "en-US";
+  recognition.onresult = function(event) {
+    const spokenWord = event.results[0][0].transcript.toLowerCase();
+    if (spokenWord === flashcards[currentFlashcard].word) {
       score++;
       $("#Feedback").show();
       $("#feed").text("Well Done!");
@@ -98,12 +91,7 @@ artyom.addCommands({
       $("#Feedback").css("background", "#25f20a");
       $("#score").text(`${score}/37`);
   }
-});
-
-// Handle incorrect recognition within the action function
-  artyom.redirectRecognizedTextOutput(function(recognized, isFinal) {
-    if (isFinal && recognized !== flashcards[currentFlashcard].word) {
-      console.log("Oh no");
+else {console.log("Oh no");
       $("#Feedback").show();
       $("#Feedback").css("background", "#e61037");
       $("#feed").text("Wrong. Try again!");
@@ -113,11 +101,9 @@ artyom.addCommands({
         $("#play").removeClass("animate-ping");
       }, 1800);
     }
-  });
-
-
 }
-    
+recognition.start();
+}   
   
    
 
