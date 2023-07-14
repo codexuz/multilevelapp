@@ -80,7 +80,7 @@ import Layout from '../../../layouts/Layout.astro'
 		}
 
 		#answer{
-			width: 70%;
+     width: 70%;
      padding: 10px 10px;     
      border-right:none ;
      border-top-left-radius:30px ;
@@ -91,7 +91,7 @@ import Layout from '../../../layouts/Layout.astro'
 		
 
 		#check{
-			width: 30%;
+			width: 20%;
 			padding: 8px 20px;
 			border-top-right-radius:30px ;
      border-bottom-right-radius:30px ;
@@ -322,8 +322,8 @@ $("#tr").html(flashcards.words[currentFlashcard].translation)
 	
 
 $("#result").click(()=>{
-  $("#quiz_page").addClass("hidden")
-  $("#result_page").removeClass("hidden")
+  $("#quiz_page").hide()
+  $("#result_page").show()
 })
 
 $("#answer").on("focus", ()=>{
