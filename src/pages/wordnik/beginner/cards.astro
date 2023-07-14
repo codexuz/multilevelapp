@@ -283,7 +283,7 @@ $("#answer").val('')
     $(".img_container").addClass("bg-blue-300")
     $(".progress_bar").width(progress+"%")
     $("#prev").removeClass("hidden")
-    if(currentFlashcard===flashcards.words.length){
+    if(currentFlashcard===flashcards.words.length-1){
       $("#next").hide()
       $("#result").show()
     }
@@ -326,7 +326,7 @@ $("#answer").val('')
     $(".img_container").removeClass("bg-red-300")
     $(".img_container").addClass("bg-blue-300")
     $(".progress_bar").width(progress+"%")
-    if(currentFlashcard===flashcards.words.length){
+    if(currentFlashcard===flashcards.words.length-1){
       $("#next").hide()
       $("#result").show()
     }
