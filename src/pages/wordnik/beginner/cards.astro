@@ -326,7 +326,6 @@ $("#answer").val('')
     $(".img_container").removeClass("bg-red-300")
     $(".img_container").addClass("bg-blue-300")
     $(".progress_bar").width(progress+"%")
-    $("#prev").show()
     if(currentFlashcard===flashcards.words.length-1){
       $("#next").hide()
       $("#result").show()
@@ -347,9 +346,6 @@ $("#result").click(()=>{
   $("#result_page").removeClass("hidden")
 })
 
-if (window.matchMedia('(max-width: 660px)').matches){
-$("#prev").hide()
-}
 
 
 }
