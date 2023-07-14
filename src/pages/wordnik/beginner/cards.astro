@@ -186,7 +186,7 @@ import Layout from '../../../layouts/Layout.astro'
 	<ol class="container mx-auto px-4 my-3" id="your-answers"></ol>
 </section>
 </Layout>
-   <script is:inline>
+<script is:inline>
 //Game functions
 let currentFlashcard=0
 $("#prev").hide()
@@ -246,6 +246,20 @@ else{
  //Next word
 
 $("#next").click(function(){
+  if($("#answer").val()===""){
+  $(".img_container").html(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-13 h-13 text-rose-600">
+  <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.72 6.97a.75.75 0 10-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 101.06 1.06L12 13.06l1.72 1.72a.75.75 0 101.06-1.06L13.06 12l1.72-1.72a.75.75 0 10-1.06-1.06L12 10.94l-1.72-1.72z" clip-rule="evenodd" />
+</svg>
+
+`)
+    $(".img_container").removeClass("bg-green-300")
+    $(".img_container").removeClass("bg-blue-300")
+    $(".img_container").addClass("bg-red-300")
+  // Add false answer to the list
+    $("#your-answers").append(`<li class="bg-gray-800 py-3 px-5 w-full my-2 text-red-400">${flashcards.words[currentFlashcard].word} - ${flashcards.words[currentFlashcard].translation}</li>`);
+
+}
+
 $("#check").removeAttr("disabled")
 $("#answer").val('')
     currentFlashcard++
@@ -322,24 +336,16 @@ $("#tr").html(flashcards.words[currentFlashcard].translation)
 	
 
 $("#result").click(()=>{
-  $("#quiz_page").hide()
-  $("#result_page").show()
+  $("#quiz_page").addClass("hidden")
+  $("#result_page").removeClass("hidden")
 })
 
-$("#answer").on("focus", ()=>{
-  $(".btn-right").css("position", "relative")
-   $(".btn-left").css("position", "relative")
-})
 
-$("#answer").on("blur", ()=>{
-  $(".btn-right").css("position", "fixed")
-   $(".btn-left").css("position", "fixed")
-})
+
 
 }
 
 window.addEventListener("DOMContentLoaded", ()=> renderdetails())
-
 </script>
 
 
