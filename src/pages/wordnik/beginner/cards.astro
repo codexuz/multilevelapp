@@ -4,20 +4,15 @@ import Layout from '../../../layouts/Layout.astro'
 
 	<script src="/static/jquery.js" is:inline></script>
   <script src="https://code.responsivevoice.org/responsivevoice.js?key=3Wzpm5HU" is:inline></script>
-  <style>
-		.box-model{
+<style>
+.box-model{
 			width: 100%;
 			margin: 0;
 			background: rgb(26, 2, 94);
-			height: 100%;
-			position: absolute;
-			top:0;
-			left: 0;
+			min-height: 100vh;
 			display: flex;
 			flex-direction: column;
-			justify-content: center;
 			align-items: center;
-
 		}
 
 		.game_card{
@@ -27,18 +22,17 @@ import Layout from '../../../layouts/Layout.astro'
 			background-color: white;
 			border-radius: 30px;
 			display: flex;
-			position: absolute;
 			flex-direction: column;
 			justify-content: flex-start;
 			align-items: center;
+			padding: 5px 2px 30px 2px;
 		}
 
 		.top{
 			width: 100%;
-			position: absolute;
-			top: 0;
 			display: flex;
 			align-items: center;
+			margin: 20px 0;
 			flex-direction: column;
 			text-align: center;
 		}
@@ -52,23 +46,16 @@ import Layout from '../../../layouts/Layout.astro'
 			flex-direction: column;
 			justify-content: center;
 			align-items: center;
-			position: absolute;
 			height: 70%;
 		}
 
-		input[type="text"]{
-			padding: 7px 30px;
-			border-radius: 30px;
-			border: 3px solid #fafafa;
-			outline: none;
-		}
 
 		.btn-left{
 			border-radius: 30px;
 			padding: 6px 20px;
 			position: fixed;
+			bottom: 10px;
 			left: 30px;
-			bottom: 25px;
 			
 		}
 
@@ -76,8 +63,8 @@ import Layout from '../../../layouts/Layout.astro'
 			border-radius: 30px;
 			padding: 6px 20px;
 			position: fixed;
+			bottom: 10px;
 			right: 30px;
-			bottom: 25px;
 			
 		}
 
@@ -92,23 +79,19 @@ import Layout from '../../../layouts/Layout.astro'
 			background:gray;
 		}
 
-		#tr{
-			bottom: 90px;
-		}
-
 		#answer{
-     padding: 10px 50px;
+			width: 70%;
+     padding: 10px 10px;     
      border-right:none ;
      border-top-left-radius:30px ;
      border-bottom-left-radius:30px ;
      outline: none;
 		}
 
-		#answer:hover{
-			box-shadow: 0 0 3px 2px blue;
-		}
+		
 
 		#check{
+			width: 30%;
 			padding: 8px 20px;
 			border-top-right-radius:30px ;
      border-bottom-right-radius:30px ;
@@ -120,22 +103,18 @@ import Layout from '../../../layouts/Layout.astro'
 			width: 250px;
 			border-radius: 150px;
 			height: 20px;
-			position: fixed;
-			bottom: 25px;
 			display: flex;
+			padding: 0 5px;
 			justify-content: left;
-			padding-left: 3px;
 			align-items: center;
 		}
 
 		.progress_bar{
-			width: 240px;
+			width: 100%;
 			border-radius: 150px;
 			place-items: center;
 			height: 10px;
 			background: #21eb75;
-			position: fixed;
-			bottom: 30px;
 		}
 
 		@media screen and (max-width:660px){
@@ -145,83 +124,22 @@ import Layout from '../../../layouts/Layout.astro'
 			height: 70%;
 			background-color: white;
 			border-radius: 30px;
+			padding: 5px 2px 30px 2px;
 			display: flex;
-			position: absolute;
 			flex-direction: column;
 			justify-content: flex-start;
 			align-items: center;
 		}
-
-		.progress{
-			width: 200px;
-			border-radius: 150px;
-			height: 20px;
-			position: fixed;
-			top: 55px;
-			display: flex;
-			justify-content: left;
-			align-items: left;
-		}
-
-		.progress_bar{
-			width: 190px;
-			border-radius: 150px;
-			place-items: center;
-			height: 10px;
-			background: #21eb75;
-			position: fixed;
-			top: 60px;
-		}
-
-		#idNum{
-			position: fixed;
-			top: 75px;
-			color: white;
-		}
-		}
-
-		@media screen and (max-width:405px){
-			#answer{
-     padding: 10px 30px;
-     border-right:none ;
-     border-top-left-radius:30px ;
-     border-bottom-left-radius:30px ;
-     outline: none;
-		}
-
-		#check{
-			padding: 8px 10px;
-			border-top-right-radius:30px ;
-     border-bottom-right-radius:30px ;
-
-		}
-		}
-
-	@media screen and (max-width:336px){
-			#answer{
-     padding: 10px 10px;
-     border-right:none ;
-     border-top-left-radius:30px ;
-     border-bottom-left-radius:30px ;
-     outline: none;
-		}
-
-		#check{
-			padding: 8px 8px;
-			border-top-right-radius:30px ;
-     border-bottom-right-radius:30px ;
-
-		}
-		}
-
+	}
 		
-
-		
-	</style>
+</style>
 <Layout title="Quiz Card">
 <main class="box-model" id="quiz_page">
 	<div class="top">
-	<h1 class="text-xl text-white my-5">Inglizcha tarjimasini yozing.</h1>
+   <div class="progress bg-gray-800 border-2 border-gray-700">
+	<div class="progress_bar"></div>
+</div>
+<div id="idNum" class="text-lg text-white"></div>
 	</div>
 <h3 id="cue" class="hidden"></h3>
 
@@ -232,9 +150,9 @@ import Layout from '../../../layouts/Layout.astro'
   <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm11.378-3.917c-.89-.777-2.366-.777-3.255 0a.75.75 0 01-.988-1.129c1.454-1.272 3.776-1.272 5.23 0 1.513 1.324 1.513 3.518 0 4.842a3.75 3.75 0 01-.837.552c-.676.328-1.028.774-1.028 1.152v.75a.75.75 0 01-1.5 0v-.75c0-1.279 1.06-2.107 1.875-2.502.182-.088.351-.199.503-.331.83-.727.83-1.857 0-2.584zM12 18a.75.75 0 100-1.5.75.75 0 000 1.5z" clip-rule="evenodd" />
 </svg>
 	</div>
-	<p id="tr" class="text-2xl text-gray-600 capitalize absolute"></p>
-	<div class="input_holder absolute bottom-8 flex justify-center items-center">
-		<input id="answer" type="" name="" class="border-2 border-gray-200" placeholder="Your answer">
+	<p id="tr" class="text-2xl my-2 text-gray-600 capitalize"></p>
+	<div class="w-full flex justify-center items-center">
+		<input id="answer" type="text" name="" class="border-2 border-gray-200" placeholder="Your answer">
 		<button id="check" class="bg-blue-700">
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 text-white">
   <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd" />
@@ -243,34 +161,30 @@ import Layout from '../../../layouts/Layout.astro'
 		</button>
 	</div>
 </div>
-<div class="flex justify-around mt-5 items-center w-full">
-  <button class="btn-left transparent hover:bg-gray-700 border-2 border-gray-700" id="prev">
+<div class="flex mt-5  justify-around items-center w-full">
+  <button class="btn-left float-left transparent hover:bg-gray-700 border-2 border-gray-700" id="prev">
   	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 text-gray-400 hover:text-indigo-400">
   <path fill-rule="evenodd" d="M13.28 3.97a.75.75 0 010 1.06L6.31 12l6.97 6.97a.75.75 0 11-1.06 1.06l-7.5-7.5a.75.75 0 010-1.06l7.5-7.5a.75.75 0 011.06 0zm6 0a.75.75 0 010 1.06L12.31 12l6.97 6.97a.75.75 0 11-1.06 1.06l-7.5-7.5a.75.75 0 010-1.06l7.5-7.5a.75.75 0 011.06 0z" clip-rule="evenodd" />
 </svg>
 
   </button>
 
-<div class="progress bg-gray-800 border-2 border-gray-700">
-	<div class="progress_bar"></div>
-</div>
-<div id="idNum" class="text-lg"></div>
 
-  <button class="btn-right transparent hover:bg-gray-700 border-2 border-gray-700"  id="next">
+
+  <button class="btn-right  transparent hover:bg-gray-700 border-2 border-gray-700"  id="next">
   	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 text-gray-400 hover:text-indigo-400">
   <path fill-rule="evenodd" d="M4.72 3.97a.75.75 0 011.06 0l7.5 7.5a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 01-1.06-1.06L11.69 12 4.72 5.03a.75.75 0 010-1.06zm6 0a.75.75 0 011.06 0l7.5 7.5a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 11-1.06-1.06L17.69 12l-6.97-6.97a.75.75 0 010-1.06z" clip-rule="evenodd" />
 </svg>
 
 </button>
-  <button class="hidden btn-right text-green-400 transparent hover:bg-gray-700 border-2 border-gray-700" id="result">View Result</button>
+  <button class="hidden btn-right  text-green-400 transparent hover:bg-gray-700 border-2 border-gray-700" id="result">View Result</button>
 
-  
+</div>  
 </main>	 
 
 <section class="flex flex-col bg-blue-900 min-h-screen w-full hidden" id="result_page">
 	<ol class="container mx-auto px-4 my-3" id="your-answers"></ol>
 </section>
-
 </Layout>
    <script is:inline>
 //Game functions
@@ -284,10 +198,10 @@ const id = new URLSearchParams(window.location.search).get("id");
     const res= await fetch('https://server-five-dusky.vercel.app/games/'+ id);
     var flashcards= await res.json();
 
-    var progress_val=190/flashcards.words.length
+    var progress_val=100/flashcards.words.length
 let progress=progress_val;
 $("#idNum").html(`${currentFlashcard+1}/${flashcards.words.length}`)
-$(".progress_bar").width(progress+"px")
+$(".progress_bar").width(progress+"%")
 
  $("#check").click(function(){
   $("#check").attr("disabled","true")
@@ -310,7 +224,7 @@ const TypedValue=taken.toLowerCase()
   
 }
 else{
-     setTimeout(nextWord, 1500)
+
     $(".img_container").html(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-13 h-13 text-rose-600">
   <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.72 6.97a.75.75 0 10-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 101.06 1.06L12 13.06l1.72 1.72a.75.75 0 101.06-1.06L13.06 12l1.72-1.72a.75.75 0 10-1.06-1.06L12 10.94l-1.72-1.72z" clip-rule="evenodd" />
 </svg>
@@ -346,7 +260,7 @@ $("#answer").val('')
     $(".img_container").removeClass("bg-green-300")
     $(".img_container").removeClass("bg-red-300")
     $(".img_container").addClass("bg-blue-300")
-    $(".progress_bar").width(progress+"px")
+    $(".progress_bar").width(progress+"%")
     $("#prev").show()
     if(currentFlashcard===flashcards.words.length-1){
       $("#next").hide()
@@ -361,10 +275,10 @@ $("#answer").val('')
     currentFlashcard--
     $("#answer").val('')
     progress-=progress_val
-    $(".progress_bar").width(progress+"px")
+    $(".progress_bar").width(progress+"%")
     $("#tr").html(flashcards.words[currentFlashcard].translation) 
     $("#next").show()
-    $("#quiz").hide()
+    $("#result").hide()
     if(currentFlashcard===0){
       $("#prev").hide()
       
@@ -390,7 +304,7 @@ $("#answer").val('')
     $(".img_container").removeClass("bg-green-300")
     $(".img_container").removeClass("bg-red-300")
     $(".img_container").addClass("bg-blue-300")
-    $(".progress_bar").width(progress+"px")
+    $(".progress_bar").width(progress+"%")
     $("#prev").show()
     if(currentFlashcard===flashcards.words.length-1){
       $("#next").hide()
@@ -408,15 +322,23 @@ $("#tr").html(flashcards.words[currentFlashcard].translation)
 	
 
 $("#result").click(()=>{
-  $("#quiz_page").hide()
-  $("#result_page").show()
+  $("#quiz_page").addClass("hidden")
+  $("#result_page").removeClass("hidden")
 })
 
+$("#answer").on("focus", ()=>{
+  $(".btn-right").css("position", "relative")
+   $(".btn-left").css("position", "relative")
+})
+
+$("#answer").on("blur", ()=>{
+  $(".btn-right").css("position", "fixed")
+   $(".btn-left").css("position", "fixed")
+})
 
 }
 
 window.addEventListener("DOMContentLoaded", ()=> renderdetails())
-
 
 </script>
 
