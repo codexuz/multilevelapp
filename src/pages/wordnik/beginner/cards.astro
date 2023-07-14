@@ -347,11 +347,9 @@ $("#result").click(()=>{
   $("#result_page").removeClass("hidden")
 })
 
-if($(window).width() < 660)
-{
-  $("#prev").hide()
+if (window.matchMedia('(max-width: 660px)').matches){
+$("#prev").hide()
 }
-
 
 
 }
