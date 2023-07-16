@@ -28,7 +28,7 @@ if (!user) {
   name: string;
   status: number;
   email:string;
-  profile:string;
+  picture:string;
   joined:string;
 }
 
@@ -52,7 +52,7 @@ if (userData) {
 <p class=""><b>Join data:</b> {userData.joined}</p>
 <p class=""><b>Status:</b> <span class="bg-green-300 mx-2 rounded-lg py-2 px-3 font-bold">{userData.status}</span></p>
 <p class=""><b>Email:</b> {userData.email}</p>
-<img src="{userData.profile}">
+<img src={userData.picture}>
 
 </main>
 </Layout>
