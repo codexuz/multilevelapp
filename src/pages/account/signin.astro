@@ -9,7 +9,7 @@ const sessionCookie = Astro.cookies.get("session").value;
 if (sessionCookie) {
   const decodedCookie = await auth.verifySessionCookie(sessionCookie);
   if (decodedCookie) {
-    return Astro.redirect("/account/dashboard");
+    return Astro.redirect("/account/profile");
   }
 }
 ---
