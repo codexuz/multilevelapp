@@ -24,12 +24,17 @@ export const post: APIRoute = async ({ request, redirect }) => {
       password,
       displayName: name,
     });
-
+    const d = new Date();
+    const y=d.getFullYear()
+    const m=d.getMonth()+1
+    const s=d.getDate()
+    const joined=`${s}-${m}-${y}`
     // Save additional data to Firestore
     await firestore.collection("users").doc(userRecord.uid).set({
       name,
       email,
-      status:"unpaid"
+      status:"unpaid",
+      joined: joined
     });
 
     return redirect("/account/signin");
