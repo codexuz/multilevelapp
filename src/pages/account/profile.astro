@@ -48,11 +48,11 @@ if (userData) {
 <Layout title="Profile">
 <main class="container mx-auto px-4 min-h-screen">
 <h1 class="text-2xl font-bold">User profile</h1>
-<p class="">{userData.name}</p>
-<p class="">{userData.joined}</p>
-<p class="">{userData.status}</p>
-<p class="">{userData.email}</p>
-<img src="{userData.profile}">
+<p class=""><b>Name:</b> {userData.name}</p>
+<p class=""><b>Join data:</b> {userData.joined}</p>
+<p class=""><b>Status:</b> <span class="bg-green-300 mx-2 rounded-lg py-2 px-3 font-bold"{userData.status}</span></p>
+<p class=""><b>Email:</b> {userData.email}</p>
+<img src={userData.profile}>
 
 </main>
 </Layout>
