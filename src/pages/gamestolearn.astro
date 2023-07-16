@@ -62,6 +62,11 @@
   		<div style="text-align: center;">Numbers</div>
   	</ons-card>
   </ons-col>
+<ons-col width="50%">
+  	<ons-card class="card" id="game6">
+  		<div style="text-align: center;">Time</div>
+  	</ons-card>
+  </ons-col>
  
 </ons-row>
 
@@ -114,10 +119,22 @@
   </ons-page>
 </template>
 
-<!---Past Tense--->
+<!--- Numbers--->
 
 <template id="page6.html">
   <ons-page id="page6">
+    <ons-toolbar>
+      <div class="left"><ons-back-button>Back</ons-back-button></div>
+      <div class="center"></div>
+    </ons-toolbar>
+<iframe style='width: 100%; margin: 35px 0; overflow: hidden; border: none; overflow: hidden; border: none;' src='https://www.gamestolearnenglish.com/monster-vocab/embed.html#numbers' width='100%' height='100%' scrolling='no'></iframe>
+  </ons-page>
+</template>
+
+<!--- Time--->
+
+<template id="page7.html">
+  <ons-page id="page7">
     <ons-toolbar>
       <div class="left"><ons-back-button>Back</ons-back-button></div>
       <div class="center"></div>
@@ -158,7 +175,10 @@ $("#game1").click(function(){
       document.querySelector('#myNavigator').pushPage('page5.html', {data: {title: 'Conditionals'}});
     };
   page.querySelector('#game5').onclick = function() {
-      document.querySelector('#myNavigator').pushPage('page5.html', {data: {title: 'Numbers'}});
+      document.querySelector('#myNavigator').pushPage('page6.html', {data: {title: 'Numbers'}});
+    };
+page.querySelector('#game6').onclick = function() {
+      document.querySelector('#myNavigator').pushPage('page7.html', {data: {title: 'Time'}});
     };
   } else if (page.id === 'page2') {
     page.querySelector('ons-toolbar .center').innerHTML = page.data.title;
@@ -173,6 +193,9 @@ $("#game1").click(function(){
     page.querySelector('ons-toolbar .center').innerHTML = page.data.title;
   }
    else if (page.id === 'page6') {
+    page.querySelector('ons-toolbar .center').innerHTML = page.data.title;
+  }
+ else if (page.id === 'page7') {
     page.querySelector('ons-toolbar .center').innerHTML = page.data.title;
   }
 });
