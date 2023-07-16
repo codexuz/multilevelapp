@@ -78,7 +78,8 @@ const firebaseConfig = {
 
       firebase.auth().createUserWithEmailAndPassword(email, password)
         .then(function(userCredential) {
-          
+          $("#alert").fadeIn()
+          $("#alert").fadeOut(3000)
           var user = userCredential.user;
           // Save additional user data to the database
           var userData = {
@@ -101,7 +102,6 @@ const firebaseConfig = {
           console.log("Registration error:", error);
           // Handle registration errors
         });
-        $("#alert").show()
-        $("#alert").hide(3000)
+        
     });
   </script>
