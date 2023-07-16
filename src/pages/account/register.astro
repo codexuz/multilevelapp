@@ -79,7 +79,7 @@ const firebaseConfig = {
       firebase.auth().createUserWithEmailAndPassword(email, password)
         .then(function(userCredential) {
           $("#alert").fadeIn()
-          setTimeout((){
+          setTimeout(()=>{
            $("#alert").html("Redirecting...")
             $("#alert").fadeOut(8000)
           },1800);
@@ -98,7 +98,7 @@ const firebaseConfig = {
           var userRef = database.ref("users/" + user.uid);
           // Set the user data under the user reference
           userRef.set(userData);
-          setTimeout((){
+          setTimeout(()=>{
            window.location.href='/account/signin'
            },10000)
         
