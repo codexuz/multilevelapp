@@ -46,15 +46,15 @@ if (userData) {
 ---
 
 <Layout title="Profile">
-<main class="container mx-auto px-4 min-h-screen bg-white text-gray-800 dark:bg-gray-800 text-white">
+<main class="container mx-auto px-4 min-h-screen bg-white text-gray-800 dark:bg-gray-800 dark:text-white">
 <h1 class="text-2xl mb-4 font-bold">User profile</h1>
 <div class="bg-white rounded-lg px-3 py-2 shadow-lg">
 <img src={userData.picture} width="50px" height="50px" class="my-2">
-<p class=""><b>Name:</b> <span class="text-gray-600 mx-2">{userData.name}</span></p>
-<p class=""><b>Join date:</b> <span class="text-gray-600 mx-2">{userData.joined}</span></p>
-<p class=""><b>Status:</b> 
+<p class="text-lg"><b>Name:</b> <span class="text-gray-600 mx-2">{userData.name}</span></p>
+<p class="text-lg"><b>Join date:</b> <span class="text-gray-600 mx-2">{userData.joined}</span></p>
+<p class="text-lg"><b>Status:</b> 
 <span class="bg-green-100 text-green-800 text-xs font-medium mr-2 mx-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">{userData.status}</span></p>
-<p class=""><b>Email:</b> <span class="text-gray-600 mx-2">{userData.email}</span></p>
+<p class="text-lg"><b>Email:</b> <span class="text-gray-600 mx-2">{userData.email}</span></p>
 </div>
 
 
