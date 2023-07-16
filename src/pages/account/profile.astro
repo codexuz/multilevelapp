@@ -27,7 +27,9 @@ if (!user) {
    interface User {
   name: string;
   status: number;
-  email:string
+  email:string;
+  profile:string;
+  joined:string;
 }
 
 const db = getFirestore(app);
@@ -46,10 +48,11 @@ if (userData) {
 <Layout title="Profile">
 <main class="container mx-auto px-4 min-h-screen">
 <h1 class="text-2xl font-bold">User profile</h1>
+<p class="">{userData.name}</p>
 <p class="">{userData.joined}</p>
 <p class="">{userData.status}</p>
 <p class="">{userData.email}</p>
-<img src="{userData.profil}">
+<img src="{userData.profile}">
 
 </main>
 </Layout>
