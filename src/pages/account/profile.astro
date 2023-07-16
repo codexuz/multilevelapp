@@ -1,10 +1,55 @@
 ---
+import { app } from "../../lib/firebase/server";
+import { getFirestore } from "firebase-admin/firestore";
+import { getAuth  } from "firebase-admin/auth";
 import Layout from "../../layouts/Layout.astro";
+import FooterMenu from '../../components/FooterMenu.astro'
+import Card from '../../components/Card.astro'
+import DashHeader from '../../components/DashHeader.astro';
+import Loader from '../../components/Loader.astro';
+
+const auth = getAuth(app);
+
+/* Check current session */
+const sessionCookie = Astro.cookies.get("session").value;
+
+if (!sessionCookie) {
+  return Astro.redirect("/account/register");
+}
+const decodedCookie = await auth.verifySessionCookie(sessionCookie);
+const user = await auth.getUser(decodedCookie.uid);
+
+if (!user) {
+  return Astro.redirect("/account/register");
+}
+
+
+   interface User {
+  name: string;
+  status: number;
+  email:string
+}
+
+const db = getFirestore(app);
+const userRef = db.collection("users").doc(user.uid)
+const userSnapshot = await userRef.get();
+const userData = userSnapshot.data();
+
+if (userData) {
+  const { name, email } = userData;
+} else {
+  // Handle the case where the user data is not available
+  console.log("User data not found.");
+}
 ---
 
 <Layout title="Profile">
 <main class="container mx-auto px-4 min-h-screen">
 <h1 class="text-2xl font-bold">User profile</h1>
+<p class="">{userData.joined}</p>
+<p class="">{userData.status}</p>
+<p class="">{userData.email}</p>
+<img src="{userData.profil}">
 
 </main>
 </Layout>
