@@ -84,7 +84,7 @@ const firebaseConfig = {
           var userData = {
             email: user.email,
             name:user.name,
-            status: "unpaid"
+            status: "unpaid",
             uid: user.uid
           };
 
@@ -98,7 +98,7 @@ const firebaseConfig = {
          
         })
         .catch(function(error) {
-          alert("Registration error:", error);
+          console.log("Registration error:", error);
           // Handle registration errors
         });
         $("#alert").show()
