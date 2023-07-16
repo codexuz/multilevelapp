@@ -27,7 +27,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
     const d = new Date();
     const y=d.getFullYear()
     const m=d.getMonth()+1
-    const s=d.getDate()
+    const s=d.getDate()+1
     const joined=`${s}-${m}-${y}`
     // Save additional data to Firestore
     await firestore.collection("users").doc(userRecord.uid).set({
