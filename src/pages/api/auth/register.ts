@@ -35,7 +35,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
       email,
       status:"unpaid",
       joined: joined,
-      picture: "https://cdn3d.iconscout.com/3d/premium/thumb/user-profile-2871145-2384395.png"
+      picture: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/2048px-Circle-icons-profile.svg.png"
     });
 
     return redirect("/account/signin");
