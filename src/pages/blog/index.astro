@@ -20,8 +20,8 @@ const renderwords= async ()=>{
           <a href="details?id=${el.id}">
              <img src="${el.img}" width="100px" height="100px">
             <h3 class="text-xl font-bold">${el.title}</h3>
-            <p class="text-lg">${el.desc}</p>
-            <span>${el.likes}</span>
+            <p class="text-lg">${el.body.slice(0,200)}</p>
+            <span>${el.like}</span>
            </a>
             </div>
             `
