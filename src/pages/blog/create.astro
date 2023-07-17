@@ -43,6 +43,8 @@ method:'POST',
 body: JSON.stringify(doc),
 headers: {'Content-Type':'application/json'}
 })
+
+window.location.reload()
 }
 
 form.addEventListener("submit", createPost)
