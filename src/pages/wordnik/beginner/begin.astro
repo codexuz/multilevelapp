@@ -22,7 +22,7 @@ const renderwords= async ()=>{
         const data=await res.json()     
         data.forEach((el)=>{
           box+=`
-          <a href="beginner?id=${el.id}" class="block rounded-lg  shadow-lg my-2.5  py-5 bg-rose-600 text-white dark:bg-slate-700 text-gray-900  dark:text-white">
+          <a href="beginner?id=${el.id}" class="rounded-lg  shadow-lg my-2.5  py-5 bg-rose-600 text-white dark:bg-slate-700 text-gray-900  dark:text-white">
             <div class="flex items-center justify-between">
             <div class="mx-2">
             <h3 class="text-xl font-bold">${el.title}</h3>
@@ -33,7 +33,7 @@ const renderwords= async ()=>{
 </svg>
 </a>
     </div>      
-            </a>
+ </a>
             `
 
         })
