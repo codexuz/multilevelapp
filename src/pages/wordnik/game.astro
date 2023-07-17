@@ -127,6 +127,7 @@ recognition.start();
     }
     wordContainer.innerText = flashcards[currentFlashcard].word;
    var imgUrl = "https://source.unsplash.com/featured/?"+ flashcards[currentFlashcard].word;
+   document.getElementById("img").src=imgUrl
     wordTr.innerText= flashcards[currentFlashcard].trans;
     audioElement.src = flashcards[currentFlashcard].audio;
     audioElement.play();
@@ -141,6 +142,7 @@ recognition.start();
   wordTr.innerText= flashcards[currentFlashcard].trans;
   audioElement.src = flashcards[currentFlashcard].audio;
   var imgUrl = "https://source.unsplash.com/featured/?"+ flashcards[currentFlashcard].word;
+  document.getElementById("img").src=imgUrl
   $("#start-btn").click(function(){
     audioElement.play();
     $("#welcome").hide()
