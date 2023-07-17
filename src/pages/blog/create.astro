@@ -44,7 +44,7 @@ body: JSON.stringify(doc),
 headers: {'Content-Type':'application/json'}
 })
 
-form.reset()
+window.location.replace("/blog")
 }
 
 form.addEventListener("submit", createPost)
