@@ -35,7 +35,7 @@ e.preventDefault()
  const doc={
 title: form.title.value,
 body: form.body.value,
-likes:0,
+like:0,
 img: "https://media.sproutsocial.com/uploads/2022/10/social-media-post-ideas-for-your-brand-in-2022.jpg"
 }
 await fetch('https://server-five-dusky.vercel.app/posts', {
@@ -44,7 +44,7 @@ body: JSON.stringify(doc),
 headers: {'Content-Type':'application/json'}
 })
 
-window.location.reload()
+form.reset()
 }
 
 form.addEventListener("submit", createPost)
