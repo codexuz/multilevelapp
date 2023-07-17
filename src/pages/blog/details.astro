@@ -10,7 +10,7 @@ import Layout from '../../layouts/Layout.astro'
   const id = new URLSearchParams(window.location.search).get("id");
   const container = document.getElementById("main")
   const renderdetails= async ()=>{
-    const res= await fetch('https://server-five-dusky.vercel.app/games/'+ id);
+    const res= await fetch('https://server-five-dusky.vercel.app/posts/'+ id);
     var blog= await res.json();
     const template=`
    <h1>${blog.title}</h1>
