@@ -166,6 +166,7 @@ function startRecording() {
           .then(function (stream) {
             mediaRecorder = new MediaRecorder(stream);
             mediaRecorder.start();
+	   startTime = new Date().getTime();
             mediaRecorder.addEventListener("dataavailable", function (event) {
               chunks.push(event.data);
             });
@@ -181,6 +182,8 @@ function startRecording() {
         mediaRecorder.addEventListener("stop", function () {
           const blob = new Blob(chunks, { type: "audio/ogg; codecs=opus" });
           const audioUrl = URL.createObjectURL(blob);
+	  const currentTime = new Date().getTime();
+          const duration = (currentTime - startTime) / 1000;
           preview.src = audioUrl;
           chunks = [];
          
