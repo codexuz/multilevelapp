@@ -28,6 +28,7 @@ const stopRecording = () => {
     recorder = null;
     const recordedBlob = new Blob(recordedChunks, { type: 'audio/webm' });
     const audioUrl = URL.createObjectURL(recordedBlob);
+    document.getElementById("audio-player").src=audioUrl
   }
 };
 
