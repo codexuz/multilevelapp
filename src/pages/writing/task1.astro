@@ -39,7 +39,7 @@ const userData = userSnapshot.data();
 
 if (userData.status==="unpaid") {
   const { name, email } = userData;
-  return Astro.redirect("/");
+  return Astro.redirect("/account/checkout");
 } else {
   // Handle the case where the user data is not available
   console.log("User data not found.");
