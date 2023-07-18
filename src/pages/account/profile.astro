@@ -38,7 +38,7 @@ const userRef = db.collection("users").doc(user.uid)
 const userSnapshot = await userRef.get();
 const userData = userSnapshot.data();
 
-if (userData) {
+if (userData.status==="unpaid") {
   const { name, email } = userData;
   return Astro.redirect("/")
 } else {
