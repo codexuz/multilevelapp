@@ -40,6 +40,7 @@ const userData = userSnapshot.data();
 
 if (userData) {
   const { name, email } = userData;
+  return Astro.redirect("/")
 } else {
   // Handle the case where the user data is not available
   console.log("User data not found.");
