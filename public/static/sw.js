@@ -15,8 +15,14 @@ self.addEventListener('install',  function (e) {
         [
           '/static/audios/*.mp3',
           '/static/audios/*.wav',
-          '/static/audios/*.mp3',
-          '/index.astro',
+          '/static/*.png',
+          '/static/*.js',
+          '/static/*.webp',
+          '/static/*.jpg',
+          '{{ astro.url("/wordnik/beginner/vocabulary") }}', 
+          '{{ astro.url("https://examonline.app/wordnik/beginner/begin") }}', 
+          '{{ astro.url("https://examonline.app/wordnik/beginner/beginner") }}', 
+          '/',
 
         ]
       );
