@@ -155,34 +155,38 @@ const q3=document.getElementById("q3")
 let t;
 const preview =document.getElementById("audio-playback")
 const blink = document.querySelector(".recorder")
-let recorder, audio_stream;
-
+let mediaRecorder;
+let chunks = [];
 part1.style.display="none";
 preview .style.display="none";
 //Recorder
 
 function startRecording() {
-  navigator.mediaDevices.getUserMedia({ audio: true })
-    .then(function (stream) {
-      audio_stream = stream;
-      recorder = new MediaRecorder(stream);
+        navigator.mediaDevices.getUserMedia({ audio: true })
+          .then(function (stream) {
+            mediaRecorder = new MediaRecorder(stream);
+            mediaRecorder.start();
+            mediaRecorder.addEventListener("dataavailable", function (event) {
+              chunks.push(event.data);
+            });
+          })
+          .catch(function (err) {
+            console.log("Error: " + err);
+          });
+      }
 
-      // when there is data, compile into object for preview src
-      recorder.ondataavailable = function (e) {
-        const url = URL.createObjectURL(e.data);
-		preview.src = url;
-// set link href as blob url, replaced instantly if re-recorded
-      
-      };
-      recorder.start();
+      function stopRecording() {
+        mediaRecorder.stop();
 
-    });
-}
+        mediaRecorder.addEventListener("stop", function () {
+          const blob = new Blob(chunks, { type: "audio/ogg; codecs=opus" });
+          const audioUrl = URL.createObjectURL(blob);
+          preview.src = audioUrl;
+          chunks = [];
+         
+        });
+      }
 
-
-function stopRecording() {
-    recorder.stop();
-  }
 
   
 //Scale UpandDown
