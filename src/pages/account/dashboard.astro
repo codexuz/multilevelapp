@@ -37,8 +37,7 @@ const userData = userSnapshot.data();
 
 if (userData.status==="unpaid") {
   const { name, email } = userData;
-  alert("You don't have access this section")
-  document.querySelector("body").style.display="none"
+  alert("You don't have access this section", return Astro.redirect("/account/register"))
 } else {
   // Handle the case where the user data is not available
   console.log("User data not found.");
