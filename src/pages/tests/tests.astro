@@ -82,7 +82,7 @@ audioElement.play()
 
 function showNextQuestion(){
 currectQuestionIndex++
-if(currectQuestionIndex === data.questions[0].part1.length){
+if(currectQuestionIndex === data.questions[0].part1.length-1){
 console.log("Part1 ended")
 }
 audioElement.src=data.questions[0].part1[currectQuestionIndex].audio
@@ -103,8 +103,8 @@ function startCountdown() {
           $("#timer").html(`${count} seconds`);
           if (count <= 0) {
             beep.play();
+	    beep.addEventListener("ended", start30SecondCountdown)
             clearInterval(interval);
-            start30SecondCountdown();
           }
         }, 1000);
       }
@@ -124,9 +124,7 @@ function start30SecondCountdown() {
              $("#timer").html("");
             clearInterval(interval);
             showNextQuestion();
-          }   else if (count <= 10) {
-      $("#timer").css("color", "red");
-    }
+          }  
         }, 1000);
       }
 
