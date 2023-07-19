@@ -117,7 +117,11 @@ return
 audioElement.src=data.questions[0].part1[currectQuestionIndex].audio
 $("#question-bar").html(data.questions[0].part1[currectQuestionIndex].question)
 $("#que-id").html(data.questions[0].part1[currectQuestionIndex].number)
-audioElement.play()
+// Check if the audio element is paused before playing the new audio
+  if (audioElement.paused) {
+    audioElement.play();
+  }
+
 // Reset the timer count
     timerCount = 0;
 
@@ -165,7 +169,10 @@ $("#que-id").html("")
 
 audioTrans.addEventListener("ended", beginPartTwo)
 function beginPartTwo(){
-audioElement.play()
+// Check if the audio element is paused before playing the new audio
+    if (audioElement.paused) {
+      audioElement.play();
+    }
 audioElement.src=data.questions[0].part2[0].audio
 $("#question-bar").html(data.questions[0].part2[0].question)
 $("#que-id").html(data.questions[0].part2[0].number)
