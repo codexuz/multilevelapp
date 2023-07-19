@@ -129,18 +129,18 @@ $("#que-id").html(data.questions[0].part1[currectQuestionIndex].number)
 }
 
 audioElement.addEventListener("ended", ()=>{
-let count = 5;
+var count = 5;
         $("#timer").html(`${count} seconds`);
-        const interval = setInterval(() => {
+        var interval = setInterval(() => {
           count--;
           $("#timer").html(`${count} seconds`);
           if (count <= 0) {
 	    $("#timer").html("-:-")
             document.getElementById("beep").play();
 	    document.getElementById("beep").addEventListener("ended", ()=>{
-		let count = 30;
+		var count = 30;
          $("#timer").html(`${count} seconds`);
-        const interval = setInterval(() => {
+        var interval = setInterval(() => {
           count--;
            $("#timer").html(`${count} seconds`);
             if (count <= 0) {
@@ -232,7 +232,7 @@ document.getElementById("audio3").play();
 
 document.getElementById("audio3").addEventListener("ended", startCount)
 function startCount(){
-var counter2 = 60;
+var counter2 = 5;
         $("#timer").html(`${counter2} seconds`);
         var interval3 = setInterval(() => {
           counter2--;
@@ -241,7 +241,7 @@ var counter2 = 60;
 	    $("#timer").html("-:-")
             document.getElementById("beep").play();
 	    document.getElementById("beep").addEventListener("ended", ()=>{
-		var counter2 = 120;
+		var counter2 = 30;
          $("#timer").html(`${counter2} seconds`);
         var interval3 = setInterval(() => {
           counter2--;
