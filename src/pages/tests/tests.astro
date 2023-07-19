@@ -276,10 +276,10 @@ $("#que-id").html(data.questions[0].part3[currectQuestion].number)
 
   //Intialize function
 $(document).ready(function(){
-   loadState();
-audioElement.src=data.questions[0].part1[currectQuestionIndex].audio
-$("#question-bar").html(data.questions[0].part1[currectQuestionIndex].question)
-$("#que-id").html(data.questions[0].part1[currectQuestionIndex].number)
+  // loadState();
+audioElement.src=data.questions[0].part1[currentQuestionIndex].audio
+$("#question-bar").html(data.questions[0].part1[currentQuestionIndex].question)
+$("#que-id").html(data.questions[0].part1[currentQuestionIndex].number)
 })
 
 //Intialize function ends here
