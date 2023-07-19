@@ -120,14 +120,13 @@ function start30SecondCountdown() {
         const interval = setInterval(() => {
           count--;
            $("#timer").html(`${count} seconds`);
-           if(count>=10){
-            $("#timer").css("color","red")
-	   }
-          else if (count <= 0) {
+            if (count <= 0) {
              $("#timer").html("");
             clearInterval(interval);
             showNextQuestion();
-          }
+          }   else if (count <= 10) {
+      $("#timer").css("color", "red");
+    }
         }, 1000);
       }
 
