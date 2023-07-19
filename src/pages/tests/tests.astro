@@ -162,6 +162,31 @@ function start30SecondCountdown() {
 
 //StartCountDown 30 seconds
 
+function showNextPart(){
+
+//ShowNextQuestion
+function showNextQuestion(){
+currectQuestionIndex++
+if(currectQuestionIndex === data.questions[0].part2.length-1){
+console.log("Part2 ended")
+}
+audioElement.src=data.questions[0].part2[currectQuestionIndex].audio
+$("#question-bar").html(data.questions[0].part2[currectQuestionIndex].question)
+$("#que-id").html(data.questions[0].part2[currectQuestionIndex].number)
+audioElement.play()
+// Reset the timer count
+    timerCount = 0;
+
+    // Save the current state to local storage
+    saveState();
+}
+
+audioElement.src=data.questions[0].part2[currectQuestionIndex].audio
+$("#question-bar").html(data.questions[0].part2[currectQuestionIndex].question)
+$("#que-id").html(data.questions[0].part2[currectQuestionIndex].number)
+
+}
+
 
 
   //Intialize function
