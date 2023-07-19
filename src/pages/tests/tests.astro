@@ -94,6 +94,7 @@ const renderdetails= async ()=>{
     const res= await fetch('https://blog-seven-bay.vercel.app/speaking/'+ id);
     var data= await res.json();
 //Start btn begin
+window.onload=Initialize()
 function Initialize(){
 
 $("#start-btn").click(()=>{
