@@ -67,6 +67,27 @@ input[type='range'] {
 var currectQuestionIndex=0
 const id = new URLSearchParams(window.location.search).get("id");
 var audioElement=document.getElementById("audio")
+var timerCount = 0; // Variable to store the timer count
+
+// Function to save state to local storage
+function saveState() {
+  localStorage.setItem("currentQuestionIndex", currectQuestionIndex);
+  localStorage.setItem("timerCount", timerCount);
+}
+
+// Function to load state from local storage
+function loadState() {
+  var savedIndex = localStorage.getItem("currentQuestionIndex");
+  var savedTimerCount = localStorage.getItem("timerCount");
+  if (savedIndex !== null) {
+    currectQuestionIndex = parseInt(savedIndex);
+  }
+  if (savedTimerCount !== null) {
+    timerCount = parseInt(savedTimerCount);
+  }
+}
+
+
 const renderdetails= async ()=>{
     const res= await fetch('https://blog-seven-bay.vercel.app/speaking/'+ id);
     var data= await res.json();
@@ -80,6 +101,8 @@ audioElement.play()
 //Start btn end
 
 
+//ShowNextQuestion
+
 function showNextQuestion(){
 currectQuestionIndex++
 if(currectQuestionIndex === data.questions[0].part1.length-1){
@@ -89,6 +112,11 @@ audioElement.src=data.questions[0].part1[currectQuestionIndex].audio
 $("#question-bar").html(data.questions[0].part1[currectQuestionIndex].question)
 $("#que-id").html(data.questions[0].part1[currectQuestionIndex].number)
 audioElement.play()
+// Reset the timer count
+    timerCount = 0;
+
+    // Save the current state to local storage
+    saveState();
 }
 
 audioElement.addEventListener("ended", startCountdown)
@@ -107,7 +135,10 @@ function startCountdown() {
 	    beep.addEventListener("ended", start30SecondCountdown)
             clearInterval(interval);
           }
-        }, 1000);
+        }, 1000)
+ // Save the timer count to local storage
+    timerCount = count;
+    saveState();
       }
 
 //StartCountDown 5 seconds ends here
@@ -135,6 +166,7 @@ function start30SecondCountdown() {
 
   //Intialize function
 $(document).ready(function(){
+    loadState();
 audioElement.src=data.questions[0].part1[currectQuestionIndex].audio
 $("#question-bar").html(data.questions[0].part1[currectQuestionIndex].question)
 $("#que-id").html(data.questions[0].part1[currectQuestionIndex].number)
