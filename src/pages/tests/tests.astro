@@ -83,6 +83,7 @@ $("#start-btn").click(()=>{
 $("#welcome").hide()
 $("#quizBar").show()
 audioElement.play()
+audioElement.addEventListener("ended", CountdownFive)
 })
 //Start btn end
 
