@@ -95,6 +95,7 @@ function showNextQuestion(){
 currentQuestionIndex++
 if(currentQuestionIndex === data.questions[0].part1.length){
 console.log("Part1 ended")
+showNextPart()
 return false
 }
 audioElement.src=data.questions[0].part1[currentQuestionIndex].audio
