@@ -183,8 +183,8 @@ var counter = 60;
           $("#timer").html(`${counter} seconds`);
           if (counter <= 0) {
 	    $("#timer").html("-:-")
-            document.getElementById("beep").play();
-	    document.getElementById("beep").addEventListener("ended", ()=>{
+            document.getElementById("beep2").play();
+	    document.getElementById("beep2").addEventListener("ended", ()=>{
 		var counter = 120;
          $("#timer").html(`${counter} seconds`);
         var interval2 = setInterval(() => {
@@ -215,7 +215,7 @@ const currectQuestion=0
 //ShowLastQuestion starts here
 function showLastQuestion(){
 currectQuestion++
-if(currectQuestionIndex === data.questions[0].part3.length){
+if(currectQuestion === data.questions[0].part3.length){
 console.log("Part3 ended")
 return
 }
@@ -239,8 +239,8 @@ var counter2 = 5;
           $("#timer").html(`${counter2} seconds`);
           if (counter2 <= 0) {
 	    $("#timer").html("-:-")
-            document.getElementById("beep").play();
-	    document.getElementById("beep").addEventListener("ended", ()=>{
+            document.getElementById("beep3").play();
+	    document.getElementById("beep3").addEventListener("ended", ()=>{
 		var counter2 = 30;
          $("#timer").html(`${counter2} seconds`);
         var interval3 = setInterval(() => {
@@ -249,7 +249,7 @@ var counter2 = 5;
             if (counter2 <= 0) {
              $("#timer").html("");
             clearInterval(interval3);
-            return
+            showLastQuestion()
           }  
         }, 1000)
 	    })
