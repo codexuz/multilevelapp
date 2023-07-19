@@ -162,14 +162,16 @@ audioTrans.play()
 $("#question-bar").html("")
 $("#que-id").html("")
 
-audioTrans.addEventListener("ended", ()=>{
+audioTrans.addEventListener("ended", beginPartTwo)
+function beginPartTwo(){
 audioElement.play()
 audioElement.src=data.questions[0].part2[0].audio
 $("#question-bar").html(data.questions[0].part2[0].question)
 $("#que-id").html(data.questions[0].part2[0].number)
-})
+}
 
-audioElement.addEventListener("ended", ()=>{
+audioElement.addEventListener("ended", startCount)
+function startCount(){
 let count = 5;
         $("#timer").html(`${count} seconds`);
         const interval = setInterval(() => {
@@ -194,7 +196,8 @@ let count = 5;
             clearInterval(interval);
           }
         }, 1000)
-})
+
+}
 
 }
 
