@@ -110,6 +110,7 @@ function showNextQuestion(){
 currectQuestionIndex++
 if(currectQuestionIndex === data.questions[0].part1.length){
 console.log("Part1 ended")
+return
 }
 audioElement.src=data.questions[0].part1[currectQuestionIndex].audio
 $("#question-bar").html(data.questions[0].part1[currectQuestionIndex].question)
