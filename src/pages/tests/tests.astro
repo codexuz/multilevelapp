@@ -1,1 +1,64 @@
+---
+import 'bootstrap/dist/css/bootstrap.css';
+import 'mdb-ui-kit/css/mdb.min.css'
+import 'font-awesome/css/font-awesome.min.css'
+import Layout from '../../../layouts/Layout.astro'
+import Result from '../../../components/Result.astro'
+import Welcome from '../../../components/Welcome.astro'
+import QuizNav from '../../../components/QuizNav.astro'
+import SpeakParts from '../../../components/SpeakParts.astro'
+import SpeakBody from '../../../components/SpeakBody.astro'
+import SpeakLoader from '../../../components/SpeakLoader.astro'
+---
+
+<Layout title="Test 1">
+ <SpeakLoader/>
+
+ <Welcome/>
+
+<div id="quizBar" class="hidden">
+
+<QuizNav/>
+
+<SpeakParts/>
+ 
+ <SpeakBody/>
+</div>
+<Result/>
+<audio id="audio"></audio>
+
+                   
+                       
+                
+</div>
+</Layout>
+
+
+<style>
+input[type='range'] {
+    overflow: hidden;
+    width: 80px;
+    appearance: none;
+    background-color: #eeeeee;
+  }
+  
+  input[type='range']::-webkit-slider-runnable-track {
+    height: 10px;
+    appearance: none;
+    color: #13bba4;
+    margin-top: -1px;
+  }
+  
+  input[type='range']::-webkit-slider-thumb {
+    width: 10px;
+    appearance: none;
+    height: 10px;
+    cursor: ew-resize;
+    background: #434343;
+    box-shadow: -80px 0 0 80px #292929;
+  }
+
+
+</style>
+
 
