@@ -82,9 +82,9 @@ $("#audio").trigger("play")
   //Intialize function
 
 $(document).ready(function(){
-$("#audio").src=data[0].questions[0].part1[currectQuestionIndex].audio
-$("#question-bar").html(data[0].questions[0].part1[currectQuestionIndex].question)
-$("#que-id").html(data[0].questions[0].part1[currectQuestionIndex].number)
+$("#audio").src=data.questions[0].part1[currectQuestionIndex].audio
+$("#question-bar").html(data.questions[0].part1[currectQuestionIndex].question)
+$("#que-id").html(data.questions[0].part1[currectQuestionIndex].number)
 
 })
 
