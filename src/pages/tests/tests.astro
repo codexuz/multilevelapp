@@ -64,6 +64,38 @@ input[type='range'] {
 <script src="https://examonline.app/static/jquery.min.js" is:inline></script>
 <script is:inline>
 
+var currectQuestionIndex=0
+const id = new URLSearchParams(window.location.search).get("id");
+const renderdetails= async ()=>{
+    const res= await fetch('https://server-five-dusky.vercel.app/games/'+ id);
+    var data= await res.json();
+//Start btn begin
+
+$("#start-btn").click(()=>{
+$("#welcome").hide()
+$("#quizBar").show()
+$("#audio").trigger("play")
+})
+//Start btn end
+
+
+  //Intialize function
+
+$(document).ready(function(){
+$("#audio").src=data[0].questions[0].part1[currectQuestionIndex].audio
+$("#question-bar").html(data[0].questions[0].part1[currectQuestionIndex].question)
+$("#que-id").html(data[0].questions[0].part1[currectQuestionIndex].number)
+
+})
+
+//Intialize function ends here
+}
+
+//DomLoad
+window.addEventListener("DOMContentLoaded", ()=> renderdetails())
+
+//DomLoad ends here
+
 
 //Scale UpandDown
 var TextSize=document.getElementById("question-bar");
@@ -95,4 +127,7 @@ var TextSize=document.getElementById("question-bar");
 `
 	}
   }
+
+
+
 </script>
