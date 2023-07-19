@@ -69,8 +69,8 @@ var currectQuestionIndex=0
 const id = new URLSearchParams(window.location.search).get("id");
 var audioElement=document.getElementById("audio")
 var audioTrans=document.getElementById("tran-audio")
-var timerCount = 0; // Variable to store the timer count
-
+//var timerCount = 0; // Variable to store the timer count
+/*
 // Function to save state to local storage
 function saveState() {
   localStorage.setItem("currentQuestionIndex", currectQuestionIndex);
@@ -88,7 +88,7 @@ function loadState() {
     timerCount = parseInt(savedTimerCount);
   }
 }
-
+*/
 
 const renderdetails= async ()=>{
     const res= await fetch('https://blog-seven-bay.vercel.app/speaking/'+ id);
@@ -119,10 +119,10 @@ $("#question-bar").html(data.questions[0].part1[currectQuestionIndex].question)
 $("#que-id").html(data.questions[0].part1[currectQuestionIndex].number)
 audioElement.play()
 // Reset the timer count
-    timerCount = 0;
+    //timerCount = 0;
 
     // Save the current state to local storage
-    saveState();
+   // saveState();
 }
 
 audioElement.addEventListener("ended", ()=>{
@@ -151,8 +151,8 @@ let count = 5;
           }
         }, 1000)
  // Save the timer count to local storage
-    timerCount = count;
-    saveState();
+   /// timerCount = count;
+    // saveState();
 })
 
 
@@ -209,7 +209,7 @@ let count2 = 60;
 
   //Intialize function
 $(document).ready(function(){
-    loadState();
+   // loadState();
 audioElement.src=data.questions[0].part1[currectQuestionIndex].audio
 $("#question-bar").html(data.questions[0].part1[currectQuestionIndex].question)
 $("#que-id").html(data.questions[0].part1[currectQuestionIndex].number)
