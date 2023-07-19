@@ -74,7 +74,7 @@ const renderdetails= async ()=>{
 $("#start-btn").click(()=>{
 $("#welcome").hide()
 $("#quizBar").show()
-$("#audio").trigger("play")
+document.getElementById("audio").play()
 })
 //Start btn end
 
@@ -82,10 +82,10 @@ $("#audio").trigger("play")
   //Intialize function
 
 $(document).ready(function(){
-$("#audio").src=data.questions[0].part1[currectQuestionIndex].audio
+document.getElementById("audio").src=data.questions[0].part1[currectQuestionIndex].audio
 $("#question-bar").html(data.questions[0].part1[currectQuestionIndex].question)
 $("#que-id").html(data.questions[0].part1[currectQuestionIndex].number)
-
+console.log(data.questions[0].part1[currectQuestionIndex].audio)
 })
 
 //Intialize function ends here
