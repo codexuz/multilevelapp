@@ -26,6 +26,7 @@ import SpeakLoader from '../../components/SpeakLoader.astro'
 </div>
 <Result/>
 <audio id="audio"></audio>
+<audio id="tran-audio"></audio>
 
                    
                        
@@ -67,6 +68,7 @@ input[type='range'] {
 var currectQuestionIndex=0
 const id = new URLSearchParams(window.location.search).get("id");
 var audioElement=document.getElementById("audio")
+var audioTrans=document.getElementById("tran-audio")
 var timerCount = 0; // Variable to store the timer count
 
 // Function to save state to local storage
@@ -107,6 +109,7 @@ function showNextQuestion(){
 currectQuestionIndex++
 if(currectQuestionIndex === data.questions[0].part1.length-1){
 console.log("Part1 ended")
+showNextPart()
 }
 audioElement.src=data.questions[0].part1[currectQuestionIndex].audio
 $("#question-bar").html(data.questions[0].part1[currectQuestionIndex].question)
@@ -163,6 +166,9 @@ function start30SecondCountdown() {
 //StartCountDown 30 seconds
 
 function showNextPart(){
+audioTrans.src="/static/audios/test1/part2/intro.mp3"
+audioTrans.play();
+audioTrans.addEventListener("ended", showInitial)
 
 //ShowNextQuestion
 function showNextQuestion(){
@@ -181,10 +187,11 @@ audioElement.play()
     saveState();
 }
 
+function showInitial(){
 audioElement.src=data.questions[0].part2[currectQuestionIndex].audio
 $("#question-bar").html(data.questions[0].part2[currectQuestionIndex].question)
 $("#que-id").html(data.questions[0].part2[currectQuestionIndex].number)
-
+}
 }
 
 
