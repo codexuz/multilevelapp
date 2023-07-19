@@ -178,7 +178,7 @@ document.getElementById("audio2").addEventListener("ended", startCount)
 function startCount(){
 var counter = 60;
         $("#timer").html(`${counter} seconds`);
-        var interval = setInterval(() => {
+        var interval2 = setInterval(() => {
           counter--;
           $("#timer").html(`${counter} seconds`);
           if (counter <= 0) {
@@ -187,17 +187,17 @@ var counter = 60;
 	    document.getElementById("beep").addEventListener("ended", ()=>{
 		var counter = 120;
          $("#timer").html(`${counter} seconds`);
-        var interval = setInterval(() => {
+        var interval2 = setInterval(() => {
           counter--;
            $("#timer").html(`${counter} seconds`);
             if (counter <= 0) {
              $("#timer").html("");
-            clearInterval(interval);
+            clearInterval(interval2);
             return
           }  
         }, 1000)
 	    })
-            clearInterval(interval);
+            clearInterval(interval2);
           }
         }, 1000)
 
