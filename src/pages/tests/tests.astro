@@ -193,6 +193,7 @@ var counter = 60;
             if (counter <= 0) {
              $("#timer").html("");
             clearInterval(interval2);
+	    showLastPart()
             return
           }  
         }, 1000)
@@ -204,6 +205,68 @@ var counter = 60;
 }
 
 }
+
+
+
+//Part 3 Questions
+
+function showLastPart(){
+//ShowLastQuestion starts here
+function showLastQuestion(){
+currectQuestionIndex++
+if(currectQuestionIndex === data.questions[0].part3.length){
+console.log("Part3 ended")
+return
+}
+document.getElementById("audio3").src=data.questions[0].part3[currectQuestionIndex].audio
+$("#question-bar").html(data.questions[0].part3[currectQuestionIndex].question)
+$("#que-id").html(data.questions[0].part3[currectQuestionIndex].number)
+// Check if the audio element is paused before playing the new audio
+document.getElementById("audio3").play();
+
+}
+//ShowLastQuestion ends here
+
+//Audio Part 3
+
+document.getElementById("audio3").addEventListener("ended", startCount)
+function startCount(){
+var counter2 = 60;
+        $("#timer").html(`${counter2} seconds`);
+        var interval3 = setInterval(() => {
+          counter2--;
+          $("#timer").html(`${counter2} seconds`);
+          if (counter2 <= 0) {
+	    $("#timer").html("-:-")
+            document.getElementById("beep").play();
+	    document.getElementById("beep").addEventListener("ended", ()=>{
+		var counter2 = 120;
+         $("#timer").html(`${counter2} seconds`);
+        var interval3 = setInterval(() => {
+          counter2--;
+           $("#timer").html(`${counter2} seconds`);
+            if (counter2 <= 0) {
+             $("#timer").html("");
+            clearInterval(interval3);
+            return
+          }  
+        }, 1000)
+	    })
+            clearInterval(interval3);
+          }
+        }, 1000)
+
+}
+
+//Initializer Part 3 
+document.getElementById("audio3").src=data.questions[0].part2[currectQuestionIndex].audio
+$("#question-bar").html(data.questions[0].part2[currectQuestionIndex].question)
+$("#que-id").html(data.questions[0].part2[currectQuestionIndex].number)
+ document.getElementById("audio3").play();
+
+}
+
+
 
   //Intialize function
 $(document).ready(function(){
