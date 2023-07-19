@@ -176,10 +176,10 @@ $("#que-id").html(data.questions[0].part2[0].number)
 part2Audio.play()
 part2Audio.addEventListener("ended", ()=>{
 let count2 = 60;
-        $("#timer").html(`${count} seconds`);
+        $("#timer").html(`${count2} seconds`);
         const interval = setInterval(() => {
           count2--;
-          $("#timer").html(`${count} seconds`);
+          $("#timer").html(`${count2} seconds`);
           if (count2 <= 0) {
 	    $("#timer").html("-:-")
             document.getElementById("beep").play();
@@ -188,7 +188,7 @@ let count2 = 60;
          $("#timer").html(`${count} seconds`);
         const interval = setInterval(() => {
           count2--;
-           $("#timer").html(`${count} seconds`);
+           $("#timer").html(`${count2} seconds`);
             if (count2 <= 0) {
              $("#timer").html("");
             clearInterval(interval);
