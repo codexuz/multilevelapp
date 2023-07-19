@@ -125,7 +125,7 @@ audioElement.play()
     saveState();
 }
 
-audioElement.addEventListener("ended", ()={
+audioElement.addEventListener("ended", ()=>{
 let count = 5;
         $("#timer").html(`${count} seconds`);
         const interval = setInterval(() => {
