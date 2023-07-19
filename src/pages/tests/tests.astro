@@ -189,8 +189,8 @@ function startCountdown2() {
           $("#timer").html(`${count} seconds`);
           if (count <= 0) {
 	    $("#timer").html("-:-")
-            document.getElementById("beep").play();
-	    document.getElementById("beep").addEventListener("ended", start30SecondCountdown2)
+            beep.play();
+	    beep.addEventListener("ended", start30SecondCountdown2)
             clearInterval(interval);
           }
         }, 1000)
