@@ -167,7 +167,7 @@ audioElement.play()
 audioElement.src=data.questions[0].part2[0].audio
 $("#question-bar").html(data.questions[0].part2[0].question)
 $("#que-id").html(data.questions[0].part2[0].number)
-}
+})
 
 audioElement.addEventListener("ended", ()=>{
 let count = 5;
@@ -194,7 +194,8 @@ let count = 5;
             clearInterval(interval);
           }
         }, 1000)
-}
+})
+
 }
 
   //Intialize function
