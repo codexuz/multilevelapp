@@ -211,16 +211,17 @@ var counter = 60;
 //Part 3 Questions
 
 function showLastPart(){
+const currectQuestion=0
 //ShowLastQuestion starts here
 function showLastQuestion(){
-currectQuestionIndex++
+currectQuestion++
 if(currectQuestionIndex === data.questions[0].part3.length){
 console.log("Part3 ended")
 return
 }
-document.getElementById("audio3").src=data.questions[0].part3[currectQuestionIndex].audio
-$("#question-bar").html(data.questions[0].part3[currectQuestionIndex].question)
-$("#que-id").html(data.questions[0].part3[currectQuestionIndex].number)
+document.getElementById("audio3").src=data.questions[0].part3[currectQuestion].audio
+$("#question-bar").html(data.questions[0].part3[currectQuestion].question)
+$("#que-id").html(data.questions[0].part3[currectQuestion].number)
 // Check if the audio element is paused before playing the new audio
 document.getElementById("audio3").play();
 
@@ -259,9 +260,9 @@ var counter2 = 60;
 }
 
 //Initializer Part 3 
-document.getElementById("audio3").src=data.questions[0].part2[currectQuestionIndex].audio
-$("#question-bar").html(data.questions[0].part2[currectQuestionIndex].question)
-$("#que-id").html(data.questions[0].part2[currectQuestionIndex].number)
+document.getElementById("audio3").src=data.questions[0].part3[currectQuestion].audio
+$("#question-bar").html(data.questions[0].part3[currectQuestion].question)
+$("#que-id").html(data.questions[0].part3[currectQuestion].number)
  document.getElementById("audio3").play();
 
 }
