@@ -99,9 +99,11 @@ $("#start-btn").click(()=>{
 $("#welcome").hide()
 $("#quizBar").show()
 audioElement.play()
+Initialize()
 })
 //Start btn end
 
+function Initialize(){
 
 //ShowNextQuestion
 
@@ -164,6 +166,7 @@ function start30SecondCountdown() {
       }
 
 //StartCountDown 30 seconds
+}
 
 function showNextPart(){
 audioTrans.src="/static/audios/test1/part2/intro.mp3"
