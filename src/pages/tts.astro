@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+</head>
+<body>
+<button id="btn">Play</button>
+
+<script>
+const endpoint = 'https://api.cabinet.tts.uz/api/v1/common/synthesize';
+
+const text = 'Assalomu alaykum';
+const voice = 'm';
+const lang = 'uz';
+const token = 'a66b5923-7f24-4b09-a71d-f1d9ee488789';
+
+const params = {
+  text: text,
+  voice: voice,
+  lang: lang,
+  token: token
+};
+
+fetch(endpoint, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(params)
+})
+  .then(response => response.blob()) // assuming the response is a binary file
+  .then(blob => {
+    // Process the TTS audio blob
+    // For example, you can create an audio element and play the TTS audio
+    const audioElement = new Audio();
+    audioElement.src = URL.createObjectURL(blob);
+    audioElement.play();
+  })
+  .catch(error => {
+    console.error('TTS request failed:', error);
+  });
+
+</script>
+</body>
+</html>
+
