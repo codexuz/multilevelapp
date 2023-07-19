@@ -67,7 +67,7 @@ input[type='range'] {
 var currectQuestionIndex=0
 const id = new URLSearchParams(window.location.search).get("id");
 const renderdetails= async ()=>{
-    const res= await fetch('https://server-five-dusky.vercel.app/games/'+ id);
+    const res= await fetch('https://blog-seven-bay.vercel.app/speaking/'+ id);
     var data= await res.json();
 //Start btn begin
 
@@ -82,9 +82,9 @@ $("#audio").trigger("play")
   //Intialize function
 
 $(document).ready(function(){
-$("#audio").src=data.questions.part1[currectQuestionIndex].audio
-$("#question-bar").html(data.questions.part1[currectQuestionIndex].question)
-$("#que-id").html(data.questions.part1[currectQuestionIndex].number)
+$("#audio").src=data.questions[0].part1[currectQuestionIndex].audio
+$("#question-bar").html(data.questions[0].part1[currectQuestionIndex].question)
+$("#que-id").html(data.questions[0].part1[currectQuestionIndex].number)
 
 })
 
