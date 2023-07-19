@@ -110,7 +110,6 @@ function showNextQuestion(){
 currectQuestionIndex++
 if(currectQuestionIndex === data.questions[0].part1.length){
 console.log("Part1 ended")
-audioElement.pause()
 showNextPart()
 return
 }
@@ -118,9 +117,7 @@ audioElement.src=data.questions[0].part1[currectQuestionIndex].audio
 $("#question-bar").html(data.questions[0].part1[currectQuestionIndex].question)
 $("#que-id").html(data.questions[0].part1[currectQuestionIndex].number)
 // Check if the audio element is paused before playing the new audio
-  if (audioElement.paused) {
     audioElement.play();
-  }
 
 // Reset the timer count
     timerCount = 0;
@@ -169,18 +166,15 @@ $("#que-id").html("")
 
 audioTrans.addEventListener("ended", beginPartTwo)
 function beginPartTwo(){
-// Check if the audio element is paused before playing the new audio
-    if (audioElement.paused) {
-      audioElement.play();
-    }
 audioElement.src=data.questions[0].part2[0].audio
 $("#question-bar").html(data.questions[0].part2[0].question)
 $("#que-id").html(data.questions[0].part2[0].number)
+ audioElement.play();
 }
 
 audioElement.addEventListener("ended", startCount)
 function startCount(){
-let count = 5;
+let count = 60;
         $("#timer").html(`${count} seconds`);
         const interval = setInterval(() => {
           count--;
@@ -189,7 +183,7 @@ let count = 5;
 	    $("#timer").html("-:-")
             document.getElementById("beep").play();
 	    document.getElementById("beep").addEventListener("ended", ()=>{
-		let count = 30;
+		let count = 120;
          $("#timer").html(`${count} seconds`);
         const interval = setInterval(() => {
           count--;
