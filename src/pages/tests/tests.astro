@@ -137,8 +137,8 @@ function startCountdown() {
           $("#timer").html(`${count} seconds`);
           if (count <= 0) {
 	    $("#timer").html("-:-")
-            beep.play();
-	    beep.addEventListener("ended", start30SecondCountdown)
+            document.getElementById("beep").play();
+	    document.getElementById("beep").addEventListener("ended", start30SecondCountdown)
             clearInterval(interval);
           }
         }, 1000)
@@ -186,12 +186,12 @@ part2Audio.addEventListener("ended", startCountdown2)
 }
 
 function startCountdown2() {
-        let count = 60;
+        let count2 = 60;
         $("#timer").html(`${count} seconds`);
         const interval = setInterval(() => {
-          count--;
+          count2--;
           $("#timer").html(`${count} seconds`);
-          if (count <= 0) {
+          if (count2 <= 0) {
 	    $("#timer").html("-:-")
             document.getElementById("beep").play();
 	    document.getElementById("beep").addEventListener("ended", start30SecondCountdown2)
@@ -201,12 +201,12 @@ function startCountdown2() {
       }
 
 function start30SecondCountdown2() {
-        let count = 120;
+        let count2 = 120;
          $("#timer").html(`${count} seconds`);
         const interval = setInterval(() => {
-          count--;
+          count2--;
            $("#timer").html(`${count} seconds`);
-            if (count <= 0) {
+            if (count2 <= 0) {
              $("#timer").html("");
             clearInterval(interval);
             console.log("Part2 ended")
