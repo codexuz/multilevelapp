@@ -26,6 +26,8 @@ import SpeakLoader from '../../components/SpeakLoader.astro'
 </div>
 <Result/>
 <audio id="audio"></audio>
+<audio id="audio2"></audio>
+<audio id="audio3"></audio>
 <audio id="tran-audio"></audio>
 
                    
@@ -166,26 +168,26 @@ $("#que-id").html("")
 
 audioTrans.addEventListener("ended", beginPartTwo)
 function beginPartTwo(){
-audioElement.src=data.questions[0].part2[0].audio
+document.getElementById("audio2").src=data.questions[0].part2[0].audio
 $("#question-bar").html(data.questions[0].part2[0].question)
 $("#que-id").html(data.questions[0].part2[0].number)
- audioElement.play();
+ document.getElementById("audio2").play();
 }
 
-audioElement.addEventListener("ended", startCount)
+document.getElementById("audio2").addEventListener("ended", startCount)
 function startCount(){
-let count = 60;
+var count = 60;
         $("#timer").html(`${count} seconds`);
-        const interval = setInterval(() => {
+        var interval = setInterval(() => {
           count--;
           $("#timer").html(`${count} seconds`);
           if (count <= 0) {
 	    $("#timer").html("-:-")
             document.getElementById("beep").play();
 	    document.getElementById("beep").addEventListener("ended", ()=>{
-		let count = 120;
+		var count = 120;
          $("#timer").html(`${count} seconds`);
-        const interval = setInterval(() => {
+        var interval = setInterval(() => {
           count--;
            $("#timer").html(`${count} seconds`);
             if (count <= 0) {
