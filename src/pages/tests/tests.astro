@@ -230,8 +230,8 @@ document.getElementById("audio3").play();
 
 //Audio Part 3
 
-document.getElementById("audio3").addEventListener("ended", startCount)
-function startCount(){
+document.getElementById("audio3").addEventListener("ended", startCounter)
+function startCounter(){
 var counter2 = 5;
         $("#timer").html(`${counter2} seconds`);
         var interval3 = setInterval(() => {
