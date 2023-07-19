@@ -125,12 +125,8 @@ audioElement.play()
     saveState();
 }
 
-audioElement.addEventListener("ended", startCountdown)
-
-//StartCountDown 5 seconds
-
-function startCountdown() {
-        let count = 5;
+audioElement.addEventListener("ended", ()={
+let count = 5;
         $("#timer").html(`${count} seconds`);
         const interval = setInterval(() => {
           count--;
@@ -138,22 +134,8 @@ function startCountdown() {
           if (count <= 0) {
 	    $("#timer").html("-:-")
             document.getElementById("beep").play();
-	    document.getElementById("beep").addEventListener("ended", start30SecondCountdown)
-            clearInterval(interval);
-          }
-        }, 1000)
- // Save the timer count to local storage
-    timerCount = count;
-    saveState();
-      }
-
-//StartCountDown 5 seconds ends here
-
-
-//StartCountDown 30 seconds
-
-function start30SecondCountdown() {
-        let count = 30;
+	    document.getElementById("beep").addEventListener("ended", ()=>{
+		let count = 30;
          $("#timer").html(`${count} seconds`);
         const interval = setInterval(() => {
           count--;
@@ -164,10 +146,20 @@ function start30SecondCountdown() {
             showNextQuestion();
           }  
         }, 1000)
-      }
+	    })
+            clearInterval(interval);
+          }
+        }, 1000)
+ // Save the timer count to local storage
+    timerCount = count;
+    saveState();
+})
 
-//StartCountDown 30 seconds
+
+
 }
+
+
 
 function showNextPart(){
 audioTrans.src="/static/audios/test1/part2/intro.mp3"
@@ -182,11 +174,8 @@ part2Audio.src=data.questions[0].part2[0].audio
 $("#question-bar").html(data.questions[0].part2[0].question)
 $("#que-id").html(data.questions[0].part2[0].number)
 part2Audio.play()
-part2Audio.addEventListener("ended", startCountdown2)
-}
-
-function startCountdown2() {
-        let count2 = 60;
+part2Audio.addEventListener("ended", ()=>{
+let count2 = 60;
         $("#timer").html(`${count} seconds`);
         const interval = setInterval(() => {
           count2--;
@@ -194,14 +183,8 @@ function startCountdown2() {
           if (count2 <= 0) {
 	    $("#timer").html("-:-")
             document.getElementById("beep").play();
-	    document.getElementById("beep").addEventListener("ended", start30SecondCountdown2)
-            clearInterval(interval);
-          }
-        }, 1000)
-      }
-
-function start30SecondCountdown2() {
-        let count2 = 120;
+	    document.getElementById("beep").addEventListener("ended", ()=>{
+		let count2 = 120;
          $("#timer").html(`${count} seconds`);
         const interval = setInterval(() => {
           count2--;
@@ -212,7 +195,14 @@ function start30SecondCountdown2() {
             console.log("Part2 ended")
           }  
         }, 1000)
-      }
+	    })
+            clearInterval(interval);
+          }
+        }, 1000)
+})
+}
+
+
 }
 
 
