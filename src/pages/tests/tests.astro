@@ -93,16 +93,15 @@ audioElement.addEventListener("ended", CountdownFive)
 
 function showNextQuestion(){
 currentQuestionIndex++
+if(currentQuestionIndex === data.questions[0].part1.length){
+console.log("Part1 ended")
+return false
+}
 audioElement.src=data.questions[0].part1[currentQuestionIndex].audio
 $("#question-bar").html(data.questions[0].part1[currentQuestionIndex].question)
 $("#que-id").html(data.questions[0].part1[currentQuestionIndex].number)
 audioElement.play();
 audioElement.addEventListener("ended", CountdownFive)
-
-if(currentQuestionIndex === data.questions[0].part1.length){
-console.log("Part1 ended")
-return
-}
 
 }
 
@@ -110,12 +109,12 @@ return
 
       function CountdownFive() {
         let count = 5;
-        timer.innerHTML += `${count} seconds`;
+        $("#timer").html(`${count} seconds`);
         const interval = setInterval(() => {
           count--;
           timer.innerHTML = `${count} seconds`;
           if (count <= 0) {
-	   timer.innerHTML="--:--";
+	    $("#timer").html("--:--");
             document.getElementById("beep").play();
             clearInterval(interval);
             start30SecondCountdown();
@@ -132,13 +131,13 @@ return
           count--;
           timer.innerHTML = `${count} seconds`;
           if (count <= 0) {
-            timer.innerHTML="";
+            timer.innerHTML="--:--";
             clearInterval(interval);
             showNextQuestion();
 
           }
         }, 1000);
-      }
+}
 
 
 /*
