@@ -169,29 +169,49 @@ function showNextPart(){
 audioTrans.src="/static/audios/test1/part2/intro.mp3"
 audioTrans.play();
 audioTrans.addEventListener("ended", showInitial)
-
-//ShowNextQuestion
-function showNextQuestion(){
-currectQuestionIndex++
-if(currectQuestionIndex === data.questions[0].part2.length-1){
-console.log("Part2 ended")
-}
-audioElement.src=data.questions[0].part2[0].audio
-$("#question-bar").html(data.questions[0].part2[0].question)
-$("#que-id").html(data.questions[0].part2[0].number)
-audioElement.play()
-// Reset the timer count
-    timerCount = 0;
-
-    // Save the current state to local storage
-    saveState();
-}
+$("#question-bar").html("")
+$("#que-id").html("")
 
 function showInitial(){
-audioElement.src=data.questions[0].part2[0].audio
+const part2Audio=document.getElementById("audio")
+part2Audio.src=data.questions[0].part2[0].audio
 $("#question-bar").html(data.questions[0].part2[0].question)
 $("#que-id").html(data.questions[0].part2[0].number)
+part2Audio.play()
+part2Audio.addEventListener("ended", startCountdown2)
 }
+
+function startCountdown2() {
+        let count = 60;
+        $("#timer").html(`${count} seconds`);
+        const interval = setInterval(() => {
+          count--;
+          $("#timer").html(`${count} seconds`);
+          if (count <= 0) {
+	    $("#timer").html("-:-")
+            beep.play();
+	    beep.addEventListener("ended", start30SecondCountdown2)
+            clearInterval(interval);
+          }
+        }, 1000)
+ // Save the timer count to local storage
+    timerCount = count;
+    saveState();
+      }
+
+function start30SecondCountdown2() {
+        let count = 120;
+         $("#timer").html(`${count} seconds`);
+        const interval = setInterval(() => {
+          count--;
+           $("#timer").html(`${count} seconds`);
+            if (count <= 0) {
+             $("#timer").html("");
+            clearInterval(interval);
+            console.log("Part2 ended")
+          }  
+        }, 1000)
+      }
 }
 
 
