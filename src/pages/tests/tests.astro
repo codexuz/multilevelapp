@@ -120,7 +120,7 @@ function start30SecondCountdown() {
         const interval = setInterval(() => {
           count--;
            $("#timer").html(`${count} seconds`);
-           if(count<=10){
+           if(count>=10){
             $("#timer").css("color","red")
 	   }
           else if (count <= 0) {
