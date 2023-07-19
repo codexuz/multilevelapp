@@ -96,12 +96,13 @@ audioElement.src=data.questions[0].part1[currentQuestionIndex].audio
 $("#question-bar").html(data.questions[0].part1[currentQuestionIndex].question)
 $("#que-id").html(data.questions[0].part1[currentQuestionIndex].number)
 audioElement.play();
+audioElement.addEventListener("ended", CountdownFive)
 
 if(currentQuestionIndex === data.questions[0].part1.length){
 console.log("Part1 ended")
 return
 }
-audioElement.addEventListener("ended", CountdownFive)
+
 }
 
 //Countdown
