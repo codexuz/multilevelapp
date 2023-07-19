@@ -66,6 +66,7 @@ input[type='range'] {
 
 var currectQuestionIndex=0
 const id = new URLSearchParams(window.location.search).get("id");
+var audioElement=document.getElementById("audio")
 const renderdetails= async ()=>{
     const res= await fetch('https://blog-seven-bay.vercel.app/speaking/'+ id);
     var data= await res.json();
@@ -74,18 +75,68 @@ const renderdetails= async ()=>{
 $("#start-btn").click(()=>{
 $("#welcome").hide()
 $("#quizBar").show()
-document.getElementById("audio").play()
+audioElement.play()
 })
 //Start btn end
 
 
-  //Intialize function
-
-$(document).ready(function(){
-document.getElementById("audio").src=data.questions[0].part1[currectQuestionIndex].audio
+function showNextQuestion(){
+currectQuestionIndex++
+if(currectQuestionIndex===data.questions[0].part1[currectQuestionIndex].question){
+console.log("Part1 ended")
+}
+audioElement.src=data.questions[0].part1[currectQuestionIndex].audio
 $("#question-bar").html(data.questions[0].part1[currectQuestionIndex].question)
 $("#que-id").html(data.questions[0].part1[currectQuestionIndex].number)
-console.log(data.questions[0].part1[currectQuestionIndex].audio)
+audioElement.play()
+}
+
+audioElement.addEventListener("ended", startCountdown)
+
+//StartCountDown 5 seconds
+
+function startCountdown() {
+        let count = 5;
+        $("#timer").html(`${count} seconds`);
+        const interval = setInterval(() => {
+          count--;
+          $("#timer").html(`${count} seconds`);
+          if (count <= 0) {
+            beep.play();
+            clearInterval(interval);
+            start30SecondCountdown();
+          }
+        }, 1000);
+      }
+
+//StartCountDown 5 seconds ends here
+
+
+//StartCountDown 30 seconds
+
+function start30SecondCountdown() {
+        let count = 30;
+         $("#timer").html(`${count} seconds`);
+        const interval = setInterval(() => {
+          count--;
+           $("#timer").html(`${count} seconds`);
+          if (count <= 0) {
+             $("#timer").html("");
+            clearInterval(interval);
+            showNextQuestion();
+          }
+        }, 1000);
+      }
+
+//StartCountDown 30 seconds
+
+
+
+  //Intialize function
+$(document).ready(function(){
+audioElement.src=data.questions[0].part1[currectQuestionIndex].audio
+$("#question-bar").html(data.questions[0].part1[currectQuestionIndex].question)
+$("#que-id").html(data.questions[0].part1[currectQuestionIndex].number)
 })
 
 //Intialize function ends here
