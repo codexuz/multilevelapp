@@ -127,10 +127,10 @@ return
 
       function start30SecondCountdown() {
         let count = 30;
-        timer.innerHTML = ` ${count} seconds</p>`;
+        timer.innerHTML = ` ${count} seconds`;
         const interval = setInterval(() => {
           count--;
-          timer.innerHTML = `${count} seconds</p>`;
+          timer.innerHTML = `${count} seconds`;
           if (count <= 0) {
             timer.innerHTML="";
             clearInterval(interval);
