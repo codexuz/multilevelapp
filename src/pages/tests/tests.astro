@@ -101,7 +101,7 @@ function startCountdown() {
         const interval = setInterval(() => {
           count--;
           $("#timer").html(`${count} seconds`);
-          if (count <= 0) {
+          if (count <= 1) {
             beep.play();
 	    beep.addEventListener("ended", start30SecondCountdown)
             clearInterval(interval);
