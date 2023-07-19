@@ -176,21 +176,21 @@ $("#que-id").html(data.questions[0].part2[0].number)
 
 document.getElementById("audio2").addEventListener("ended", startCount)
 function startCount(){
-var count = 60;
-        $("#timer").html(`${count} seconds`);
+var counter = 60;
+        $("#timer").html(`${counter} seconds`);
         var interval = setInterval(() => {
-          count--;
-          $("#timer").html(`${count} seconds`);
-          if (count <= 0) {
+          counter--;
+          $("#timer").html(`${counter} seconds`);
+          if (counter <= 0) {
 	    $("#timer").html("-:-")
             document.getElementById("beep").play();
 	    document.getElementById("beep").addEventListener("ended", ()=>{
-		var count = 120;
-         $("#timer").html(`${count} seconds`);
+		var counter = 120;
+         $("#timer").html(`${counter} seconds`);
         var interval = setInterval(() => {
-          count--;
-           $("#timer").html(`${count} seconds`);
-            if (count <= 0) {
+          counter--;
+           $("#timer").html(`${counter} seconds`);
+            if (counter <= 0) {
              $("#timer").html("");
             clearInterval(interval);
             return
