@@ -114,7 +114,7 @@ audioElement.addEventListener("ended", CountdownFive)
           timer.innerHTML = `${count} seconds`;
           if (count <= 0) {
 	   timer.innerHTML="--:--";
-            beep.play();
+            document.getElementById("beep").play();
             clearInterval(interval);
             start30SecondCountdown();
           }
