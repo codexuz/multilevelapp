@@ -67,12 +67,13 @@ input[type='range'] {
 <script src="https://examonline.app/static/jquery.min.js" is:inline></script>
 <script is:inline>
 
-var currectQuestionIndex=0
+var currentQuestionIndex=0
 const id = new URLSearchParams(window.location.search).get("id");
 var audioElement=document.getElementById("audio")
 var audioTrans=document.getElementById("tran-audio")
-var timerCount = 0; // Variable to store the timer count
+//var timerCount = 0; // Variable to store the timer count
 
+/*
 // Function to save state to local storage
 function saveState() {
   localStorage.setItem("currentQuestionIndex", currectQuestionIndex);
@@ -90,7 +91,7 @@ function loadState() {
     timerCount = parseInt(savedTimerCount);
   }
 }
-
+*/
 
 const renderdetails= async ()=>{
     const res= await fetch('https://blog-seven-bay.vercel.app/speaking/'+ id);
@@ -109,23 +110,24 @@ audioElement.play()
 //ShowNextQuestion
 
 function showNextQuestion(){
-currectQuestionIndex++
-if(currectQuestionIndex === data.questions[0].part1.length){
+currentQuestionIndex++
+audioElement.src=data.questions[0].part1[currentQuestionIndex].audio
+$("#question-bar").html(data.questions[0].part1[currentQuestionIndex].question)
+$("#que-id").html(data.questions[0].part1[currentQuestionIndex].number)
+audioElement.play();
+if(currentQuestionIndex === data.questions[0].part1.length){
 console.log("Part1 ended")
 showNextPart()
 return
 }
-audioElement.src=data.questions[0].part1[currectQuestionIndex].audio
-$("#question-bar").html(data.questions[0].part1[currectQuestionIndex].question)
-$("#que-id").html(data.questions[0].part1[currectQuestionIndex].number)
-// Check if the audio element is paused before playing the new audio
-    audioElement.play();
 
+/*
 // Reset the timer count
     timerCount = 0;
 
     //Save the current state to local storage
    saveState();
+*/
 }
 
 audioElement.addEventListener("ended", ()=>{
@@ -153,9 +155,11 @@ var count = 5;
             clearInterval(interval);
           }
         }, 1000)
+/*
  // Save the timer count to local storage
    timerCount = count;
     saveState();
+*/
 })
 
 
@@ -172,9 +176,7 @@ document.getElementById("audio2").src=data.questions[0].part2[0].audio
 $("#question-bar").html(data.questions[0].part2[0].question)
 $("#que-id").html(data.questions[0].part2[0].number)
  document.getElementById("audio2").play();
-}
-
-document.getElementById("audio2").addEventListener("ended", startCount)
+document.getElementById("audio2").addEventListener("ended", startCount);
 function startCount(){
 var counter = 60;
         $("#timer").html(`${counter} seconds`);
@@ -203,6 +205,8 @@ var counter = 60;
         }, 1000)
 
 }
+}
+
 
 }
 
@@ -211,19 +215,20 @@ var counter = 60;
 //Part 3 Questions
 
 function showLastPart(){
-var currectQuestion=0
+var currentQuestion=0
 //ShowLastQuestion starts here
 function showLastQuestion(){
-currectQuestion++
-if(currectQuestion === data.questions[0].part3.length){
+currentQuestion++
+document.getElementById("audio3").src=data.questions[0].part3[currentQuestion].audio
+$("#question-bar").html(data.questions[0].part3[currentQuestion].question)
+$("#que-id").html(data.questions[0].part3[currentQuestion].number)
+document.getElementById("audio3").play();
+
+if(currentQuestion === data.questions[0].part3.length){
 console.log("Part3 ended")
 return
 }
-document.getElementById("audio3").src=data.questions[0].part3[currectQuestion].audio
-$("#question-bar").html(data.questions[0].part3[currectQuestion].question)
-$("#que-id").html(data.questions[0].part3[currectQuestion].number)
-// Check if the audio element is paused before playing the new audio
-document.getElementById("audio3").play();
+
 
 }
 //ShowLastQuestion ends here
