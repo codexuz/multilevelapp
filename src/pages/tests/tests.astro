@@ -157,7 +157,9 @@ function start30SecondCountdown() {
             clearInterval(interval);
             showNextQuestion();
           }  
-        }, 1000);
+        }, 1000)
+timerCount = count;
+    saveState();
       }
 
 //StartCountDown 30 seconds
