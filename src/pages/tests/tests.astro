@@ -189,14 +189,11 @@ function startCountdown2() {
           $("#timer").html(`${count} seconds`);
           if (count <= 0) {
 	    $("#timer").html("-:-")
-            beep.play();
-	    beep.addEventListener("ended", start30SecondCountdown2)
+            document.getElementById("beep").play();
+	    document.getElementById("beep").addEventListener("ended", start30SecondCountdown2)
             clearInterval(interval);
           }
         }, 1000)
- // Save the timer count to local storage
-    timerCount = count;
-    saveState();
       }
 
 function start30SecondCountdown2() {
