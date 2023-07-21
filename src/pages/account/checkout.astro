@@ -5,14 +5,14 @@ import Layout from "../../layouts/Layout.astro";
 <Layout title="Checkout">
 <!-- component -->
 <section class="body-font h-screen text-gray-600">
-  <div class="container mx-auto mt-10 flex max-w-3xl flex-wrap justify-center rounded-lg bg-white px-5 py-24">
+  <div class="container mx-auto  flex max-w-3xl flex-wrap justify-center rounded-lg bg-white p-2">
     <!-- QR Code Number Account & Uploadfile -->
     <div class="flex-wrap md:flex">
       <div class="mx-auto">
         <img class="mx-auto  h-60 w-96 rounded-lg border p-1 md:mt-0" src="/static/card.svg" alt="step" />
         <div>
           <h1 class="font-laonoto mt-4 text-center text-xl font-bold">Payment Card</h1>
-          <p id="card" class="mt-1 text-center font-medium text-red-500">8600 0423 5121 0603</p>
+          <input type="text" id="card" class="my-3 text-center font-medium text-red-500" value="8600 0423 5121 0603">
         </div>
         <!-- component -->
         <div class="mx-auto w-52">
@@ -73,11 +73,16 @@ import Layout from "../../layouts/Layout.astro";
 </Layout>
 <script is:inline>
 document.getElementById("copy").addEventListener("click", ()=>{
-var copyText = document.getElementById("card");
+ // Get the text field
+  var copyText = document.getElementById("card");
+
+  // Select the text field
   copyText.select();
-  copyText.setSelectionRange(0, 99999);
-  navigator.clipboard.writeText(copyText.innerHTML);
- document.getElementById("copy").innerHTML = "Copied";
+  copyText.setSelectionRange(0, 99999); // For mobile devices
+
+  // Copy the text inside the text field
+  navigator.clipboard.writeText(copyText.value);
+
 setTimeout(()=>{
 document.getElementById("copy").innerHTML = "Copy";
 },1500)
