@@ -30,7 +30,8 @@ if (!user) {
   email:string;
   picture:string;
   joined:string;
-   expiresAt:string
+  expiresAt:string;
+  tariff:string
 }
 
 const db = getFirestore(app);
@@ -71,6 +72,10 @@ if (userData) {
   <li
     class="container mx-auto px-4 flex justify-between items-center border-b-2 border-neutral-100 border-opacity-100 py-4 text-neutral-500 dark:border-opacity-50">
     <span><b>Expiration date:</b></span> <span class="text-gray-600 mx-2">{userData.expiresAt}</span>
+  </li>
+    <li
+    class="container mx-auto px-4 flex justify-between items-center border-b-2 border-neutral-100 border-opacity-100 py-4 text-neutral-500 dark:border-opacity-50">
+    <span><b>Tariff plan:</b></span> <span class="text-gray-600 mx-2">{userData.tariff}</span>
   </li>
 </ul>
 <div class="container mx-auto px-4 my-4 ">
