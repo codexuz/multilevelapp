@@ -19,7 +19,11 @@ const container=document.querySelector(".container")
 const renderwords= async ()=>{
     let box='';
         const res=await fetch("https://server-five-dusky.vercel.app/games")
-        const data=await res.json()     
+        const words=await res.json()   
+   const wordData = JSON.stringify(words)
+  	localStorage.setItem("beginner", wordData)
+	var wordnik=localStorage.getItem("beginner")
+	var data=JSON.parse(wordnik)
         data.forEach((el)=>{
           box+=`
           <div class="rounded-lg shadow-lg my-2.5 px-3 py-5 bg-white text-gray-900 dark:bg-slate-700 dark:text-white">
