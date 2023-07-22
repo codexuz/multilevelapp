@@ -5,14 +5,14 @@ import Layout from "../../layouts/Layout.astro";
 <Layout title="Checkout">
 <!-- component -->
 <section class="body-font h-screen text-gray-600">
-  <div class="container mx-auto  flex max-w-3xl flex-wrap justify-center rounded-lg bg-white p-2">
+  <div class="container mx-auto  flex flex-wrap justify-center rounded-lg bg-white p-2">
     <!-- QR Code Number Account & Uploadfile -->
     <div class="flex-wrap md:flex">
-      <div class="mx-auto">
-        <img class="mx-auto  h-auto w-auto rounded-lg border p-1 md:mt-0" src="/static/card.svg" alt="step" />
+      <div class="container mx-auto px-4">
+        <img class=" h-auto w-auto rounded-lg border p-1 md:mt-0" src="/static/card.svg" alt="step" />
         <div class="flex flex-col justify-center items-center">
           <h1 class="font-laonoto mt-4 text-center text-xl font-bold">Payment Card</h1>
-          <input type="text" readonly="readonly" id="card" class=" border my-3 text-center font-medium text-red-500" value="8600 0423 5121 0603">
+          <input type="text" readonly="readonly" id="card" class=" border-0 rounded-2xl my-3 text-center font-medium text-red-500" value="8600 0423 5121 0603">
         </div>
         <!-- component -->
         <div class="mx-auto w-52">
@@ -25,15 +25,57 @@ import Layout from "../../layouts/Layout.astro";
             <div class="pointer-events-none h-full w-1 bg-gray-200"></div>
           </div>
           <div class="relative z-10 inline-flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-blue-500 text-white">
-            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="h-5 w-5" viewBox="0 0 24 24">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+</svg>
+
           </div>
           <div class="flex-grow pl-4">
-            <h2 class="title-font mb-1 text-sm font-medium tracking-wider text-gray-900">STEP 1</h2>
+            <h2 class="title-font mb-1 text-sm font-medium tracking-wider text-gray-900">Qadam 1</h2>
             <p class="font-laonoto leading-relaxed">
-              ຊຳລະເງິນດ້ວຍການສະແກນຈ່າຍຜ່ານ <br />
-              <b>QR CODE </b>ຫຼື ໂອນຈ່າຍຜ່ານເລກບັນຊີ
+              Quyidagi tarifflardan birini tanlang<br/>
+<details>
+<summary class="bg-blue-600 rounded-lg py-2 px-5">Tarifflarni ko'rish uchun bosing</summary>
+<b>⭐ Basic Tariff * (a month access)</b>
+<br>
+<i>Narxi: <b>49.000 so'm (1 oylik)</b></i>
+<ul>
+<li>✅ Speaking Mock</li>
+<li>✅ Dictionary +(Video dictionary)</li>
+<li>✅ Phrasal Verbs Dictionary</li>
+<li>✅ Wordnik Game </li>
+<li>✅ Vocabulary Level-based</li>
+<li>✅ Writing Task 1 and Task 2 course</li>
+</ul><br>
+
+<b>⭐ Pro Tariff * (3-month access)</b>
+<br>
+<i>Narxi: <b>99.000 so'm (3 oylik)</b></i>
+<ul>
+<li>✅ Full Mock (Writing, Reading, Listening)</li>
+<li>✅ 3 marta Writing checking service (per month)</li>
+<li>✅ Speaking Mock</li>
+<li>✅ Dictionary +(Video dictionary)</li>
+<li>✅ Phrasal Verbs Dictionary</li>
+<li>✅ Wordnik Game </li>
+<li>✅ Vocabulary level-based</li>
+<li>✅ Writing Task 1 and Task 2 course</li>
+</ul>
+<br>
+<b>⭐ Premium Tariff (6-month access)</b>
+<br>
+<i>Narxi: <b>250.000 so'm (6 oylik)</b></i>
+<ul>
+<li>✅ Live Telegram lessons</li>
+<li>✅ Full Mock (Writing, Reading, Listening)</li>
+<li>✅ Writing checking service</li>
+<li>✅ Speaking Mock</li>
+<li>✅ Dictionary +(Video dictionary)</li>
+<li>✅ Phrasal Verbs Dictionary</li>
+<li>✅ Wordnik Game </li>
+<li>✅ Vocabulary level-based</li>
+<li>✅ Writing Task 1 and Task 2 course</li>
+</ul>
             </p>
           </div>
         </div>
@@ -42,28 +84,13 @@ import Layout from "../../layouts/Layout.astro";
             <div class="pointer-events-none h-full w-1 bg-gray-200"></div>
           </div>
           <div class="relative z-10 inline-flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-blue-500 text-white">
-            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="h-5 w-5" viewBox="0 0 24 24">
-              <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
-            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+</svg>
           </div>
           <div class="flex-grow pl-4">
-            <h2 class="title-font mb-1 text-sm font-medium tracking-wider text-gray-900">STEP 2</h2>
-            <p class="font-laonoto leading-relaxed">ແຈ້ງຫຼັກຖານການຊຳລະເງິນດ້ວຍ <b>ຮູບໃບບິນ</b> ຫຼື <b>ຮູບສະລິບການໂອນ</b>.</p>
-          </div>
-        </div>
-        <div class="relative flex pb-12">
-          <div class="relative z-10 inline-flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-blue-500 text-white">
-            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="h-5 w-5" viewBox="0 0 24 24">
-              <circle cx="12" cy="5" r="3"></circle>
-              <path d="M12 22V8M5 12H2a10 10 0 0020 0h-3"></path>
-            </svg>
-          </div>
-          <div class="flex-grow pl-4">
-            <h2 class="title-font mb-1 text-sm font-medium tracking-wider text-gray-900">STEP 3</h2>
-            <p class="font-laonoto leading-relaxed">
-              ສຳເລັດການໂອນ ກະລຸນາລໍຖ້າພະນັກງານກວດສອບ ທ່ານສາມາດກວດສອບສະຖານະການຊຳລະສຳເລັດໄດ້ ໄປທີ່ໜ້າ <span> <b>Payments</b></span
-              >.
-            </p>
+            <h2 class="title-font mb-1 text-sm font-medium tracking-wider text-gray-900">Qaadam 2</h2>
+            <p class="font-laonoto leading-relaxed">❗To'lov qilgach, kvitansiyani <a class="text-blue-500 font-bold" href="https://t.me/edumo_admin">@edumo_admin </a> profiliga yuboring. <b>Keyin sizga parol va login beriladi.</b></p>
           </div>
         </div>
       </div>
