@@ -1,8 +1,6 @@
 ---
 export interface Props {
-	qname1: string;
-	qname2:string;
-	qname3:string;
+	qname: string;
 	qvalue1: string;
 	qvalue2: string;
 	qvalue3: string;
@@ -15,7 +13,7 @@ const { qname, qvalue, choice } = Astro.props;
 ---
 
 <div class="question">
-<input type="radio" name={qname1} value={qvalue1}> {choice1} <br>
-<input type="radio" name={qname2} value={qvalue2}> {choice2} <br>
-<input type="radio" name={qname3} value={qvalue3}> {choice3} <br>
+<input type="radio" name={qname} value={qvalue1}> {choice1} <br>
+<input type="radio" name={qname} value={qvalue2}> {choice2} <br>
+<input type="radio" name={qname} value={qvalue3}> {choice3} <br>
 </div>
