@@ -1,8 +1,5 @@
   ---
   import Layout from '../../layouts/Layout.astro'
-  import { app } from "../../lib/firebase/server";
-  import { getFirestore } from "firebase-admin/firestore";
-  import { getAuth } from "firebase-admin/auth";
   import Module1 from '../../components/writing/Module1.astro'
   import Module2 from '../../components/writing/Module2.astro'
   import Module3 from '../../components/writing/Module3.astro'
@@ -10,40 +7,7 @@
   import ModuleHeader from '../../components/writing/ModuleHeader.astro'
   import ModuleSidebar from '../../components/writing/ModuleSidebar.astro'
 
-const auth = getAuth(app);
 
-/* Check current session */
-const sessionCookie = Astro.cookies.get("session").value;
-
-if (!sessionCookie) {
-  return Astro.redirect("/account/signin");
-}
-const decodedCookie = await auth.verifySessionCookie(sessionCookie);
-const user = await auth.getUser(decodedCookie.uid);
-
-if (!user) {
-  return Astro.redirect("/account/signin");
-}
-
-
-   interface User {
-  name: string;
-  status: number;
-  email:string;
-}
-
-const db = getFirestore(app);
-const userRef = db.collection("users").doc(user.uid)
-const userSnapshot = await userRef.get();
-const userData = userSnapshot.data();
-
-if (userData.status==="unpaid") {
-  const { name, email } = userData;
-  return Astro.redirect("/account/checkout");
-} else {
-  // Handle the case where the user data is not available
-  console.log("User data not found.");
-}
 
   ---
 
