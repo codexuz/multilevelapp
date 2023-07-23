@@ -1,0 +1,11 @@
+---
+export interface Props {
+	qname: string;
+	qvalue: string;
+  	choice:string
+}
+
+const { qname, qvalue, choice} = Astro.props;
+---
+
+<input type="radio" name={qname} value={qvalue}> {choice} <br>
