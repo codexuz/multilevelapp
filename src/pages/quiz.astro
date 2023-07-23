@@ -1,18 +1,12 @@
 ---
-import MultipleChoice from '../components/quiz/MultipleChoice.astro'
+import RadioInput from '../components/quiz/RadioInput.astro'
 import Layout from '../layouts/Layout.astro'
 ---
 <Layout title="Mock">
-<MultipleChoice
-qname1="q1"
-qname2="q1"
-qname3="q1"
-qvalue1="A"
-choice1="What is your name?"
-qvalue2="B"
-choice2="What is your surname?"
-qvalue3="C"
-choice3="What is your fullname?"
+<RadioInput
+qname="q1"
+qvalue="A"
+choice="What is your surname?"
 />
 
 </Layout>
