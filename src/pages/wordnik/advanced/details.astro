@@ -24,9 +24,6 @@ import BeginScore from '../../../components/wordnik/BeginScore.astro'
   // Initialize variables
   let currentFlashcard = 0;
   let score = 0;
-  let progress = 5;    
-  const progressContainer = document.getElementById("progress");
-  progressContainer.style.width = `${progress}%`;
   const wordContainer = document.getElementById("word");
   const wordTr=document.getElementById("translation")
   const audioElement = document.getElementById("audio");
@@ -38,8 +35,9 @@ import BeginScore from '../../../components/wordnik/BeginScore.astro'
   const renderdetails= async ()=>{
     const res= await fetch('https://server-five-dusky.vercel.app/advanced/'+ id);
     var flashcards= await res.json();
-  
-  
+
+  var progress_val=100/flashcards.words.length
+let progress=progress_val;
   // Function to start speech recognition
   function startSpeechRecognition() {
     const recognition = new window.webkitSpeechRecognition();
@@ -77,7 +75,7 @@ import BeginScore from '../../../components/wordnik/BeginScore.astro'
   // Function to move to the next flashcard
   $("#next_btn").click(function() {
     currentFlashcard++;
-    progress += 5;
+   progress+=progress_val
     $("#Feedback").fadeOut("fast", function(){
           $("#feed").text("");
   })
