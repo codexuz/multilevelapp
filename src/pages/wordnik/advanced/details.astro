@@ -24,6 +24,7 @@ import BeginScore from '../../../components/wordnik/BeginScore.astro'
   // Initialize variables
   let currentFlashcard = 0;
   let score = 0;
+  const progressContainer = document.getElementById("progress");
   const wordContainer = document.getElementById("word");
   const wordTr=document.getElementById("translation")
   const audioElement = document.getElementById("audio");
@@ -38,6 +39,8 @@ import BeginScore from '../../../components/wordnik/BeginScore.astro'
 
   var progress_val=100/flashcards.words.length
 let progress=progress_val;
+ progressContainer.style.width = `${progress}%`;
+
   // Function to start speech recognition
   function startSpeechRecognition() {
     const recognition = new window.webkitSpeechRecognition();
