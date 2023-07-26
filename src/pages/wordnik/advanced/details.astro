@@ -1,1 +1,122 @@
+---
+import Layout from '../../../layouts/Layout.astro'
+import BeginWelcome from '../../../components/wordnik/BeginWelcome.astro'
+import GameCard from '../../../components/wordnik/GameCard.astro'
+import NextButton from '../../../components/wordnik/NextButton.astro'
+import Feedback from '../../../components/wordnik/Feedback.astro'
+import BeginScore from '../../../components/wordnik/BeginScore.astro'
+---
 
+<Layout title="Wordnik Game">
+  <main class="min-h-screen w-full bg-white flex items-center justify-center">  
+ <BeginWelcome/> 
+ <GameCard/>
+ <NextButton/>
+ <Feedback/>
+ <BeginScore/>
+</main>
+<audio id="audio" src=""></audio>
+</Layout>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous"  is:inline></script>
+<script is:inline>
+
+  // Initialize variables
+  let currentFlashcard = 0;
+  let score = 0;
+  let progress = 5;    
+  const progressContainer = document.getElementById("progress");
+  progressContainer.style.width = `${progress}%`;
+  const wordContainer = document.getElementById("word");
+  const wordTr=document.getElementById("translation")
+  const audioElement = document.getElementById("audio");
+  
+  
+  
+  const id = new URLSearchParams(window.location.search).get("id");
+
+  const renderdetails= async ()=>{
+    const res= await fetch('https://server-five-dusky.vercel.app/games/'+ id);
+    var flashcards= await res.json();
+  
+  
+  // Function to start speech recognition
+  function startSpeechRecognition() {
+    const recognition = new window.webkitSpeechRecognition();
+    recognition.continuous = false;
+    recognition.lang = "en-US";
+    recognition.onresult = function(event) {
+      const spokenWord = event.results[0][0].transcript.toLowerCase();
+      if (spokenWord === flashcards.words[currentFlashcard].word) {
+        score++;
+  
+        $("#Feedback").show()
+        $("#feed").text("Well Done!");
+        $("#feed").css("color","white")
+        $("#Feedback").css("background", "#25f20a")
+        $("#score").text(`${score}/37`);
+      } else {
+        console.log("Oh no");
+        $("#Feedback").show()
+        $("#Feedback").css("background", "#e61037")
+        $("#feed").text("Wrong. Try again!");
+        $("#feed").css("color","white")
+        $("#play").addClass("animate-ping")
+        setTimeout(()=>{
+          $("#play").removeClass("animate-ping")
+        },1800)
+      }
+      //nextFlashcard();
+    };
+    recognition.start();
+  }
+  
+
+  console.log(flashcards.words.length)
+
+  // Function to move to the next flashcard
+  $("#next_btn").click(function() {
+    currentFlashcard++;
+    progress += 5;
+    $("#Feedback").fadeOut("fast", function(){
+          $("#feed").text("");
+  })
+  
+    progressContainer.style.width = `${progress}%`;
+    if (currentFlashcard === flashcards.words.length) {
+      $("#score-page").show()
+      //victory.play()
+      $("#gameCard").hide()
+      $("#nextBtnContainer").hide()
+  
+    }
+    wordContainer.innerText = flashcards.words[currentFlashcard].word;
+    wordTr.innerText= flashcards.words[currentFlashcard].translation;
+     wordValue=wordContainer.innerText
+      const voiceName = "UK English Female";
+      responsiveVoice.speak(wordValue, voiceName);
+    $("#play").click(()=>{
+      wordValue=wordContainer.innerHTML
+      const voiceName = "UK English Female";
+      responsiveVoice.speak(wordValue, voiceName);
+    })
+  });
+  
+  // Set the initial word and audio
+  wordContainer.innerText = flashcards.words[currentFlashcard].word;
+  wordTr.innerText= flashcards.words[currentFlashcard].translation;
+  $("#start-btn").click(function(){
+    wordValue=wordContainer.innerHTML
+       console.log(wordValue)
+      const voiceName = "UK English Female";
+      responsiveVoice.speak(wordValue, voiceName);
+    $("#welcome").hide()
+      $("#gameCard").show()
+      $("#nextBtnContainer").show()
+  
+  })
+}  
+
+window.addEventListener("DOMContentLoaded", ()=> renderdetails())
+
+  </script>
