@@ -1,0 +1,52 @@
+---
+import Layout from '../../../layouts/Layout.astro'
+---
+
+
+<Layout title="Beginner Words">
+
+   <div class="container mx-auto px-4 bg-white min-h-screen pt-5"></div> 
+
+
+</Layout>
+
+
+
+<script is:inline>
+
+const container=document.querySelector(".container")
+
+const renderwords= async ()=>{
+    let box='';
+        const res=await fetch("https://server-five-dusky.vercel.app/advanced")
+        const words=await res.json()   
+   const wordData = JSON.stringify(words)
+  	localStorage.setItem("beginner", wordData)
+	var wordnik=localStorage.getItem("beginner")
+	var data=JSON.parse(wordnik)
+        data.forEach((el)=>{
+          box+=`
+          <div class="rounded-lg shadow-lg my-2.5 px-3 py-5 bg-white text-gray-900 dark:bg-slate-700 dark:text-white">
+          <a href="details?id=${el.id}">
+            <h3 class="text-xl font-bold">${el.title}</h3>
+            <p class="text-lg">${el.desc}</p>
+           </a>
+            </div>
+            `
+
+        })
+        container.innerHTML=box
+    }
+
+
+
+window.addEventListener("DOMContentLoaded", ()=> renderwords())
+
+
+
+
+
+
+
+
+</script>
