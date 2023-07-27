@@ -93,7 +93,7 @@ word0.classList.add("bg-red-100", "text-red-500","font-bold", "border-red-500")
 word0.classList.add("bg-green-100", "text-green-400","font-bold", "border-green-500")
 				score++;}
 
-for (var i=35; i<37; i++) 
+for (var i=34; i<36; i++) 
 					{
 						part5="a"+i; part5a="s"+i;
 					if (document.getElementById(part5).checked == true)	
