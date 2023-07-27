@@ -1,20 +1,17 @@
-<head>
-  <script src="https://cdn.tailwindcss.com"></script>
-<title>Mock 1</title>
-</head>
+---
+import Layout from '../../layouts/Layout.astro'
 <style>
 	input[type="radio"]{
 		width: 18px;
 		height: 18px;
 	}
 </style>
-</style>
-
+<Layout title="Mock 1">
 	<div class="container mx-auto px-4"  id="container">
 		<h3 id="title" class="text-2xl font-bold py-3"></h3>
 		<div id="content"></div>
 	</div>
-
+</Layout>
 <script is:inline>
 
 
