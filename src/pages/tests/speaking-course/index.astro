@@ -6,7 +6,9 @@ import ModuleSidebar from '../../../components/writing/ModuleSidebar.astro'
 <Layout title="Speaking Course">
 <ModuleHeader/>
 <ModuleSidebar/>
-<main></main>
+<main>
+<div id="module1" class="module w-full"></div>
+</main>
 </Layout>
 
 <style>
@@ -79,4 +81,7 @@ import ModuleSidebar from '../../../components/writing/ModuleSidebar.astro'
     };
 
    window.onload=nextLevel()
+
+$("#module1").load("/static/house.html");
+
   </script>
