@@ -1,0 +1,65 @@
+<div class="overlay hidden">
+  <nav class="sidebar hidden">
+    <!-- sidebar menu -->
+    <ul class="menu py-8 px-3">
+      <li><a href="#" class="module-link" data-module="module1">Houses and Apartments</a></li>
+    </ul>
+  </nav>
+</div>
+
+<style>
+
+.overlay{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  left: 0;
+  top: 0;
+  z-index: 5;
+}
+   .sidebar{
+    width: 250px;
+    height: 100%;
+    background: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    padding: 30px 10px;
+
+   }
+
+   .menu{
+    list-style: none;
+   }
+
+   
+   li{
+        margin: 10px 0;
+
+   }
+   .module-link{
+    font-size: 17px;
+    color: #222624;
+    transition: 2s ease;
+   }
+
+   .module-link:hover{
+    color: #00f5af;
+    text-decoration: underline;
+   }
+
+   .module-link:focus{
+    color: #00f5af;
+    text-decoration: underline;
+   }
+
+   .module-link:visited{
+    color: #00f5af;
+    text-decoration: underline;
+   }
+
+</style>
