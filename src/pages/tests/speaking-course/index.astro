@@ -48,7 +48,7 @@ import Module3 from '../../../components/speaking/Module3.astro'
     // JavaScript Code
     function nextLevel() {
       // Retrieve user progress from local storage
-      var userProgress = localStorage.getItem('userProgress');
+      var userProgress = localStorage.getItem('courseProgress');
       
       // Check if progress exists
       if (userProgress) {
@@ -80,7 +80,7 @@ import Module3 from '../../../components/speaking/Module3.astro'
 
           // Update user progress in local storage
           var userProgress = { currentModule: module };
-          localStorage.setItem('userProgress', JSON.stringify(userProgress));
+          localStorage.setItem('userProgress', JSON.stringify(courseProgress));
         });
       }
     };
