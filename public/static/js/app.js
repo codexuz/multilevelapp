@@ -12,6 +12,7 @@ var currentQuestionIndex=0
 const id = new URLSearchParams(window.location.search).get("id");
 var audioElement=document.getElementById("audio")
 var audioTrans=document.getElementById("tran-audio")
+var audioTrans3=document.getElementById("tran3-audio")
 let audioStream, mediaRecorder, chunks;
 let isRecordingAudio = false;
 
@@ -240,7 +241,17 @@ var counter = 60;
 
 
 
+//Part 3 Questions
 
+function partThree(){
+audioTrans3.src="/static/audios/test1/part3/intro.mp3"
+audioTrans3.play()
+$("#question-bar").html("")
+$("#que-id").html("")
+
+audioTrans3.addEventListener("ended", beginPartThree)
+
+}
 
 
 
