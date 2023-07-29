@@ -80,7 +80,8 @@ var currentQuestionIndex=0
 const id = new URLSearchParams(window.location.search).get("id");
 var audioElement=document.getElementById("audio")
 var audioTrans=document.getElementById("tran-audio")
-
+let audioStream, mediaRecorder, chunks;
+let isRecordingAudio = false;
 
 const renderdetails= async ()=>{
     const res= await fetch('https://blog-seven-bay.vercel.app/speaking/'+ id);
@@ -126,6 +127,71 @@ await startRecording();
 
 
 
+//Recorder
+
+async function startRec(){
+        try {
+          // Request access to audio media
+          audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+          // Create MediaRecorder object
+          mediaRecorder = new MediaRecorder(audioStream);
+
+          // Initialize chunks array to store recorded data
+          chunks = [];
+
+          // Event handler for dataavailable event
+          mediaRecorder.addEventListener('dataavailable', (e) => {
+            chunks.push(e.data);
+          });
+
+         
+          const timeSlice = 1000;
+
+          mediaRecorder.mimeType = 'audio/mp3' ;
+          mediaRecorder.audioBitsPerSecond = 44100;
+          mediaRecorder.start(timeSlice);
+
+          isRecordingAudio = true;
+        } catch (error) {
+          console.log('Error accessing microphone:', error);
+        }
+      };
+
+      // Handle stop button click event
+      function stopRec(){
+        // Stop recording
+        mediaRecorder.stop();
+        isRecordingAudio = false;
+
+        // Create audio element and play recorded audio
+        const blob = new Blob(chunks, { type: mediaRecorder.mimeType });
+        const audioURL = URL.createObjectURL(blob);
+        document.getElementById("audio").src = audioURL;
+      };
+
+      // Handle pause 
+      function pauseRecord(){
+        if (isRecordingAudio) {
+          // Pause recording
+          mediaRecorder.pause();
+
+          isRecordingAudio = false;
+        }
+      };
+
+      // Handle continue button click event
+      function continueRecord(){
+        if (!isRecordingAudio) {
+          // Continue recording
+          mediaRecorder.resume();
+
+          isRecordingAudio = true;
+        }
+      }
+
+
+
 //Start btn begin
 
 $("#start-btn").click(()=>{
@@ -133,6 +199,7 @@ $("#welcome").hide()
 $("#quizBar").show()
 audioElement.play()
 audioElement.addEventListener("ended", CountdownFive)
+startRec()
 })
 //Start btn end
 
@@ -224,6 +291,7 @@ var counter = 60;
              $("#timer").html("");
             clearInterval(interval2);
 	    console.log("Part 2 ended")
+	    stopRecording()
             return false
           }  
         }, 1000)
