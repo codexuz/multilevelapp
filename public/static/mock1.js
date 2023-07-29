@@ -1,4 +1,6 @@
-	document.getElementById("check").addEventListener("click", ()=>{
+let readingScore=JSON.parse(localStorage.getItem("readingScore"))
+console.log(readingScore)
+document.getElementById("check").addEventListener("click", ()=>{
 		document.getElementById("check").style.display="none"
 var ex0, ex, result, score, part3, part03,text, text2, text3, text03, word, word0, part5, part5a;
 result=true; score=0;
@@ -136,7 +138,9 @@ var year=d.getFullYear()
 var month=d.getMonth()+1;
 var date = d.getDate()
 var sana=`${date}-${month}-${year}`;
-var readingScore=[]
+if(!readingScore){
+readingScore=[];
+}
 var template={today:sana, ball:score}
 readingScore.push(template)	
 localStorage.setItem("readingScore", JSON.stringify(readingScore))
