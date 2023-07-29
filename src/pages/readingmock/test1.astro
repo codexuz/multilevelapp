@@ -26,7 +26,6 @@ var container =document.getElementById("container")
  async function callData(){
 const response= await fetch('https://xirurgabdukarim.uz/wp-json/wp/v2/mocktests/588')
 const data= await response.json()
-console.log(data)
 document.getElementById("title").innerHTML=data.title.rendered
 document.getElementById("content").innerHTML=data.content.rendered
 var script=document.createElement("script")
