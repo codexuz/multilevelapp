@@ -18,7 +18,6 @@ import Layout from '../../layouts/Layout.astro'
 	</div>
 </Layout>
 
-<script src="/static/jquery.min.js" is:inline></script>
 <script is:inline>
 
 
@@ -31,7 +30,9 @@ console.log(data)
 document.getElementById("title").innerHTML=data.title.rendered
 document.getElementById("content").innerHTML=data.content.rendered
 var script=document.createElement("script")
+var script2=document.createElement("script")
 script.src="/static/mock1.js"
+script.src2="/static/jquery.min.js"
 document.body.appendChild(script)
 }
 
