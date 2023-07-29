@@ -65,7 +65,16 @@ input[type='range'] {
 </style>
 <script src="https://www.WebRTC-Experiment.com/RecordRTC.js" is:inline></script>
 <script src="https://examonline.app/static/jquery.min.js" is:inline></script>
-<script is:inline>
+<script type="module" is:inline>
+import { BrowserClient, BrowserMicrophone } from 'https://cdn.jsdelivr.net/npm/@speechly/browser-client@2.6.5/+esm';
+
+const microphone = new BrowserMicrophone();
+const client = new BrowserClient({
+  appId: '89d6eff7-77b5-4e79-82b7-53450cfb27f8',
+  logSegments: true,
+  debug: true,
+});
+
 
 var currentQuestionIndex=0
 const id = new URLSearchParams(window.location.search).get("id");
@@ -76,6 +85,46 @@ var audioTrans=document.getElementById("tran-audio")
 const renderdetails= async ()=>{
     const res= await fetch('https://blog-seven-bay.vercel.app/speaking/'+ id);
     var data= await res.json();
+
+//Speech recognition
+
+let isRecording = false;
+
+const micBtn = document.getElementById('start-btn');
+const transcripts = document.getElementById('result');
+
+const attachMicrophone = async () => {
+  if (microphone.mediaStream) return;
+  await microphone.initialize();
+  await client.attach(microphone.mediaStream);
+};
+
+const startRecording = async () => {
+  await attachMicrophone();
+  await client.start();
+  isRecording = true;
+};
+
+const stopRecording = async () => {
+  await client.stop();
+  isRecording = false;
+};
+
+client.onSegmentChange((segment) => {
+  const text = segment.words.map((word) => word.value).join(' ');
+  if (segment.isFinal) {
+    transcripts.innerHTML += `<p>${text}</p>`;
+  }
+});
+
+micBtn.addEventListener('click', async () => {
+ 
+await startRecording();
+  
+});
+
+
+
 
 //Start btn begin
 
