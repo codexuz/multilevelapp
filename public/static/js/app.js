@@ -224,7 +224,7 @@ var counter = 60;
              $("#timer").html("");
             clearInterval(interval2);
       console.log("Part 2 ended")
-      stopRecording()
+              partThree()
             return false
           }  
         }, 1000)
