@@ -129,7 +129,7 @@ for (var i=34; i<36; i++)
 					}
 
 
-document.getElementById("answer").classList.remove("hidden");
+document.getElementById("answers").classList.remove("hidden");
 document.getElementById("score").innerHTML=`Your Score: ${score}/35`
 var d=new Date();
 var year=d.getFullYear()
