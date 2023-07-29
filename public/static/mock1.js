@@ -58,7 +58,7 @@ part3=['d', 'g', 'f', 'c', 'a', 'e'];
 </svg>`;
 */
 part03.classList.remove("bg-white", "border-blue-500")
-part03.classList.add("bg-red-50", "text-red-500","font-bold", "border-red-500")
+part03.classList.add("bg-pink-50", "text-pink-500","font-bold", "border-pink-500")
 
 }
 						else {
