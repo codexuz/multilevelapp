@@ -1,5 +1,5 @@
 	document.getElementById("check").addEventListener("click", ()=>{
-		document.getElementById("check").setAttribute("disabled", "disabled")
+		document.getElementById("check").style.display="none"
 var ex0, ex, result, score, part3, part03,text, text2, text3, text03, word, word0, part5, part5a;
 result=true; score=0;
 
@@ -129,6 +129,15 @@ for (var i=34; i<36; i++)
 					}
 
 
-
+document.getElementById("answer").classList.remove("hidden");
 document.getElementById("score").innerHTML=`Your Score: ${score}/35`
+var d=new Date();
+var year=d.getFullYear()
+var month=d.getMonth()+1;
+var date = d.getDate()
+var sana=`${date}-${month}-${year}`;
+var readingScore=[]
+var template={today:sana, ball:score}
+readingScore.push(template)	
+localStorage.setItem("readingScore", JSON.stringify(readingScore))
 })
