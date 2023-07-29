@@ -111,7 +111,7 @@ word0.classList.add("bg-pink-100", "text-pink-500","font-bold", "border-pink-500
 */
 word0.classList.add("bg-green-100", "text-green-400","font-bold", "border-green-500")
 				score++;}
-
+}
 for (var i=34; i<36; i++) 
 					{
 						part5="a"+i; part5a="s"+i;
