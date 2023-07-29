@@ -126,7 +126,7 @@ for (var i=34; i<36; i++)
 </svg>
 `;}
 }
-					}
+					
 
 
 document.getElementById("answers").classList.remove("hidden");
