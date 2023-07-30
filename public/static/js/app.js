@@ -256,9 +256,8 @@ audioTrans3.src="/static/audios/test1/part3/intro.mp3"
 audioTrans3.play()
 $("#question-bar").html("")
 $("#que-id").html("")
-
+startRecording()
 audioTrans3.addEventListener("ended", ()=>{
-  startRecording()
   document.getElementById("audio3").src=data.questions[0].part3[currentPartThree].audio
   document.getElementById("audio3").play()
  $("#question-bar").html(data.questions[0].part3[currentPartThree].question)
