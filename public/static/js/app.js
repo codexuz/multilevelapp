@@ -48,7 +48,7 @@ const stopRecording = async () => {
 client.onSegmentChange((segment) => {
   const text = segment.words.map((word) => word.value).join(' ');
   if (segment.isFinal) {
-    transcripts.innerHTML += `<p>${text}</p>`;
+    transcripts.innerHTML += `${text}`;
   }
 });
 
