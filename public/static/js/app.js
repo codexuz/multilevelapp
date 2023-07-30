@@ -276,6 +276,36 @@ function showNextThree(){
   }
 
 
+  function threeCountdown() {
+    let count = 5;
+    $("#timer").html(`${count} seconds`);
+    const interval = setInterval(() => {
+      count--;
+      timer.innerHTML = `${count} seconds`;
+      if (count <= 0) {
+  $("#timer").html("--:--");
+        document.getElementById("beep").play();
+        clearInterval(interval);
+        threeCountdown30();
+      }
+    }, 1000);
+  }
+
+  function threeCountdown30() {
+    let count = 30;
+    timer.innerHTML = ` ${count} seconds`;
+    const interval = setInterval(() => {
+      count--;
+      timer.innerHTML = `${count} seconds`;
+      if (count <= 0) {
+        timer.innerHTML="--:--";
+        clearInterval(interval);
+        showNextThree();
+
+      }
+    }, 1000);
+}
+
 
 //Intialize function
 $(document).ready(function(){
