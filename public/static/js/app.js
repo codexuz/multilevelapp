@@ -144,6 +144,7 @@ startRec()
 function showNextQuestion(){
 currentQuestionIndex++
 if(currentQuestionIndex === data.questions[0].part1.length){
+  stopRec()
 console.log("Part1 ended")
 showNextPart()
 return false
@@ -209,6 +210,7 @@ $("#que-id").html(data.questions[0].part2[0].number)
  document.getElementById("audio2").play();
 document.getElementById("audio2").addEventListener("ended", startCount);
 function startCount(){
+  startRec()
 var counter = 60;
         $("#timer").html(`${counter} seconds`);
         var interval2 = setInterval(() => {
@@ -226,6 +228,7 @@ var counter = 60;
             if (counter <= 0) {
              $("#timer").html("");
             clearInterval(interval2);
+            stopRec()
       console.log("Part 2 ended")
               partThree()
             return false
@@ -259,7 +262,10 @@ audioTrans3.addEventListener("ended", ()=>{
   document.getElementById("audio3").play()
  $("#question-bar").html(data.questions[0].part3[currentPartThree].question)
  $("#que-id").html(data.questions[0].part3[currentPartThree].number)
- document.getElementById("audio3").addEventListener("ended", threeCountdown)
+ document.getElementById("audio3").addEventListener("ended", ()=>{
+  startRec()
+  threeCountdown()
+  })
 })
 
 }
