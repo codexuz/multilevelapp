@@ -339,7 +339,7 @@ function ScoreCounter() {
     clearInterval(interval);
       document.getElementById("alert-time").classList.add("hidden")
       document.getElementById("scorepage").classList.remove("hidden");
-      calculateOverallScore()
+      //calculateOverallScore()
     }
   }, 1000);
   }
