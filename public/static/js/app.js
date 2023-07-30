@@ -322,7 +322,7 @@ function examEnd(){
 	document.getElementById("end-audio").play();
   $("#question-bar").html("")
   $("#que-id").html("")
-    $("part3").html(`<i class="fa fa-check-circle"></i>`)
+    $("#part3").html(`<i class="fa fa-check-circle"></i>`)
     document.getElementById("end-audio").addEventListener("ended", function(){
 		stopRec();
     stopRecording()
