@@ -9,6 +9,7 @@ const client = new BrowserClient({
 
 
 var currentQuestionIndex=0
+var currentPartThree=0
 const id = new URLSearchParams(window.location.search).get("id");
 var audioElement=document.getElementById("audio")
 var audioTrans=document.getElementById("tran-audio")
@@ -249,11 +250,30 @@ audioTrans3.play()
 $("#question-bar").html("")
 $("#que-id").html("")
 
-audioTrans3.addEventListener("ended", beginPartThree)
+audioTrans3.addEventListener("ended", ()=>{
+  document.getElementById("audio3").src=data.questions[0].part3[currentPartThree].audio
+  document.getElementById("audio3").play()
+ $("#question-bar").html(data.questions[0].part3[currentPartThree].question)
+ $("#que-id").html(data.questions[0].part3[currentPartThree].number)
+ document.getElementById("audio3").addEventListener("ended", threeCountdown)
+})
 
 }
 
 
+function showNextThree(){
+  currentPartThree++
+  if(currentPartThree === data.questions[0].part3.length){
+  console.log("Part3 ended")
+  return false
+  }
+  document.getElementById("audio3").src=data.questions[0].part3[currentPartThree].audio
+  $("#question-bar").html(data.questions[0].part3[currentPartThree].question)
+  $("#que-id").html(data.questions[0].part3[currentPartThree].number)
+  document.getElementById("audio3").play();
+  document.getElementById("audio3").addEventListener("ended", threeCountdown)
+  
+  }
 
 
 
