@@ -101,7 +101,7 @@ async function startRec(){
         // Create audio element and play recorded audio
         const blob = new Blob(chunks, { type: mediaRecorder.mimeType });
         const audioURL = URL.createObjectURL(blob);
-        document.getElementById("audio").src = audioURL;
+        document.getElementById("player").src = audioURL;
       };
 
       // Handle pause 
@@ -144,7 +144,7 @@ startRec()
 function showNextQuestion(){
 currentQuestionIndex++
 if(currentQuestionIndex === data.questions[0].part1.length){
-  stopRec()
+  stopRecording()
 console.log("Part1 ended")
 showNextPart()
 return false
@@ -204,13 +204,13 @@ $("#que-id").html("")
 
 audioTrans.addEventListener("ended", beginPartTwo)
 function beginPartTwo(){
+  startRecording()
 document.getElementById("audio2").src=data.questions[0].part2[0].audio
 $("#question-bar").html(data.questions[0].part2[0].question)
 $("#que-id").html(data.questions[0].part2[0].number)
  document.getElementById("audio2").play();
 document.getElementById("audio2").addEventListener("ended", startCount);
 function startCount(){
-  startRec()
 var counter = 60;
         $("#timer").html(`${counter} seconds`);
         var interval2 = setInterval(() => {
@@ -228,8 +228,8 @@ var counter = 60;
             if (counter <= 0) {
              $("#timer").html("");
             clearInterval(interval2);
-            stopRec()
       console.log("Part 2 ended")
+      stopRecording()
               partThree()
             return false
           }  
@@ -258,12 +258,12 @@ $("#question-bar").html("")
 $("#que-id").html("")
 
 audioTrans3.addEventListener("ended", ()=>{
+  startRecording()
   document.getElementById("audio3").src=data.questions[0].part3[currentPartThree].audio
   document.getElementById("audio3").play()
  $("#question-bar").html(data.questions[0].part3[currentPartThree].question)
  $("#que-id").html(data.questions[0].part3[currentPartThree].number)
  document.getElementById("audio3").addEventListener("ended", ()=>{
-  startRec()
   threeCountdown()
   })
 })
@@ -326,6 +326,7 @@ function examEnd(){
     $("part3").html(`<i class="fa fa-check-circle"></i>`)
     document.getElementById("end-audio").addEventListener("ended", function(){
 		stopRec();
+    stopRecording()
     $("#quizBar").hide()
 		document.getElementById("alert-time").classList.remove("hidden")
     ScoreCounter()
@@ -351,6 +352,9 @@ function ScoreCounter() {
   }, 1000);
   }
 
+  document.getElementById("audio-player").addEventListener("click", ()=>{
+    document.getElementById("player").play()
+  })
 
 
 
