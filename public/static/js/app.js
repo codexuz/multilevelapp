@@ -268,9 +268,9 @@ audioTrans3.addEventListener("ended", ()=>{
 
 function showNextThree(){
   currentPartThree++
-  if(currentPartThree === data.questions[0].part3.length){
+  if(currentPartThree === data.questions[0].part3.length+1){
+    examEnd()
   console.log("Part3 ended")
-  examEnd()
   return false
   }
   document.getElementById("audio3").src=data.questions[0].part3[currentPartThree].audio
