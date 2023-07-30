@@ -287,7 +287,6 @@ function showNextThree(){
 
 
   function threeCountdown() {
-    document.getElementById("audio3").pause()
     let count = 5;
     $("#timer").html(`${count} seconds`);
     const interval = setInterval(() => {
