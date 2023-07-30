@@ -194,10 +194,7 @@ audioElement.addEventListener("ended", CountdownFive)
 
 
 function showNextPart(){
-  $("#part1").html(`<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 text-white">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-</svg>
-`)
+  $("#part1").html(`<i class="fa fa-check-circle"></i>`)
 	$("#part1").addClass("bg-emerald-400");
 audioTrans.src="/static/audios/test1/part2/intro.mp3"
 audioTrans.play()
@@ -250,9 +247,7 @@ var counter = 60;
 //Part 3 Questions
 
 function partThree(){
-  $("#part2").html(`<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 text-white">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-</svg>`)
+  $("#part2").html(`<i class="fa fa-check-circle"></i>`)
 	$("#part2").addClass("bg-emerald-400");
 audioTrans3.src="/static/audios/test1/part3/intro.mp3"
 audioTrans3.play()
@@ -320,11 +315,9 @@ function showNextThree(){
 
 function examEnd(){
 	document.getElementById("end-audio").play();
-	que.innerHTML='';
-	que_id.innerHTML='';
-    $("part3").html(`<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 text-white">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-  </svg>`)
+  $("#question-bar").html("")
+  $("#que-id").html("")
+    $("part3").html(`<i class="fa fa-check-circle"></i>`)
     document.getElementById("end-audio").addEventListener("ended", function(){
 		stopRec();
     $("#quizBar").hide()
