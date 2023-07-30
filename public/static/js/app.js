@@ -144,7 +144,6 @@ startRec()
 function showNextQuestion(){
 currentQuestionIndex++
 if(currentQuestionIndex === data.questions[0].part1.length){
-  stopRecording()
 console.log("Part1 ended")
 showNextPart()
 return false
@@ -204,7 +203,6 @@ $("#que-id").html("")
 
 audioTrans.addEventListener("ended", beginPartTwo)
 function beginPartTwo(){
-  startRecording()
 document.getElementById("audio2").src=data.questions[0].part2[0].audio
 $("#question-bar").html(data.questions[0].part2[0].question)
 $("#que-id").html(data.questions[0].part2[0].number)
@@ -229,7 +227,6 @@ var counter = 60;
              $("#timer").html("");
             clearInterval(interval2);
       console.log("Part 2 ended")
-      stopRecording()
               partThree()
             return false
           }  
@@ -256,7 +253,6 @@ audioTrans3.src="/static/audios/test1/part3/intro.mp3"
 audioTrans3.play()
 $("#question-bar").html("")
 $("#que-id").html("")
-startRecording()
 audioTrans3.addEventListener("ended", ()=>{
   document.getElementById("audio3").src=data.questions[0].part3[currentPartThree].audio
   document.getElementById("audio3").play()
@@ -325,7 +321,6 @@ function examEnd(){
     $("part3").html(`<i class="fa fa-check-circle"></i>`)
     document.getElementById("end-audio").addEventListener("ended", function(){
 		stopRec();
-    stopRecording()
     $("#quizBar").hide()
 		document.getElementById("alert-time").classList.remove("hidden")
     ScoreCounter()
