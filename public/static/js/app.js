@@ -310,6 +310,42 @@ function showNextThree(){
     }, 1000);
 }
 
+//End exam
+
+function examEnd(){
+	document.getElementById("end-audio").play();
+	que.innerHTML='';
+	que_id.innerHTML='';
+    $("part3").html(`<i class="fa fa-check-circle"></i>`)
+    document.getElementById("end-audio").addEventListener("ended",function(){
+		stopRec();
+    $("#quizBar").hide()
+		document.getElementById("alert-time").classList.remove("hidden")
+    ScoreCounter()
+
+});		
+}
+
+
+//ScoreCounter
+
+function ScoreCounter() {
+  let count = 40;
+  const interval = setInterval(() => {
+    count--;
+        const alertTime=document.getElementById("alert-timer")
+        alertTime.innerHTML= count;
+    if (count <= 0) {
+    clearInterval(interval);
+      document.getElementById("alert-time").classList.add("hidden")
+      document.getElementById("scorepage").classList.remove("hidden");
+      calculateOverallScore()
+    }
+  }, 1000);
+  }
+
+
+
 
 //Intialize function
 $(document).ready(function(){
