@@ -194,6 +194,8 @@ audioElement.addEventListener("ended", CountdownFive)
 
 
 function showNextPart(){
+  $("#part1").html(`<i class="fa fa-check-circle"></i>`)
+	$("#part1").addClass("bg-emerald-400");
 audioTrans.src="/static/audios/test1/part2/intro.mp3"
 audioTrans.play()
 $("#question-bar").html("")
@@ -245,6 +247,8 @@ var counter = 60;
 //Part 3 Questions
 
 function partThree(){
+  $("#part2").html(`<i class="fa fa-check-circle"></i>`)
+	$("#part2").addClass("bg-emerald-400");
 audioTrans3.src="/static/audios/test1/part3/intro.mp3"
 audioTrans3.play()
 $("#question-bar").html("")
