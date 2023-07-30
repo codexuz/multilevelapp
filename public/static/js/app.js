@@ -145,6 +145,7 @@ function showNextQuestion(){
 currentQuestionIndex++
 if(currentQuestionIndex === data.questions[0].part1.length){
 console.log("Part1 ended")
+stopRecording()
 showNextPart()
 return false
 }
@@ -209,6 +210,7 @@ $("#que-id").html(data.questions[0].part2[0].number)
  document.getElementById("audio2").play();
 document.getElementById("audio2").addEventListener("ended", startCount);
 function startCount(){
+  startRecording()
 var counter = 60;
         $("#timer").html(`${counter} seconds`);
         var interval2 = setInterval(() => {
@@ -226,6 +228,7 @@ var counter = 60;
             if (counter <= 0) {
              $("#timer").html("");
             clearInterval(interval2);
+            stopRecording()
       console.log("Part 2 ended")
               partThree()
             return false
@@ -259,6 +262,7 @@ audioTrans3.addEventListener("ended", ()=>{
  $("#question-bar").html(data.questions[0].part3[currentPartThree].question)
  $("#que-id").html(data.questions[0].part3[currentPartThree].number)
  document.getElementById("audio3").addEventListener("ended", ()=>{
+  startRecording()
   threeCountdown()
   })
 })
@@ -283,6 +287,7 @@ function showNextThree(){
 
 
   function threeCountdown() {
+    document.getElementById("audio3").pause()
     let count = 5;
     $("#timer").html(`${count} seconds`);
     const interval = setInterval(() => {
@@ -321,6 +326,7 @@ function examEnd(){
     $("part3").html(`<i class="fa fa-check-circle"></i>`)
     document.getElementById("end-audio").addEventListener("ended", function(){
 		stopRec();
+    stopRecording()
     $("#quizBar").hide()
 		document.getElementById("alert-time").classList.remove("hidden")
     ScoreCounter()
