@@ -277,11 +277,11 @@ function showNextThree(){
   console.log("Part3 ended")
   return false
   }
-  document.getElementById("audio3").src=data.questions[0].part3[currentPartThree].audio
+  document.getElementById("audio4").src=data.questions[0].part3[currentPartThree].audio
   $("#question-bar").html(data.questions[0].part3[currentPartThree].question)
   $("#que-id").html(data.questions[0].part3[currentPartThree].number)
-  document.getElementById("audio3").play();
-  document.getElementById("audio3").addEventListener("ended", threeCountdown)
+  document.getElementById("audio4").play();
+  document.getElementById("audio4").addEventListener("ended", threeCountdown)
   
   }
 
