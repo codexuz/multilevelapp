@@ -347,6 +347,8 @@ function ScoreCounter() {
     clearInterval(interval);
       document.getElementById("alert-time").classList.add("hidden")
       document.getElementById("scorepage").classList.remove("hidden");
+      var texttranscription =  document.getElementById("result").value
+      localStorage.setItem("transcription", JSON.stringify(texttranscription))
       //calculateOverallScore()
     }
   }, 1000);
