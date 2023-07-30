@@ -3,8 +3,8 @@ import { BrowserClient, BrowserMicrophone } from 'https://cdn.jsdelivr.net/npm/@
 const microphone = new BrowserMicrophone();
 const client = new BrowserClient({
   appId: '89d6eff7-77b5-4e79-82b7-53450cfb27f8',
-  logSegments: true,
-  debug: true,
+  logSegments: false,
+  debug: false,
 });
 
 
