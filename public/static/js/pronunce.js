@@ -78,3 +78,8 @@ responsiveVoice.speak(wordValue, voiceName);
 
 })
     
+
+function deletePost(){
+    localStorage.removeItem("vocabulary")
+    window.location.reload()
+ }
