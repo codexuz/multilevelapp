@@ -168,7 +168,7 @@ body{
       <div class="wrapper">
         <div class="text-input">
           <textarea spellcheck="false" class="from-text" placeholder="Enter text"></textarea>
-          <textarea spellcheck="false" readonly disabled class="to-text" placeholder="Translation"></textarea>
+          <div style="height:250px; width:100%" contenteditable="true" readonly disabled class="to-text">Translation</div>
         </div>
         <ul class="controls">
           <li class="row from">
@@ -212,15 +212,15 @@ selectTag.forEach((tag, id) => {
 exchageIcon.addEventListener("click", () => {
     let tempText = fromText.value,
     tempLang = selectTag[0].value;
-    fromText.value = toText.value;
-    toText.value = tempText;
+    fromText.value = toText.innerHTML;
+    toText.innerHTML = tempText;
     selectTag[0].value = selectTag[1].value;
     selectTag[1].value = tempLang;
 });
 
 fromText.addEventListener("keyup", () => {
     if(!fromText.value) {
-        toText.value = "";
+        toText.innerHTML = "";
     }
 });
 
@@ -232,13 +232,13 @@ translateBtn.addEventListener("click", () => {
     toText.setAttribute("placeholder", "Translating...");
     let apiUrl = `https://api.mymemory.translated.net/get?q=${text}&langpair=${translateFrom}|${translateTo}`;
     fetch(apiUrl).then(res => res.json()).then(data => {
-        toText.value = data.responseData.translatedText;
+        toText.innerHTML = data.responseData.translatedText;
         data.matches.forEach(data => {
             if(data.id === 0) {
-                toText.value = JSON.stringify(data.translation);
+                toText.innerHTML = JSON.parse(data.translation);
             }
         });
-        toText.setAttribute("placeholder", "Translation");
+        toText.innerHTML="Translation";
     });
 });
 
@@ -249,7 +249,7 @@ icons.forEach(icon => {
             if(target.id == "from") {
                 navigator.clipboard.writeText(fromText.value);
             } else {
-                navigator.clipboard.writeText(toText.value);
+                navigator.clipboard.writeText(toText.innerHTML);
             }
         } else {
             let utterance;
@@ -257,7 +257,7 @@ icons.forEach(icon => {
                 utterance = new SpeechSynthesisUtterance(fromText.value);
                 utterance.lang = selectTag[0].value;
             } else {
-                utterance = new SpeechSynthesisUtterance(toText.value);
+                utterance = new SpeechSynthesisUtterance(toText.innerHTML);
                 utterance.lang = selectTag[1].value;
             }
             speechSynthesis.speak(utterance);
