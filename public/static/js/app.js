@@ -294,6 +294,7 @@ function examEnd(){
     $("#part3").addClass("bg-emerald-400");
     document.getElementById("end-audio").addEventListener("ended", function(){
 		stopRec();
+    stopRecording()
     $("#quizBar").hide()
 		$("#alert-time").show()
     ScoreCounter()
