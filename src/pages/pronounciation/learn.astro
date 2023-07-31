@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+    <script src="https://unpkg.com/onsenui/js/onsenui.min.js" is:inline></script>
+    <script src="https://code.responsivevoice.org/responsivevoice.js?key=3Wzpm5HU" is:inline></script>
+    <title>Pronounce it</title>
+</head>
+<body>
+
+    <ons-page>
+        <ons-toolbar>
+          <div class="left"><ons-back-button>Back</ons-back-button></div>
+          <div class="center"></div>
+        </ons-toolbar>
+        <ons-card style="height:30vh">
+            <h3 id="word"></h3>
+            <i><b><p id="translation"></p></b></i>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <button class="button" style="position:absolute; left:15px; bottom:30px;display:none" id="prev" onclick="showPrevCard()">Prev</button>
+                <button class="button" style="position:absolute; right:15px;bottom:30px" id="next" onclick="showNextCard()">Next</button>
+            </div>
+            
+        </ons-card>
+      </ons-page>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" is:inline></script>
+    
+    <script src="/static/js/pronunce.js" is:inline></script>
+
+</body>
+</html>
