@@ -232,10 +232,10 @@ translateBtn.addEventListener("click", () => {
     toText.setAttribute("placeholder", "Translating...");
     let apiUrl = `https://api.mymemory.translated.net/get?q=${text}&langpair=${translateFrom}|${translateTo}`;
     fetch(apiUrl).then(res => res.json()).then(data => {
-        toText.value = JSON.parse(data.responseData.translatedText);
+        toText.value = data.responseData.translatedText;
         data.matches.forEach(data => {
             if(data.id === 0) {
-                toText.value = data.translation;
+                toText.value = JSON.parse(data.translation);
             }
         });
         toText.setAttribute("placeholder", "Translation");
