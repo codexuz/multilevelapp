@@ -235,7 +235,7 @@ translateBtn.addEventListener("click", () => {
         toText.value = data.responseData.translatedText;
         data.matches.forEach(data => {
             if(data.id === 0) {
-                toText.value = JSON.parse(data.translation);
+                toText.value = JSON.stringify(data.translation);
             }
         });
         toText.setAttribute("placeholder", "Translation");
