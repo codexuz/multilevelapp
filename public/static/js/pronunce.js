@@ -49,9 +49,7 @@ function showNextCard(){
         currentIndex--
         $("#next").show()
        if(currentIndex===0){
-            $("#prev").hide()
-            $("#next").hide()
-            
+            $("#prev").hide()            
         } 
 
         $("#word").html(vocabulary[currentIndex].word)
