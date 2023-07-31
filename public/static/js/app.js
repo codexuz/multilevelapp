@@ -48,7 +48,7 @@ const stopRecording = async () => {
 client.onSegmentChange((segment) => {
   const text = segment.words.map((word) => word.value).join(' ');
   if (segment.isFinal) {
-    transcripts.innerHTML += `${text}`;
+    transcripts.innerHTML += capitalize(text) + '. ';
     var texttranscription =  document.getElementById("result").value
     localStorage.setItem("transcription", JSON.stringify(texttranscription))
   }
@@ -61,6 +61,12 @@ await startRecording();
 });
 
 
+//Capitalize letter
+
+function capitalize(sentence) {
+  return sentence.charAt(0).toUpperCase() + sentence.slice(1);
+  }
+  
 
 
 //Recorder
