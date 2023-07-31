@@ -72,6 +72,11 @@ input[type='range'] {
 
 <script is:inline>
 
+window.history.pushState(null, null, window.location.href);
+window.onpopstate = function () {
+    window.history.go(2);
+};
+
 //Scale UpandDown
 var TextSize=document.getElementById("question-bar");
  function sizeUp(){
