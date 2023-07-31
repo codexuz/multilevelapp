@@ -49,6 +49,8 @@ client.onSegmentChange((segment) => {
   const text = segment.words.map((word) => word.value).join(' ');
   if (segment.isFinal) {
     transcripts.innerHTML += `${text}`;
+    var texttranscription =  document.getElementById("result").value
+    localStorage.setItem("transcription", JSON.stringify(texttranscription))
   }
 });
 
@@ -323,11 +325,11 @@ function examEnd(){
   $("#question-bar").html("")
   $("#que-id").html("")
     $("#part3").html(`<i class="fa fa-check-circle"></i>`)
+    $("#part3").addClass("bg-emerald-400");
     document.getElementById("end-audio").addEventListener("ended", function(){
 		stopRec();
-    stopRecording()
     $("#quizBar").hide()
-		document.getElementById("alert-time").classList.remove("hidden")
+		$("#alert-time").show()
     ScoreCounter()
 
 });		
@@ -344,19 +346,14 @@ function ScoreCounter() {
         alertTime.innerHTML= count;
     if (count <= 0) {
     clearInterval(interval);
-      document.getElementById("alert-time").classList.add("hidden")
-      document.getElementById("scorepage").classList.remove("hidden");
-      var texttranscription =  document.getElementById("result").value
-      localStorage.setItem("transcription", JSON.stringify(texttranscription))
+      $("#alert-time").hide()
+      $("#scorepage").show();
       //calculateOverallScore()
     }
   }, 1000);
   }
 
-  document.getElementById("audio-player").addEventListener("click", ()=>{
-    document.getElementById("player").play()
-  })
-
+ 
 
 
 //Intialize function
