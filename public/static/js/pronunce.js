@@ -50,6 +50,7 @@ function showNextCard(){
         $("#next").show()
        if(currentIndex===0){
             $("#prev").hide()
+            $("#next").hide()
             
         } 
 
