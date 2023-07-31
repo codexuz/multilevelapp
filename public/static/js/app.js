@@ -14,8 +14,7 @@ const id = new URLSearchParams(window.location.search).get("id");
 var audioElement=document.getElementById("audio")
 var audioTrans=document.getElementById("tran-audio")
 var audioTrans3=document.getElementById("tran3-audio")
-let audioStream, mediaRecorder, chunks;
-let isRecordingAudio = false;
+let recorder, audio_stream;
 
 const renderdetails= async ()=>{
     const res= await fetch('https://blog-seven-bay.vercel.app/speaking/'+ id);
@@ -68,69 +67,30 @@ function capitalize(sentence) {
   }
   
 
-
 //Recorder
+function startRec() {
+  navigator.mediaDevices.getUserMedia({ audio: true })
+    .then(function (stream) {
+      audio_stream = stream;
+      recorder = new MediaRecorder(stream);
 
-async function startRec(){
-        try {
-          // Request access to audio media
-          audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      // when there is data, compile into object for preview src
+      recorder.ondataavailable = function (e) {
+        const url = URL.createObjectURL(e.data);
+		document.getElementById("player").src = url;
 
-          // Create MediaRecorder object
-          mediaRecorder = new MediaRecorder(audioStream);
-
-          // Initialize chunks array to store recorded data
-          chunks = [];
-
-          // Event handler for dataavailable event
-          mediaRecorder.addEventListener('dataavailable', (e) => {
-            chunks.push(e.data);
-          });
-
-         
-          const timeSlice = 1000;
-
-          mediaRecorder.mimeType = 'audio/mp3' ;
-          mediaRecorder.audioBitsPerSecond = 44100;
-          mediaRecorder.start(timeSlice);
-
-          isRecordingAudio = true;
-        } catch (error) {
-          console.log('Error accessing microphone:', error);
-        }
       };
+      recorder.start();
 
-      // Handle stop button click event
-      function stopRec(){
-        // Stop recording
-        mediaRecorder.stop();
-        isRecordingAudio = false;
+    });
+}
 
-        // Create audio element and play recorded audio
-        const blob = new Blob(chunks, { type: mediaRecorder.mimeType });
-        const audioURL = URL.createObjectURL(blob);
-        document.getElementById("player").src = audioURL;
-      };
 
-      // Handle pause 
-      function pauseRecord(){
-        if (isRecordingAudio) {
-          // Pause recording
-          mediaRecorder.pause();
+function stopRec() {
+    recorder.stop();
+  }
 
-          isRecordingAudio = false;
-        }
-      };
 
-      // Handle continue button click event
-      function continueRecord(){
-        if (!isRecordingAudio) {
-          // Continue recording
-          mediaRecorder.resume();
-
-          isRecordingAudio = true;
-        }
-      }
 
 
 
