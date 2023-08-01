@@ -269,7 +269,6 @@ function startCountdown() {
 		
 		recicon.style.display="block"
 		rectext.style.display="block"
-		document.getElementById("result").style.display="block"
 		let count = 30;
 		timer.innerHTML = ` ${count}  LEFT`;
 		const interval = setInterval(() => {
@@ -294,7 +293,6 @@ function step1(){
     startRecording();
 	que.innerHTML="Are clothes important for you?";
 	que_id.innerHTML=2
-	document.getElementById("result").style.display="none"
 	audio2.play();
 	audio2.addEventListener("ended", startCountdown);
 	//countdown 5 sec
@@ -316,7 +314,6 @@ function step1(){
 		function start30SecondCountdown() {
 		recicon.style.display="block"
 		rectext.style.display="block"
-		document.getElementById("result").style.display="block"
 			let count = 30;
 			timer.innerHTML = ` ${count} LEFT`;
 			const interval = setInterval(() => {
@@ -342,7 +339,6 @@ function step1(){
 function step2(){
 	que.innerHTML="What kinds of clothes do you prefer to wear?";
 	que_id.innerHTML=3
-	document.getElementById("result").style.display="none"
 	audio3.play();
 	audio3.addEventListener("ended", startCountdown);
 	//countdown 5 sec
@@ -364,7 +360,6 @@ function step2(){
 		function start30SecondCountdown() {
 			recicon.style.display="block"
 		rectext.style.display="block"
-		document.getElementById("result").style.display="block"
 			let count = 30;
 			timer.innerHTML = ` ${count} LEFT`;
 			const interval = setInterval(() => {
@@ -386,7 +381,6 @@ function step2(){
 function step3(){
 	que.innerHTML="Would you ever spend a lot of money on clothes?";
 	que_id.innerHTML=4
-	document.getElementById("result").style.display="none"
 	audio4.play();
 	audio4.addEventListener("ended", startCountdown);
 	//countdown 5 sec
@@ -408,7 +402,6 @@ function step3(){
 		function start30SecondCountdown() {
 			recicon.style.display="block"
 		rectext.style.display="block"
-		document.getElementById("result").style.display="block"
 			let count = 30;
 			timer.innerHTML = ` ${count} sec LEFT`;
 			const interval = setInterval(() => {
@@ -433,7 +426,6 @@ function step3(){
 function step4(){
 	que.innerHTML="Let's talk about sport. Do you like to watch sports on TV?";
 	que_id.innerHTML=5
-	document.getElementById("result").style.display="none"
 	audio5.play();
 	audio5.addEventListener("ended", startCountdown);
 	//countdown 5 sec
@@ -455,7 +447,6 @@ function step4(){
 		function start30SecondCountdown() {
 			recicon.style.display="block"
 		rectext.style.display="block"
-		document.getElementById("result").style.display="block"
 			let count = 30;
 			timer.innerHTML = ` ${count} sec LEFT`;
 			const interval = setInterval(() => {
@@ -479,7 +470,6 @@ function step4(){
 function step5(){
 	que.innerHTML="What are the popular sports in your country?";
 	que_id.innerHTML=6
-	document.getElementById("result").style.display="none"
 	audio6.play();
 	audio6.addEventListener("ended", startCountdown);
 	//countdown 5 sec
@@ -501,7 +491,6 @@ function step5(){
 		function start30SecondCountdown() {
 			recicon.style.display="block"
 		rectext.style.display="block"
-		document.getElementById("result").style.display="block"
 			let count = 30;
 			timer.innerHTML = ` ${count} sec LEFT`;
 			const interval = setInterval(() => {
@@ -513,7 +502,6 @@ function step5(){
 				timer.innerHTML="";
 				clearInterval(interval);
 				part2();
-				document.getElementById("result").style.display="none"
 		
 			  }
 			}, 1000);
@@ -558,7 +546,6 @@ function step6(){
 		function start30SecondCountdown() {
 			recicon.style.display="block"
 		rectext.style.display="block"
-		document.getElementById("result").style.display="block"
 			let count = 120;
 			timer.innerHTML = ` ${count} sec LEFT`;
 			const interval = setInterval(() => {
@@ -570,7 +557,6 @@ function step6(){
 				timer.innerHTML="";
 				clearInterval(interval);
 				part3();
-				document.getElementById("result").style.display="none"
 			  }
 			}, 1000);
 		  }
