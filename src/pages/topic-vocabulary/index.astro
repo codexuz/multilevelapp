@@ -7,63 +7,63 @@
     <script src="https://unpkg.com/onsenui/js/onsenui.min.js" is:inline></script>
     <script src="https://unpkg.com/jquery/dist/jquery.min.js" is:inline></script>
     <title>Topic Vocabulary</title>
-  </head>
-  
     <style>
-      *{
-        box-sizing: border-box;
-      }
-  
-      body{
-        background-color: white;
-      }
-      .sidebar{
-        width:250px;
-        position: fixed;
-        top: 0;
-        left: 0;
-        height:100%;
-        background-color: white;
-        padding: 50px 0;
-        overflow-y: auto;
-      }
-  
+        *{
+          box-sizing: border-box;
+        }
     
-  
-      ons-list-item:hover{
-        color: rgb(7, 221, 175);
-      }
-  
-      #main-content{
-        width: calc(100% - 250px);
-        margin: 0 0 0 250px;
-        padding: 0 0 0 20px;
-      }
-     
-    @media screen and (max-width:660px) {
-      .sidebar{
-        display: none;
-        position: fixed;
-        padding: 60px 0;
-        z-index: 999;
+        body{
+          background-color: white;
+        }
+        .sidebar{
+          width:250px;
+          position: fixed;
+          top: 0;
+          left: 0;
+          height:100%;
+          background-color: white;
+          padding: 50px 0;
+          overflow-y: auto;
+        }
+    
+      
+    
+        ons-list-item:hover{
+          color: rgb(7, 221, 175);
+        }
+    
+        #main-content{
+          width: calc(100% - 250px);
+          margin: 0 0 0 250px;
+          padding: 0 0 0 20px;
+        }
+       
+      @media screen and (max-width:660px) {
+        .sidebar{
+          display: none;
+          position: fixed;
+          padding: 60px 0;
+          z-index: 999;
+        }
+        
+        #main-content{
+          width: 100%;
+          margin: 0;
+          padding: 20px;
+        }
+    
+        .overlay{
+          width: 100%;
+          display: none;
+          position: fixed;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.158);
+        }
       }
       
-      #main-content{
-        width: 100%;
-        margin: 0;
-        padding: 20px;
-      }
-  
-      .overlay{
-        width: 100%;
-        display: none;
-        position: fixed;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.158);
-      }
-    }
-     
     </style>
+</head>
+     
   <ons-page>
     <ons-toolbar>
       <div class="left" style="margin: 0 30px;">
