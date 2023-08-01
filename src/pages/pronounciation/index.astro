@@ -14,6 +14,7 @@
 <template id="page1.html">
   <ons-page id="page1">
     <ons-toolbar>
+      <ons-icon onclick="window.location.href='/'" class="left" icon="fa-home" style="color:white"></ons-icon>
       <div class="center" style="color: dodgerblue;">Learn Vocabulary</div>
     </ons-toolbar>
 <ons-row>
@@ -23,6 +24,9 @@
 <ons-button onclick='window.location.href="/pronounciation/learn"' style="margin:15px 0; padding:20px 0; font-size:20px" modifier="large">Learn &nbsp; <ons-icon icon="fa-book"></ons-icon></ons-button>
 </ons-col>
 </ons-row>
+<ons-fab onclick="deletePost()" position="bottom right">
+  <ons-icon icon="fa-eraser"></ons-icon>
+</ons-fab>
 </ons-page>
 </template>
 
@@ -44,9 +48,7 @@
       </ons-card>
     </ons-page>
   </template>
-  <ons-fab onclick="deletePost()" position="bottom right">
-    <ons-icon icon="fa-eraser"></ons-icon>
-</ons-fab>
+ 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" is:inline></script>
 
