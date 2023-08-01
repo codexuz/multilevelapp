@@ -244,7 +244,7 @@ var TextSize=document.getElementById("question-bar");
 function step0() {
 	welcome.style.display="none";
 	part1.style.display="block"
-	que.innerHTML="What do you do in your free time?";
+	que.innerHTML="Do you often buy clothes?";
 	que_id.innerHTML=1
 	document.getElementById("result").style.display="none"
 	audio1.play();
@@ -293,7 +293,7 @@ function startCountdown() {
 //Step1 fun
 function step1(){
     startRecording();
-	que.innerHTML="Do you have a busy social life?";
+	que.innerHTML="Are clothes important for you?";
 	que_id.innerHTML=2
 	document.getElementById("result").style.display="none"
 	audio2.play();
@@ -341,7 +341,7 @@ function step1(){
 //step2
 
 function step2(){
-	que.innerHTML="Has your life changed much in the last year?";
+	que.innerHTML="What kinds of clothes do you prefer to wear?";
 	que_id.innerHTML=3
 	document.getElementById("result").style.display="none"
 	audio3.play();
@@ -385,7 +385,7 @@ function step2(){
 //step3
 
 function step3(){
-	que.innerHTML="What would you like to change about your lifestyle?";
+	que.innerHTML="Would you ever spend a lot of money on clothes?";
 	que_id.innerHTML=4
 	document.getElementById("result").style.display="none"
 	audio4.play();
@@ -432,7 +432,7 @@ function step3(){
 //step4
 
 function step4(){
-	que.innerHTML="Do you enjoy your current stage of life?";
+	que.innerHTML="Let's talk about sport. Do you like to watch sports on TV?";
 	que_id.innerHTML=5
 	document.getElementById("result").style.display="none"
 	audio5.play();
@@ -478,7 +478,7 @@ function step4(){
 //step5
 
 function step5(){
-	que.innerHTML="What do you dislike about your current stage of life?";
+	que.innerHTML="What are the popular sports in your country?";
 	que_id.innerHTML=6
 	document.getElementById("result").style.display="none"
 	audio6.play();
@@ -536,7 +536,7 @@ function part2(){
 //step6
 
 function step6(){
-	que.innerHTML=`<p><b>Describe a healthy lifestyle you know.</b></p><p>You should say:</p><ul><li>What is it?</li><li>How do you know it?</li><li>When do you do it?</li><li>And explain why you think it is healthy.</li></ul><br><textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Izoh yozish uchun"></textarea>`;
+	que.innerHTML=`<p><b>Describe an environmental problem that the world is facing.</b></p><p>You should say:</p><ul><li>What the environmental problem it is</li><li>why it is happening</li><li>what harmful effects it has</li><li>and explain what can be done to prevent this environmental problem</li></ul><br><textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Izoh yozish uchun"></textarea>`;
 	que_id.innerHTML=7
 	audio8.play();
 	audio8.addEventListener("ended", startCountdown);
@@ -595,7 +595,7 @@ function part3(){
 
 
 function step7(){
-	que.innerHTML="What are some ways that people can quickly make their lives better?";
+	que.innerHTML="Do you think health is important?";
 	que_id.innerHTML=8
 	audio10.play();
 	audio10.addEventListener("ended", startCountdown);
@@ -641,7 +641,7 @@ function step7(){
 //step8
 
 function step8(){
-	que.innerHTML="What are the best ways to achieve these?";
+	que.innerHTML="Do you think people pay enought attention to their health today?";
 	que_id.innerHTML=9
 	audio11.play();
 	audio11.addEventListener("ended", startCountdown);
@@ -685,7 +685,7 @@ function step8(){
 //step9
 
 function step9(){
-	que.innerHTML="Do you agree that we learn best from our mistakes?";
+	que.innerHTML="What types of activities do you think help people stay healthy?";
 	que_id.innerHTML=10
 	audio12.play();
 	audio12.addEventListener("ended", startCountdown);
@@ -729,7 +729,7 @@ function step9(){
 //step10
 
 function step10(){
-	que.innerHTML="What’s the best way to gain experience in life?";
+	que.innerHTML="How can people be encouraged to stay healthy?";
 	que_id.innerHTML=11
 	audio13.play();
 	audio13.addEventListener("ended", startCountdown);
@@ -774,7 +774,7 @@ function step10(){
 
 
 function step11(){
-	que.innerHTML="What are the important qualities of a good friend?";
+	que.innerHTML="Do women pay more attention to their health than men?";
 	que_id.innerHTML=12
 	audio14.play();
 	audio14.addEventListener("ended", startCountdown);
@@ -818,11 +818,9 @@ function examEnd(){
 	audio15.play();
 	que.innerHTML='';
 	que_id.innerHTML='';
-	preview .style.display="block";
-	downloadAudio .style.display="block";
 	stopRecording();
 	audio15.addEventListener("ended", ()=>{
-        window.location.href="/tests/demo/result"
+        window.location.href="/account/checkout"
     });
 	
 }
