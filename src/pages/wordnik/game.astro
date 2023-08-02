@@ -88,12 +88,14 @@ function startSpeechRecognition() {
       $("#Feedback").show();
       $("#feed").text("Well Done!");
       $("#feed").css("color", "#00ff00");
+      $("#Feedback").addClass("bg-green-300")
       $("#score").text(`${score}/37`);
   }
 else {console.log("Oh no");
       $("#Feedback").show();
       $("#feed").text("Wrong. Try again!");
       $("#feed").css("color", "red");
+      $("#Feedback").addClass("bg-red-300")
       $("#play").addClass("animate-ping");
       setTimeout(() => {
         $("#play").removeClass("animate-ping");
