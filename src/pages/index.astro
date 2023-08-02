@@ -6,7 +6,9 @@ import Loader from '../components/Loader.astro';
 import HelloPage from '../components/HelloPage.astro';
 import BoxCard from '../components/BoxCard.astro';
 import TryButton from '../components/TryButton.astro'
-
+import { getAnalytics, logEvent } from "firebase/analytics";
+const analytics = getAnalytics();
+logEvent(analytics, 'notification_received');
 ---
 
 <Layout title="Home">
