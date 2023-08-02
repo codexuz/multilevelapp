@@ -88,16 +88,16 @@ function startSpeechRecognition() {
       $("#Feedback").show();
       $("#feed").text("Well Done!");
       $("#feed").addClass("text-green-400");
-      $("#Feedback").addClass("bg-green-100")
-      $("#Feedback").addClass("border-green-400")
+      $("#Feedback").addClass("bg-green-200")
+      $("#Feedback").addClass("border-2","border-green-400")
       $("#score").text(`${score}/37`);
   }
 else {console.log("Oh no");
       $("#Feedback").show();
       $("#feed").text("Wrong. Try again!");
       $("#feed").addClass("text-red-500");
-      $("#Feedback").addClass("bg-red-100")
-      $("#Feedback").addClass("border-red-500")
+      $("#Feedback").addClass("bg-red-200")
+      $("#Feedback").addClass("border-2","border-red-500")
       $("#play").addClass("animate-ping");
       setTimeout(() => {
         $("#play").removeClass("animate-ping");
