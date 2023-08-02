@@ -87,15 +87,13 @@ function startSpeechRecognition() {
       score++;
       $("#Feedback").show();
       $("#feed").text("Well Done!");
-      $("#feed").css("color", "white");
-      $("#Feedback").css("background", "#25f20a");
+      $("#feed").css("color", "#00ff00");
       $("#score").text(`${score}/37`);
   }
 else {console.log("Oh no");
       $("#Feedback").show();
-      $("#Feedback").css("background", "#e61037");
       $("#feed").text("Wrong. Try again!");
-      $("#feed").css("color", "white");
+      $("#feed").css("color", "red");
       $("#play").addClass("animate-ping");
       setTimeout(() => {
         $("#play").removeClass("animate-ping");
