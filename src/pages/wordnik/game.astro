@@ -86,7 +86,7 @@ function startSpeechRecognition() {
     if (spokenWord === flashcards[currentFlashcard].word) {
       score++;
       $("#Feedback").show();
-      $("#feed").text("Well Done!");
+      $("#feed").text("Correct!");
       $("#feed").addClass("text-green-400");
       $("#Feedback").addClass("bg-green-100")
       $("#Feedback").css("border-width","2px")
