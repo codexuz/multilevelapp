@@ -119,11 +119,12 @@ recognition.start();
     progress += 3;
     $("#Feedback").fadeOut("fast", function(){
           $("#feed").text("");
-  })
-  $("#feed").removeClass("text-green-400");
+          $("#feed").removeClass("text-green-400");
   $("#Feedback").removeClass("bg-green-100")
   $("#feed").removeClass("text-red-500");
   $("#Feedback").removeClass("bg-red-100")
+  })
+  
     progressContainer.style.width = `${progress}%`;
     if (currentFlashcard === flashcards.length) {
       $("#score-page").show()
