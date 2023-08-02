@@ -86,18 +86,20 @@ function startSpeechRecognition() {
     if (spokenWord === flashcards[currentFlashcard].word) {
       score++;
       $("#Feedback").show();
-      $("#feed").text("Correct!");
+      $("#feed").text("Well Done!");
       $("#feed").addClass("text-green-400");
-      $("#Feedback").addClass("bg-green-200")
-      $("#Feedback").addClass("border-2","border-green-800")
+      $("#Feedback").addClass("bg-green-100")
+      $("#Feedback").css("border-width","2px")
+      $("#Feedback").css("border-color","#00ff00")
       $("#score").text(`${score}/37`);
   }
 else {console.log("Oh no");
       $("#Feedback").show();
       $("#feed").text("Wrong. Try again!");
       $("#feed").addClass("text-red-500");
-      $("#Feedback").addClass("bg-red-200")
-      $("#Feedback").addClass("border-2","border-red-800")
+      $("#Feedback").addClass("bg-red-100")
+      $("#Feedback").css("border-width","2px")
+      $("#Feedback").css("border-color","#ff0000")
       $("#play").addClass("animate-ping");
       setTimeout(() => {
         $("#play").removeClass("animate-ping");
@@ -118,7 +120,10 @@ recognition.start();
     $("#Feedback").fadeOut("fast", function(){
           $("#feed").text("");
   })
-  
+  $("#feed").removeClass("text-green-400");
+  $("#Feedback").removeClass("bg-green-100")
+  $("#feed").removeClass("text-red-500");
+  $("#Feedback").removeClass("bg-red-100")
     progressContainer.style.width = `${progress}%`;
     if (currentFlashcard === flashcards.length) {
       $("#score-page").show()
