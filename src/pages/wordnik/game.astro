@@ -88,19 +88,15 @@ function startSpeechRecognition() {
       $("#Feedback").show();
       $("#feed").text("Well Done!");
       $("#feed").css("color", "#00ff00");
-      $("#Feedback").addClass("bg-green-600")
-      $("#Feedback").addClass("border-green-800")
       $("#score").text(`${score}/37`);
   }
 else {console.log("Oh no");
       $("#Feedback").show();
       $("#feed").text("Wrong. Try again!");
       $("#feed").css("color", "red");
-      $("#Feedback").addClass("bg-red-600")
       $("#Feedback").css("background-image", "url('https://static.vecteezy.com/system/resources/previews/006/852/804/original/abstract-blue-background-simple-design-for-your-website-free-vector.jpg')")
       $("#Feedback").css("background-size", "cover")
       $("#Feedback").css("background-repeat", "no-repeat")
-      $("#Feedback").addClass("border-red-800")
       $("#play").addClass("animate-ping");
       setTimeout(() => {
         $("#play").removeClass("animate-ping");
