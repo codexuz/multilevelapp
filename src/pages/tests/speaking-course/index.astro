@@ -1,124 +1,130 @@
----
-import { app } from "../../../lib/firebase/server";
-import { getFirestore } from "firebase-admin/firestore";
-import { getAuth  } from "firebase-admin/auth";
-import Layout from '../../../layouts/Layout.astro'
-import ModuleHeader from '../../../components/writing/ModuleHeader.astro'
-import ModuleSidebar2 from '../../../components/writing/ModuleSidebar2.astro'
-import Module from '../../../components/speaking/Module.astro'
-import Module2 from '../../../components/speaking/Module2.astro'
-import Module3 from '../../../components/speaking/Module3.astro'
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+  <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+  <script src="https://unpkg.com/onsenui/js/onsenui.min.js" is:inline></script>
+  <script src="https://unpkg.com/jquery/dist/jquery.min.js" is:inline></script>
+  <title>Topic Vocabulary</title>
+  <style>
+    *{
+      box-sizing: border-box;
+    }
 
-const auth = getAuth(app);
+    body{
+      background-color: white;
+    }
+    .sidebar{
+      width:250px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height:100%;
+      background-color: white;
+      padding: 50px 0;
+      overflow-y: auto;
+    }
 
-/* Check current session */
-const sessionCookie = Astro.cookies.get("session").value;
+  
 
-if (!sessionCookie) {
-  return Astro.redirect("/account/register");
-}
-const decodedCookie = await auth.verifySessionCookie(sessionCookie);
-const user = await auth.getUser(decodedCookie.uid);
+    ons-list-item:hover{
+      color: rgb(7, 221, 175);
+    }
 
-if (!user) {
-  return Astro.redirect("/account/register");
-}
-
-
-const db = getFirestore(app);
-const userRef = db.collection("users").doc(user.uid)
-const userSnapshot = await userRef.get();
-const userData = userSnapshot.data();
-
-if (userData.status==="unpaid") {
-  const { name, email } = userData;
-  return Astro.redirect("/account/checkout") 
-} else {
-  // Handle the case where the user data is not available
-  console.log("User data not found.");
-}
----
-<Layout title="Speaking Course">
-<ModuleHeader/>
-<ModuleSidebar2/>
-<main>
-<Module/>
-<Module2/>
-<Module3/>
-</main>
-</Layout>
-
-<style>
-  body{
-      user-select: none;
+    #main-content{
+      width: calc(100% - 250px);
+      margin: 0 0 0 250px;
+      padding: 0 0 0 20px;
     }
    
-   main{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 80%;
-    margin: 130px 10%;
-   }
+  @media screen and (max-width:660px) {
+    .sidebar{
+      display: none;
+      position: fixed;
+      padding: 60px 0;
+      z-index: 999;
+    }
+    
+    #main-content{
+      width: 100%;
+      margin: 0;
+      padding: 20px;
+    }
 
+    .overlay{
+      width: 100%;
+      display: none;
+      position: fixed;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.158);
+    }
+  }
+   
   </style>
-
-<script src="/static/jquery.min.js"   is:inline></script>
+  </head>
+<body>
+<ons-page>
+  <ons-toolbar>
+    <div class="left" style="margin: 0 30px;">
+      <ons-icon id="handle-bar" icon="fa-bars" style="color: dodgerblue;"></ons-icon>
+    </div>
+  </ons-toolbar>
+  <aside class="sidebar">
+    <ons-lits id="post-titles"></ons-lits>
+  </aside>
+  <div class="overlay"></div>
+  <main>
+    <div id="main-content"></div>
+  </main>
+</ons-page>
 
 <script is:inline>
+  // JavaScript to fetch post titles and populate the sidebar
+  fetch('https://xirurgabdukarim.uz/wp-json/wp/v2/speaking?per_page=100')
+    .then(response => response.json())
+    .then(posts => {
+      const postTitles = document.getElementById('post-titles');
+      posts.forEach(post => {
+        const listItem = document.createElement('ons-list-item');
+        listItem.textContent = post.title.rendered;
+        listItem.addEventListener('click', () => loadMainPage(post.id));
+        postTitles.appendChild(listItem);
 
-    $("#toggle").click(function(){
-      $(".overlay").show()
-      $(".sidebar").show()
-    })
+      });
 
-    $(".overlay").click(function(){
-      $(this).hide()
-    })
-
-    
-    // JavaScript Code
-    function nextLevel() {
-      // Retrieve user progress from local storage
-      var userProgress = localStorage.getItem('courseProgress');
-      
-      // Check if progress exists
-      if (userProgress) {
-        // Get the module ID to display
-        var currentModule = JSON.parse(userProgress).currentModule;
-        
-        // Hide all modules except the current one
-        var modules = document.getElementsByClassName('module');
-        for (var i = 0; i < modules.length; i++) {
-          modules[i].style.display = 'none';
-
-        }
-        document.getElementById(currentModule).style.display = 'block';
+      // Show the content of the first post on the main page by default
+      if (posts.length > 0) {
+        loadMainPage(posts[0].id);
       }
+    });
 
-      // Add event listeners to module links
-      var moduleLinks = document.getElementsByClassName('module-link');
-      for (var i = 0; i < moduleLinks.length; i++) {
-        moduleLinks[i].addEventListener('click', function(event) {
-          event.preventDefault();
-          var module = this.getAttribute('data-module');
-          
-          // Show selected module and hide others
-          var modules = document.getElementsByClassName('module');
-          for (var i = 0; i < modules.length; i++) {
-            modules[i].style.display = 'none';
-          }
-          document.getElementById(module).style.display = 'block';
+  function loadMainPage(postId) {
+    // Fetch the post content by ID and display it on the main page
+    fetch(`https://xirurgabdukarim.uz/wp-json/wp/v2/speaking/${postId}`)
+      .then(response => response.json())
+      .then(post => {
+        const mainContent = document.getElementById('main-content');
+        mainContent.innerHTML = post.content.rendered;
+      });
+  }
 
-          // Update user progress in local storage
-          var userProgress = { currentModule: module };
-          localStorage.setItem('userProgress', JSON.stringify(courseProgress));
-        });
-      }
-    };
+  $("#handle-bar").click(()=>{
+    $(".sidebar").toggle()
+    $(".overlay").toggle()
 
-   window.onload=nextLevel()
+  })
 
+  $(".overlay").click(()=>{
+    $(".sidebar").hide()
+    $(".overlay").css("display","none")
+  })
 
-
-  </script>
+  $("ons-list").click(()=>{
+    $(".sidebar").hide()
+    $(".overlay").css("display","none")
+  })
+</script>
+</body>
+</html>
