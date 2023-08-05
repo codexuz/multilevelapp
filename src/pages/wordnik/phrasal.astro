@@ -1,0 +1,182 @@
+---
+import Layout from '../../layouts/Layout.astro'
+---
+ <style>
+    *{
+       
+        box-sizing: border-box;
+    }
+    #suggestions-container {
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 100%;
+  max-height: 350px;
+  overflow-y: auto;
+  left: 0;
+  z-index: 1;
+}
+
+.suggestion {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.suggestion:hover {
+  background-color: #f2f2f2;
+}
+
+#word-container {
+  margin-top: 16px;
+}
+
+#word-container h2 {
+  margin-bottom: 8px;
+}
+
+#word-container h3 {
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+
+#word-container ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+#word-container li {
+  margin-bottom: 8px;
+}
+
+#word-container li strong {
+  font-weight: bold;
+}
+
+#word-container .synonyms {
+  font-style: italic;
+}
+
+#word-container .translations {
+  margin-top: 16px;
+}
+
+#word-container .translation {
+  margin-bottom: 8px;
+}
+
+#word-container .translation p {
+  margin: 0;
+}
+
+#word-container .translation h4 {
+  margin-bottom: 8px;
+}
+  </style>
+<Layout title="Phrasal Verbs">
+<main class="w-full">
+<input type="text" id="search-box" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 my-3" placeholder="Type Phrasal Verb...." required>
+<div id="suggestions-container" class=""></div>
+<p id="word-container" class="py-4 mb-4"></p>
+</main>
+</Layout>
+
+<script is:inline>
+
+let dictionaryData;
+const searchBox = document.getElementById('search-box');
+const displayArea = document.getElementById('word-container');
+const suggestionsContainer = document.getElementById('suggestions-container');
+
+fetch('/static/phrase.json')
+  .then(response => response.json())
+  .then(data => {
+    dictionaryData = data;
+  });
+
+searchBox.addEventListener('keyup', event => {
+  const query = event.target.value.toLowerCase();
+  const suggestions = getMatchingWords(query);
+
+  if (suggestions.length > 0) {
+    suggestionsContainer.innerHTML = '';
+    suggestions.forEach(suggestion => {
+      const suggestionElement = document.createElement('div');
+      suggestionElement.classList.add('suggestion');
+      suggestionElement.textContent = suggestion;
+      suggestionElement.addEventListener('click', () => {
+        searchBox.value = suggestion;
+        suggestionsContainer.innerHTML = '';
+        displayWord(suggestion);
+      });
+      suggestionsContainer.appendChild(suggestionElement);
+    });
+  } else {
+    suggestionsContainer.innerHTML = '';
+  }
+});
+
+function getMatchingWords(query) {
+  const matches = [];
+  for (const word in dictionaryData) {
+    if (word.startsWith(query)) {
+      matches.push(word);
+    }
+  }
+  return matches;
+}
+
+function displayWord(word) {
+    const wordData = dictionaryData[word];
+    let html = '';
+    html += `<h2>${word}</h2>`;
+  
+    if (wordData.descriptions && wordData.descriptions.length > 0) {
+      html += '<h6>Definitions</h6>';
+      html += '<ol>';
+      wordData.descriptions.forEach(description => {
+        html += `<li>${description}</li>`;
+      });
+      html += '</ol>';
+    }
+  
+    if (wordData.examples && wordData.examples.length > 0) {
+      html += '<h6>Examples</h6>';
+      html += '<ol>';
+      wordData.examples.forEach(examples => {
+        html += `<li>${examples}</li>`;
+      });
+      html += '</ol>';
+    }
+  
+    if (wordData.synonyms && wordData.synonyms.length > 0) {
+      html += '<h6>Synonyms</h6>';
+      html += '<ol class="mb-4 synonyms">';
+      wordData.synonyms.forEach(synonyms => {
+        html += `<li>${synonyms}</li>`;
+      });
+      html += '</ol>';
+}
+/*
+if (wordData.translations) {
+    html += '<h3>Translations</h3>';
+    html += '<div class="translations">';
+    for (const language in wordData.translations) {
+      const translations = wordData.translations[language];
+      if (Object.keys(translations).length > 0) {
+        html += `<div class="translation"><h4>${language}</h4><ul>`;
+        for (const translation of Object.keys(translations)) {
+          html += `<li>${translation}: `;
+          
+          html += '</li>';
+        }
+        html += '</ul></div>';
+      }
+    }
+    html += '</div>';
+  }
+  */
+  displayArea.innerHTML=html;
+}
+</script>
