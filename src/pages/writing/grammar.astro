@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+  <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+  <script src="https://unpkg.com/onsenui/js/onsenui.min.js" is:inline></script>
+  <script src="https://unpkg.com/jquery/dist/jquery.min.js" is:inline></script>
+  <title>Grammar Lessons</title>
+  <style>
+    *{
+      box-sizing: border-box;
+    }
+
+    body{
+      background-color: white;
+    }
+    .sidebar{
+      width:250px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height:100%;
+      background-color: white;
+      padding: 50px 0;
+      overflow-y: auto;
+    }
+
+  
+
+    ons-list-item:hover{
+      color: rgb(7, 221, 175);
+    }
+
+    #main-content{
+      width: calc(100% - 250px);
+      margin: 0 0 0 250px;
+      padding: 0 0 0 20px;
+    }
+   
+  @media screen and (max-width:660px) {
+    .sidebar{
+      display: none;
+      position: fixed;
+      padding: 60px 0;
+      z-index: 999;
+    }
+    
+    #main-content{
+      width: 100%;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .overlay{
+      width: 100%;
+      display: none;
+      position: fixed;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.158);
+    }
+  }
+   
+  </style>
+  </head>
+<body>
+<ons-page>
+  <ons-toolbar>
+    <div class="left" style="margin: 0 30px;">
+      <ons-icon id="handle-bar" icon="fa-bars" style="color: dodgerblue;"></ons-icon>
+    </div>
+  </ons-toolbar>
+  <aside class="sidebar">
+    <ons-lits id="post-titles"></ons-lits>
+  </aside>
+  <div class="overlay"></div>
+  <main>
+    <div id="main-content"></div>
+  </main>
+</ons-page>
+
+<script is:inline>
+  // JavaScript to fetch post titles and populate the sidebar
+  fetch('https://xirurgabdukarim.uz/wp-json/wp/v2/grammar?per_page=100&order=asc')
+    .then(response => response.json())
+    .then(posts => {
+      const postTitles = document.getElementById('post-titles');
+      posts.forEach(post => {
+        const listItem = document.createElement('ons-list-item');
+        listItem.textContent = post.title.rendered;
+        listItem.addEventListener('click', () => loadMainPage(post.id));
+        postTitles.appendChild(listItem);
+
+      });
+
+      // Show the content of the first post on the main page by default
+      if (posts.length > 0) {
+        loadMainPage(posts[0].id);
+      }
+    });
+
+  function loadMainPage(postId) {
+    // Fetch the post content by ID and display it on the main page
+    fetch(`https://xirurgabdukarim.uz/wp-json/wp/v2/grammar/${postId}`)
+      .then(response => response.json())
+      .then(post => {
+        const mainContent = document.getElementById('main-content');
+        mainContent.innerHTML = post.content.rendered;
+      });
+  }
+
+  $("#handle-bar").click(()=>{
+    $(".sidebar").toggle()
+    $(".overlay").toggle()
+
+  })
+
+  $(".overlay").click(()=>{
+    $(".sidebar").hide()
+    $(".overlay").css("display","none")
+  })
+
+  $("ons-list").click(()=>{
+    $(".sidebar").hide()
+    $(".overlay").css("display","none")
+  })
+</script>
+</body>
+</html>
