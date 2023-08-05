@@ -134,7 +134,7 @@ function displayWord(word) {
   
     if (wordData.descriptions && wordData.descriptions.length > 0) {
       html += '<h6>Definitions</h6>';
-      html += '<ol>';
+      html += '<ol class="list-decimal">';
       wordData.descriptions.forEach(description => {
         html += `<li>${description}</li>`;
       });
@@ -143,7 +143,7 @@ function displayWord(word) {
   
     if (wordData.examples && wordData.examples.length > 0) {
       html += '<h6>Examples</h6>';
-      html += '<ol>';
+      html += '<ol class="list-decimal">';
       wordData.examples.forEach(examples => {
         html += `<li>${examples}</li>`;
       });
@@ -152,7 +152,7 @@ function displayWord(word) {
   
     if (wordData.synonyms && wordData.synonyms.length > 0) {
       html += '<h6>Synonyms</h6>';
-      html += '<ol class="mb-4 synonyms">';
+      html += '<ol class="mb-4 synonyms list-decimal">';
       wordData.synonyms.forEach(synonyms => {
         html += `<li>${synonyms}</li>`;
       });
