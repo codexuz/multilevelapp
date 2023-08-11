@@ -2,7 +2,7 @@ let readingScore=JSON.parse(localStorage.getItem("readingScore"))
 console.log(readingScore)
 document.getElementById("check").addEventListener("click", ()=>{
 		document.getElementById("check").style.display="none";
-		document.getElementById("next-btn").style.display="block";
+		//document.getElementById("next-btn").style.display="block";
 
 var ex0, ex, result, score, part3, part03,text, text2, text3, text03, word, word0, part5, part5a;
 result=true; score=0;
