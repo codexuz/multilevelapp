@@ -1,7 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro"
 
-let res = await fetch("https://xirurgabdukarim.uz/wp-json/wp/v2/listening1/")
+let res = await fetch("https://xirurgabdukarim.uz/wp-json/wp/v2/listening1?per_page=100&order=asc")
 let posts = await res.json();
 ---
 <Layout title="Part 1 Listening">
