@@ -1,10 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro"
 
-let res = await fetch("https://xirurgabdukarim.uz/wp-json/wp/v2/listening3/")
+let res = await fetch("https://xirurgabdukarim.uz/wp-json/wp/v2/listening3?order=asc")
 let posts = await res.json();
 ---
-<Layout title="Part 1 Listening">
+<Layout title="Part 3 Listening">
   <section>
     <h1 class="text-3xl my-3 font-bold text-center">Part 1 Exercises</h1>
     <div class="container mx-auto mb-8 px-4">
