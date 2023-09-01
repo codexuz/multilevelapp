@@ -1,5 +1,44 @@
 ---
 import Layout from '../../layouts/Layout.astro'
+import { app } from "../lib/firebase/server";
+import { getFirestore } from "firebase-admin/firestore";
+import { getAuth  } from "firebase-admin/auth";
+
+
+const auth = getAuth(app);
+
+/* Check current session */
+const sessionCookie = Astro.cookies.get("session").value;
+
+if (!sessionCookie) {
+  return Astro.redirect("/account/register");
+}
+const decodedCookie = await auth.verifySessionCookie(sessionCookie);
+const user = await auth.getUser(decodedCookie.uid);
+
+if (!user) {
+  return Astro.redirect("/account/register");
+}
+
+
+   interface User {
+  name: string;
+  status: number;
+  email:string;
+}
+
+const db = getFirestore(app);
+const userRef = db.collection("users").doc(user.uid)
+const userSnapshot = await userRef.get();
+const userData = userSnapshot.data();
+
+if (userData.status==="unpaid" || userData.tariff==="basic") {
+  const { name, email } = userData;
+  return Astro.redirect("/account/checkout") 
+} else {
+  // Handle the case where the user data is not available
+  console.log("User data not found.");
+}
 ---
 
 <Layout title="Listening">
