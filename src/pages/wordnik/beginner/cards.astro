@@ -202,7 +202,7 @@ let currentFlashcard=0
 const id = new URLSearchParams(window.location.search).get("id");
 
   const renderdetails= async ()=>{
-    const res= await fetch('https://server-five-dusky.vercel.app/games/'+ id);
+    const res= await fetch('https://server-beta-smoky.vercel.app/games/'+ id);
     var flashcards= await res.json();
 
     var progress_val=100/flashcards.words.length
